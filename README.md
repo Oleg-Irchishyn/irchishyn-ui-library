@@ -1,20 +1,86 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+## Gen2Verse.UI.Library
 
-# Getting Started
-TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
-1.	Installation process
-2.	Software dependencies
-3.	Latest releases
-4.	API references
+Gen2Verse UI component library built with **React** + **MUI**. Components are developed and previewed in **Storybook** and can be consumed by other apps as a Node module.
 
-# Build and Test
-TODO: Describe and show how to build your code and run the tests. 
+### Prerequisites
 
-# Contribute
-TODO: Explain how other users and developers can contribute to make your code better. 
+- Node.js (LTS recommended)
+- npm
 
-If you want to learn more about creating good readme files then refer the following [guidelines](https://docs.microsoft.com/en-us/azure/devops/repos/git/create-a-readme?view=azure-devops). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
+### Install
+
+```bash
+npm install
+```
+
+### Run (Storybook dev server)
+
+Use the `dev` script (no need to run `storybook` directly):
+
+```bash
+npm run dev
+```
+
+Storybook runs on `http://localhost:6006`.
+
+### Docs
+
+Each component can include a dedicated **Docs** page (MDX) in Storybook showing import/usage examples and a props table.
+
+### Build library (outputs `dist/`)
+
+```bash
+npm run build
+```
+
+### Type-check
+
+```bash
+npm run type-check
+```
+
+### Build Storybook (static)
+
+```bash
+npm run build-storybook
+```
+
+### Lint / format
+
+```bash
+npm run lint
+npm run type-check
+npm run format
+```
+
+### Version and publish
+
+Update after resolving bugfixes or small issues:
+
+```bash
+npm version patch
+```
+
+Update after adding new features without breaking changes:
+
+```bash
+npm version minor
+```
+
+Update after adding new features with breaking changes:
+
+```bash
+npm version major
+```
+
+Publish (uses your configured npm registry, e.g. Azure Artifacts):
+
+```bash
+npm publish --access public
+```
+
+### Use in another repo (installed package)
+
+```bash
+npm install @gen2fund/gen2verse-ui-library@latest
+```

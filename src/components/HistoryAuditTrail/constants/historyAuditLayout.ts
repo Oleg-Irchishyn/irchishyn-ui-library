@@ -1,0 +1,4 @@
+export const HISTORY_AUDIT_LAYOUT = {
+  AVATAR_SIZE: 40,
+  TIMELINE_OVERLAP: 12,
+};

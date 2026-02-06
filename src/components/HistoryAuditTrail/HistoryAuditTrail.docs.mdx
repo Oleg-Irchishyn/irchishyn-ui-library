@@ -1,0 +1,62 @@
+import { ArgTypes, Canvas, Description, Meta, Subtitle, Title } from '@storybook/blocks';
+
+import * as Stories from './HistoryAuditTrail.stories';
+
+<Meta of={Stories} />
+
+<Title>HistoryAuditTrail</Title>
+<Subtitle>Activity history timeline (AG Grid + MUI theme)</Subtitle>
+<Description>
+  `HistoryAuditTrail` renders an activity history list from a backend response. It supports empty
+  and loading states, a clear button (`onClear`), and row click handling (`onItemClick`).
+</Description>
+
+## Import
+
+```ts
+import { HistoryAuditTrail } from '@gen2fund/gen2verse-ui-library';
+import type { HistoryAuditTrailEvent } from '@gen2fund/gen2verse-ui-library';
+```
+
+## Basic usage
+
+```tsx
+import { HistoryAuditTrail } from '@gen2fund/gen2verse-ui-library';
+import type { HistoryAuditTrailEvent } from '@gen2fund/gen2verse-ui-library';
+
+const events: HistoryAuditTrailEvent[] = [
+  {
+    id: '1',
+    username: 'Alice Smith',
+    auditEventType: 'ADDED',
+    subject: "Added new derived field 'Net_Contribution'",
+    details: 'Gross_Contribution - fees',
+    timestamp: '2026-02-03T13:16:35.9275039+02:00',
+  },
+];
+
+export function Example() {
+  return (
+    <HistoryAuditTrail
+      title="Activity History"
+      countLabel={`${events.length} events`}
+      events={events}
+      onClear={() => {}}
+      onItemClick={() => {}}
+    />
+  );
+}
+```
+
+## States
+
+- **Loading**: set `loading={true}` (and typically `events={[]}`) to show the loader.
+- **Empty**: pass `events={[]}` to show the empty state.
+
+## Examples
+
+<Canvas of={Stories.Default} />
+
+## Props
+
+<ArgTypes of={Stories.Default} />
