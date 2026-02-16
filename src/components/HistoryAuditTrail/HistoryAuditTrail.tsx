@@ -6,32 +6,66 @@ import { HistoryAuditTrailHeader } from './components/HistoryAuditTrailHeader';
 import { HistoryAuditTrailTable } from './components/HistoryAuditTrailTable';
 import { useHistoryAuditTrail } from './useHistoryAuditTrail';
 
+import { HISTORY_AUDIT_LABELS } from './constants';
 import type { HistoryAuditTrailProps } from './types';
 
 export const HistoryAuditTrail = ({
   events,
   title = 'Activity History',
   countLabel,
+  enableExport = false,
+  exportFileName,
   loading = false,
   onItemClick,
   onClear,
   height,
   sx,
 }: HistoryAuditTrailProps) => {
-  const { rowData, columnDefs, defaultColDef, onRowClicked, getRowId } = useHistoryAuditTrail({
+  const {
+    rowData,
+    columnDefs,
+    defaultColDef,
+    onRowClicked,
+    getRowId,
+    quickFilterText,
+    setQuickFilterText,
+    filteredRowCount,
+    isSearchActive,
+    displayedCountLabel,
+    handleClear,
+    onGridReady,
+    handleDownloadExcel,
+    getContextMenuItems,
+  } = useHistoryAuditTrail({
     events,
     onItemClick,
+    countLabel,
+    onClear,
+    enableExport,
+    exportFileName,
   });
 
   return (
-    <Box sx={{ width: '100%', ...((sx as object) ?? {}) }}>
-      <HistoryAuditTrailHeader title={title} countLabel={countLabel} onClear={onClear} />
+    <Box data-testid="history-audit-trail" sx={{ width: '100%', ...((sx as object) ?? {}) }}>
+      <HistoryAuditTrailHeader
+        title={title}
+        countLabel={displayedCountLabel}
+        onClear={handleClear}
+        search={{
+          searchValue: quickFilterText,
+          onSearchValueChange: setQuickFilterText,
+          onDownloadExcel: handleDownloadExcel,
+          enableExport,
+        }}
+      />
 
       <Box sx={{ position: 'relative' }}>
         {loading && events.length === 0 ? (
           <HistoryAuditTrailLoader />
         ) : events.length === 0 ? (
           <HistoryAuditTrailEmpty />
+        ) : isSearchActive && filteredRowCount === 0 ? (
+          <HistoryAuditTrailEmpty message={HISTORY_AUDIT_LABELS.NO_DATA_TO_DISPLAY} />
         ) : (
           <HistoryAuditTrailTable
             rowData={rowData}
@@ -39,6 +73,9 @@ export const HistoryAuditTrail = ({
             defaultColDef={defaultColDef}
             onRowClicked={onRowClicked}
             getRowId={getRowId}
+            quickFilterText={quickFilterText}
+            getContextMenuItems={getContextMenuItems}
+            onGridReady={onGridReady}
             height={height}
             loading={loading}
           />

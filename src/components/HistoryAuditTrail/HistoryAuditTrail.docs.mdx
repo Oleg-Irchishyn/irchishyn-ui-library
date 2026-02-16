@@ -8,7 +8,8 @@ import * as Stories from './HistoryAuditTrail.stories';
 <Subtitle>Activity history timeline (AG Grid + MUI theme)</Subtitle>
 <Description>
   `HistoryAuditTrail` renders an activity history list from a backend response. It supports empty
-  and loading states, a clear button (`onClear`), and row click handling (`onItemClick`).
+  and loading states, a clear button (`onClear`), row click handling (`onItemClick`), quick search,
+  and optional CSV/Excel export actions.
 </Description>
 
 ## Import
@@ -53,9 +54,45 @@ export function Example() {
 - **Loading**: set `loading={true}` (and typically `events={[]}`) to show the loader.
 - **Empty**: pass `events={[]}` to show the empty state.
 
+## Export-enabled usage
+
+```tsx
+import { HistoryAuditTrail } from '@gen2fund/gen2verse-ui-library';
+import type { HistoryAuditTrailEvent } from '@gen2fund/gen2verse-ui-library';
+
+const events: HistoryAuditTrailEvent[] = [
+  {
+    id: '1',
+    username: 'Alice Smith',
+    auditEventType: 'ADDED',
+    subject: "Added new derived field 'Net_Contribution'",
+    details: 'Gross_Contribution - fees',
+    timestamp: '2026-02-12T09:43:12.9275039+02:00',
+  },
+];
+
+export function ExportExample() {
+  return (
+    <HistoryAuditTrail
+      title="Activity History"
+      countLabel={`${events.length} events`}
+      events={events}
+      enableExport
+      exportFileName="history-audit-trail"
+    />
+  );
+}
+```
+
+When `enableExport` is enabled:
+
+- Right-click on an activity/timestamp cell to open `Export` submenu (`CSV Export`, `Excel Export`)
+- Click the download icon next to search to export directly to `Excel`
+
 ## Examples
 
 <Canvas of={Stories.Default} />
+<Canvas of={Stories.ExportEnabled} />
 
 ## Props
 

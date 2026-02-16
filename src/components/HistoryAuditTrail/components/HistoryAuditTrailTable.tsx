@@ -3,17 +3,21 @@ import { Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { AgGridReact } from 'ag-grid-react';
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
+import { AllEnterpriseModule } from 'ag-grid-enterprise';
 
 import type { HistoryAuditTrailTableProps, HistoryAuditTrailTableRow } from '../types';
 
 import { createHistoryAuditAgGridTheme } from '../utils';
 
-ModuleRegistry.registerModules([AllCommunityModule]);
+ModuleRegistry.registerModules([AllCommunityModule, AllEnterpriseModule]);
 
 export const HistoryAuditTrailTable = ({
   rowData,
   columnDefs,
   defaultColDef,
+  quickFilterText,
+  getContextMenuItems,
+  onGridReady,
   loading = false,
   onRowClicked,
   getRowId,
@@ -48,11 +52,17 @@ export const HistoryAuditTrailTable = ({
         rowData={rowData}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
+        popupParent={typeof document !== 'undefined' ? document.body : undefined}
+        quickFilterText={quickFilterText}
+        getContextMenuItems={getContextMenuItems}
+        onGridReady={onGridReady}
         getRowId={getRowId}
         onRowClicked={onRowClicked}
         loading={loading}
         headerHeight={0}
         rowHeight={112}
+        suppressContextMenu={false}
+        preventDefaultOnContextMenu={true}
         suppressCellFocus={true}
         suppressRowClickSelection={true}
         animateRows={true}

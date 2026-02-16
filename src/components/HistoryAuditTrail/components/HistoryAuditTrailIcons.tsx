@@ -1,8 +1,10 @@
 import {
+  Download as DownloadIconLucide,
   History as HistoryIconLucide,
   Info as InfoIconLucide,
   Pencil as EditIconLucide,
   Plus as PlusIconLucide,
+  Search as SearchIconLucide,
   Trash2 as TrashIconLucide,
   X as CloseIconLucide,
 } from 'lucide-react';
@@ -15,6 +17,8 @@ export const PlusIcon = () => <PlusIconLucide size={16} />;
 export const EditIcon = () => <EditIconLucide size={16} />;
 export const TrashIcon = () => <TrashIconLucide size={16} />;
 export const InfoIcon = () => <InfoIconLucide size={16} />;
+export const SearchIcon = () => <SearchIconLucide size={16} />;
+export const DownloadIcon = () => <DownloadIconLucide size={16} />;
 
 export const HistoryAuditTrailIconForType = ({ type }: { type: string }) => {
   switch (type) {

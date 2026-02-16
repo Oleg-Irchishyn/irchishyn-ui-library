@@ -1,5 +1,11 @@
 import type { SxProps, Theme } from '@mui/material/styles';
-import type { ColDef, GetRowIdParams, RowClickedEvent } from 'ag-grid-community';
+import type {
+  ColDef,
+  GetContextMenuItems,
+  GetRowIdParams,
+  GridReadyEvent,
+  RowClickedEvent,
+} from 'ag-grid-community';
 
 import type { HISTORY_AUDIT_EVENT_TYPES } from './constants';
 
@@ -44,12 +50,23 @@ export interface HistoryAuditTrailHeaderProps {
   title: string;
   countLabel?: string;
   onClear?: () => void;
+  search?: HistoryAuditTrailSearchProps;
+}
+
+export interface HistoryAuditTrailSearchProps {
+  searchValue?: string;
+  onSearchValueChange?: (value: string) => void;
+  onDownloadExcel?: () => void;
+  enableExport?: boolean;
 }
 
 export interface HistoryAuditTrailTableProps {
   rowData: HistoryAuditTrailTableRow[];
   columnDefs: ColDef<HistoryAuditTrailTableRow>[];
   defaultColDef: ColDef<HistoryAuditTrailTableRow>;
+  quickFilterText?: string;
+  getContextMenuItems?: GetContextMenuItems<HistoryAuditTrailTableRow>;
+  onGridReady?: (event: GridReadyEvent<HistoryAuditTrailTableRow>) => void;
   loading?: boolean;
   onRowClicked?: (event: RowClickedEvent<HistoryAuditTrailTableRow>) => void;
   getRowId: (params: GetRowIdParams<HistoryAuditTrailTableRow>) => string;
@@ -61,6 +78,8 @@ export interface HistoryAuditTrailProps {
   events: HistoryAuditTrailEvent[];
   title?: string;
   countLabel?: string;
+  enableExport?: boolean;
+  exportFileName?: string;
   loading?: boolean;
   onItemClick?: (event: HistoryAuditTrailEvent) => void;
   onClear?: () => void;
@@ -71,4 +90,8 @@ export interface HistoryAuditTrailProps {
 export interface UseHistoryAuditTrailParams {
   events: HistoryAuditTrailEvent[];
   onItemClick?: (event: HistoryAuditTrailEvent) => void;
+  countLabel?: string;
+  onClear?: () => void;
+  enableExport?: boolean;
+  exportFileName?: string;
 }
