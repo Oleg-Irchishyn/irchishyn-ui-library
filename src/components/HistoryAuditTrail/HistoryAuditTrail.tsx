@@ -35,6 +35,7 @@ export const HistoryAuditTrail = ({
     handleClear,
     onGridReady,
     handleDownloadExcel,
+    handleDownloadCsv,
     getContextMenuItems,
   } = useHistoryAuditTrail({
     events,
@@ -54,9 +55,16 @@ export const HistoryAuditTrail = ({
         search={{
           searchValue: quickFilterText,
           onSearchValueChange: setQuickFilterText,
-          onDownloadExcel: handleDownloadExcel,
-          enableExport,
         }}
+        export={
+          enableExport
+            ? {
+                onExportExcel: handleDownloadExcel,
+                onExportCsv: handleDownloadCsv,
+                enableExport,
+              }
+            : undefined
+        }
       />
 
       <Box sx={{ position: 'relative' }}>

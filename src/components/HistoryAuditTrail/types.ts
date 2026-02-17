@@ -46,18 +46,23 @@ export interface HistoryAuditTrailEmptyProps {
   message?: string;
 }
 
+export interface HistoryAuditTrailExportProps {
+  onExportExcel?: () => void;
+  onExportCsv?: () => void;
+  enableExport?: boolean;
+}
+
 export interface HistoryAuditTrailHeaderProps {
   title: string;
   countLabel?: string;
   onClear?: () => void;
   search?: HistoryAuditTrailSearchProps;
+  export?: HistoryAuditTrailExportProps;
 }
 
 export interface HistoryAuditTrailSearchProps {
   searchValue?: string;
   onSearchValueChange?: (value: string) => void;
-  onDownloadExcel?: () => void;
-  enableExport?: boolean;
 }
 
 export interface HistoryAuditTrailTableProps {

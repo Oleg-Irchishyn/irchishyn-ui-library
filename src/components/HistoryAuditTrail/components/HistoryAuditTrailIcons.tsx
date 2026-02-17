@@ -1,5 +1,7 @@
 import {
+  ChevronDown as ChevronDownIconLucide,
   Download as DownloadIconLucide,
+  FileSpreadsheet as FileSpreadsheetIconLucide,
   History as HistoryIconLucide,
   Info as InfoIconLucide,
   Pencil as EditIconLucide,
@@ -19,6 +21,8 @@ export const TrashIcon = () => <TrashIconLucide size={16} />;
 export const InfoIcon = () => <InfoIconLucide size={16} />;
 export const SearchIcon = () => <SearchIconLucide size={16} />;
 export const DownloadIcon = () => <DownloadIconLucide size={16} />;
+export const ChevronDownIcon = () => <ChevronDownIconLucide size={16} />;
+export const FileSpreadsheetIcon = () => <FileSpreadsheetIconLucide size={16} />;
 
 export const HistoryAuditTrailIconForType = ({ type }: { type: string }) => {
   switch (type) {

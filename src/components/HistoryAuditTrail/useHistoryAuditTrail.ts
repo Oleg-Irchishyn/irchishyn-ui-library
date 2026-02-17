@@ -124,21 +124,32 @@ export const useHistoryAuditTrail = ({
     gridApiRef.current?.exportDataAsExcel({ fileName: `${exportFileName}.xlsx` });
   }, [enableExport, exportFileName]);
 
+  const handleDownloadCsv = useCallback(() => {
+    if (!enableExport) return;
+    gridApiRef.current?.exportDataAsCsv({ fileName: `${exportFileName}.csv` });
+  }, [enableExport, exportFileName]);
+
   const getContextMenuItems = useCallback<GetContextMenuItems<HistoryAuditTrailTableRow>>(
     (params: GetContextMenuItemsParams<HistoryAuditTrailTableRow>) => {
-      if (!enableExport) return [];
-
       const columnId = params.column?.getColId();
       const exportEnabledColumns = [
         HISTORY_AUDIT_COLUMN_IDS.ACTIVITY,
         HISTORY_AUDIT_COLUMN_IDS.TIME,
       ];
-      if (!columnId || !exportEnabledColumns.includes(columnId)) {
-        return [];
-      }
+      const showExport =
+        enableExport && columnId != null && exportEnabledColumns.includes(columnId);
 
-      return [
-        {
+      const items: ReturnType<GetContextMenuItems<HistoryAuditTrailTableRow>> = [
+        'cut',
+        'copy',
+        'copyWithHeaders',
+        'copyWithGroupHeaders',
+        'paste',
+      ];
+
+      if (showExport) {
+        items.push('separator');
+        items.push({
           name: 'Export',
           subMenu: [
             {
@@ -150,8 +161,10 @@ export const useHistoryAuditTrail = ({
               action: () => params.api.exportDataAsExcel({ fileName: `${exportFileName}.xlsx` }),
             },
           ],
-        },
-      ];
+        });
+      }
+
+      return items;
     },
     [enableExport, exportFileName],
   );
@@ -212,6 +225,7 @@ export const useHistoryAuditTrail = ({
       handleClear,
       onGridReady,
       handleDownloadExcel,
+      handleDownloadCsv,
       getContextMenuItems,
       enableExport,
     }),
@@ -230,6 +244,7 @@ export const useHistoryAuditTrail = ({
       handleClear,
       onGridReady,
       handleDownloadExcel,
+      handleDownloadCsv,
       getContextMenuItems,
       enableExport,
     ],
