@@ -91,8 +91,30 @@ export const HistoryAuditActivityColumns = ({
                 height: 20,
                 fontSize: '0.7rem',
                 fontWeight: 500,
+                borderRadius: '1px',
                 bgcolor: theme.palette.grey[100],
                 color: theme.palette.text.secondary,
+                '& .MuiChip-label': { px: 1 },
+              })}
+            />
+          ) : null}
+          {data.moduleBadge ? (
+            <Chip
+              label={data.moduleBadge}
+              size="small"
+              sx={(theme) => ({
+                height: 20,
+                fontSize: '0.7rem',
+                fontWeight: 500,
+                borderRadius: '1px',
+                bgcolor: data.moduleBadgeColor
+                  ? `${data.moduleBadgeColor}14`
+                  : theme.palette.grey[100],
+                color: data.moduleBadgeColor ?? theme.palette.text.secondary,
+                border: '1px solid',
+                borderColor: data.moduleBadgeColor
+                  ? `${data.moduleBadgeColor}4D`
+                  : theme.palette.divider,
                 '& .MuiChip-label': { px: 1 },
               })}
             />

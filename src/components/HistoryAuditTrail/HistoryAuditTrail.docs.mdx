@@ -9,7 +9,7 @@ import * as Stories from './HistoryAuditTrail.stories';
 <Description>
   `HistoryAuditTrail` renders an activity history list from a backend response. It supports empty
   and loading states, a clear button (`onClear`), row click handling (`onItemClick`), quick search,
-  and optional CSV/Excel export actions.
+  optional CSV/Excel export actions, and multi-module filtering via source paths.
 </Description>
 
 ## Import
@@ -89,10 +89,108 @@ When `enableExport` is enabled:
 - Right-click on an activity/timestamp cell to open `Export` submenu (`CSV Export`, `Excel Export`)
 - Click the download icon next to search to export directly to `Excel`
 
+## Multi-module usage
+
+```tsx
+import { HistoryAuditTrail } from '@gen2fund/gen2verse-ui-library';
+
+const moduleSources = [
+  '/capevent/package/10001',
+  '/capevent/configuration/1004',
+  '/capevent/driver-report/3521',
+];
+
+export function MultiModuleExample() {
+  return (
+    <HistoryAuditTrail
+      title="Activity History"
+      events={events}
+      countLabel={`${events.length} events`}
+      moduleSources={moduleSources}
+      primaryModuleSource="/capevent/package/10001"
+    />
+  );
+}
+```
+
+Multi-module behavior:
+
+- Dropdown appears only when more than one module has events
+- Dropdown item names are derived from source paths (for example, `configuration` -> `Configuration`)
+- `All Modules` shows all events across configured sources
+- Secondary module entries show color-coded badges; primary module entries do not
+- Change rendering supports both `oldValue/newValue` and `fieldChanges[]` response formats
+
+### `moduleFilterCallback` behavior
+
+`moduleFilterCallback` is optional. By default, filtering is automatic and uses:
+
+```ts
+event.source === selectedSource;
+```
+
+Provide `moduleFilterCallback` only when your event source format needs custom matching
+(for example, trimming trailing slashes, normalizing case, or mapping aliases).
+
+```tsx
+moduleFilterCallback={(event, selectedSource) =>
+  (event.source ?? '').replace(/\/$/, '').toLowerCase() ===
+  selectedSource.replace(/\/$/, '').toLowerCase()
+}
+```
+
+## All props example
+
+```tsx
+import { HistoryAuditTrail } from '@gen2fund/gen2verse-ui-library';
+import type { HistoryAuditTrailEvent } from '@gen2fund/gen2verse-ui-library';
+
+const events: HistoryAuditTrailEvent[] = [
+  {
+    id: 'event-1',
+    source: '/capevent/package/10001',
+    username: 'SYSTEM',
+    auditEventType: 'OTHER',
+    subject: 'Notice letters generated',
+    details: '18 investors',
+    fieldChanges: [{ oldValue: null, newValue: null }],
+    timestamp: '2026-02-20T11:19:22.4318918Z',
+  },
+];
+
+const moduleSources = [
+  '/capevent/package/10001',
+  '/capevent/configuration/1004',
+  '/capevent/driver-report/3521',
+];
+
+export function AllPropsExample() {
+  return (
+    <HistoryAuditTrail
+      title="Activity History"
+      countLabel={`${events.length} events`}
+      events={events}
+      enableExport={true}
+      exportFileName="history-audit-trail"
+      moduleSources={moduleSources}
+      primaryModuleSource="/capevent/package/10001"
+      moduleFilterCallback={(event, selectedSource) => event.source === selectedSource}
+      allModulesLabel="All Modules"
+      loading={false}
+      onItemClick={(event) => console.log('Clicked event', event.id)}
+      onClear={() => console.log('Clear clicked')}
+      height={420}
+      sx={{ borderRadius: 1 }}
+    />
+  );
+}
+```
+
 ## Examples
 
 <Canvas of={Stories.Default} />
 <Canvas of={Stories.ExportEnabled} />
+<Canvas of={Stories.MultiModule} />
 
 ## Props
 

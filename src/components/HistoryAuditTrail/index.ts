@@ -5,6 +5,8 @@ export type {
   HistoryAuditEventType,
   HistoryAuditTrailEmptyProps,
   HistoryAuditTrailHeaderProps,
+  HistoryAuditTrailModuleOption,
+  HistoryAudtitTrailModuleDropdownProps,
   HistoryAuditTrailTableProps,
   HistoryAuditTrailTableRow,
   HistoryAuditTrailProps,

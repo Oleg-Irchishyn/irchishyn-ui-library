@@ -13,6 +13,11 @@ export type HistoryAuditEventType =
   | (typeof HISTORY_AUDIT_EVENT_TYPES)[keyof typeof HISTORY_AUDIT_EVENT_TYPES]
   | (string & {});
 
+export interface HistoryAuditFieldChange {
+  oldValue?: string | null;
+  newValue?: string | null;
+}
+
 export interface HistoryAuditTrailEvent {
   id: string;
   source?: string | null;
@@ -21,6 +26,7 @@ export interface HistoryAuditTrailEvent {
   subject?: string | null;
   oldValue?: string | null;
   newValue?: string | null;
+  fieldChanges?: HistoryAuditFieldChange[] | null;
   details?: string | null;
   timestamp: string;
 }
@@ -30,6 +36,8 @@ export interface HistoryAuditTrailTableRow {
   event: HistoryAuditTrailEvent;
   actor: string;
   badge?: string | null;
+  moduleBadge?: string | null;
+  moduleBadgeColor?: string | null;
   action: string;
   details?: string | null;
   changeFrom?: string | null;
@@ -56,6 +64,7 @@ export interface HistoryAuditTrailHeaderProps {
   title: string;
   countLabel?: string;
   onClear?: () => void;
+  moduleDropdown?: HistoryAudtitTrailModuleDropdownProps;
   search?: HistoryAuditTrailSearchProps;
   export?: HistoryAuditTrailExportProps;
 }
@@ -63,6 +72,18 @@ export interface HistoryAuditTrailHeaderProps {
 export interface HistoryAuditTrailSearchProps {
   searchValue?: string;
   onSearchValueChange?: (value: string) => void;
+}
+
+export interface HistoryAuditTrailModuleOption {
+  name: string;
+  value: string;
+}
+
+export interface HistoryAudtitTrailModuleDropdownProps {
+  value: string;
+  options: HistoryAuditTrailModuleOption[];
+  onValueChange: (value: string) => void;
+  allModulesLabel?: string;
 }
 
 export interface HistoryAuditTrailTableProps {
@@ -85,6 +106,10 @@ export interface HistoryAuditTrailProps {
   countLabel?: string;
   enableExport?: boolean;
   exportFileName?: string;
+  moduleSources?: string[];
+  primaryModuleSource?: string;
+  moduleFilterCallback?: (event: HistoryAuditTrailEvent, selectedSource: string) => boolean;
+  allModulesLabel?: string;
   loading?: boolean;
   onItemClick?: (event: HistoryAuditTrailEvent) => void;
   onClear?: () => void;
@@ -99,4 +124,8 @@ export interface UseHistoryAuditTrailParams {
   onClear?: () => void;
   enableExport?: boolean;
   exportFileName?: string;
+  moduleSources?: string[];
+  primaryModuleSource?: string;
+  moduleFilterCallback?: (event: HistoryAuditTrailEvent, selectedSource: string) => boolean;
+  allModulesLabel?: string;
 }

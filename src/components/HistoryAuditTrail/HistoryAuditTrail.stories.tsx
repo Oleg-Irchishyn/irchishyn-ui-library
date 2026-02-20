@@ -22,8 +22,7 @@ const sample: HistoryAuditTrailEvent[] = [
     username: 'Bob Jones',
     auditEventType: HISTORY_AUDIT_EVENT_TYPES.UPDATED,
     subject: "Updated column heading for 'Commitment_Amount'",
-    oldValue: 'Commitment',
-    newValue: 'Total Commitment ($)',
+    fieldChanges: [{ oldValue: 'Commitment', newValue: 'Total Commitment ($)' }],
     details: null,
     timestamp: '2026-02-12T08:13:45.1275039+02:00',
   },
@@ -50,13 +49,34 @@ const sample: HistoryAuditTrailEvent[] = [
     timestamp: '2026-02-10T11:05:01.3275039+02:00',
   },
   {
+    id: '5fbe3731-069f-43fe-9fc3-b0efc55f6ee3',
+    source: '/capevent/driver-report/3521',
+    username: 'SYSTEM',
+    auditEventType: HISTORY_AUDIT_EVENT_TYPES.OTHER,
+    subject: 'Testing Gen2Fund UI Library integration',
+    oldValue: null,
+    newValue: null,
+    details: '',
+    timestamp: '2026-02-20T11:19:22.4318918Z',
+  },
+  {
+    id: '80a3a5b7-2142-4a48-8fd2-c831256f9aa5',
+    source: '/capevent/driver-report/3521',
+    username: 'Other',
+    auditEventType: HISTORY_AUDIT_EVENT_TYPES.OTHER,
+    subject: '',
+    oldValue: null,
+    newValue: null,
+    details: '',
+    timestamp: '2026-02-20T11:20:32.6350662Z',
+  },
+  {
     id: '2a261039-4144-49b8-bf6d-59b6404e2f67',
     source: '/capevent/package/10001',
     username: 'Sarah Williamns',
     auditEventType: HISTORY_AUDIT_EVENT_TYPES.UPDATED,
     subject: 'Due Date updated for Entity: GI Strategic Partners LP',
-    oldValue: '01/22/2025',
-    newValue: '01/29/2025',
+    fieldChanges: [{ oldValue: '01/22/2025', newValue: '01/29/2025' }],
     details: null,
     timestamp: '2025-01-29T14:42:50.4275039+02:00',
   },
@@ -71,6 +91,12 @@ const sample: HistoryAuditTrailEvent[] = [
     details: '18 notice letters removed after addendum removed',
     timestamp: '2024-11-07T10:12:09.5275039+02:00',
   },
+];
+
+const moduleSources = [
+  '/capevent/package/10001',
+  '/capevent/configuration/1003',
+  '/capevent/driver-report/3521',
 ];
 
 const meta: Meta<typeof HistoryAuditTrail> = {
@@ -88,6 +114,8 @@ const meta: Meta<typeof HistoryAuditTrail> = {
     events: sample,
     enableExport: false,
     exportFileName: 'history-audit-trail',
+    moduleSources,
+    primaryModuleSource: '/capevent/package/10001',
   },
 };
 
@@ -115,5 +143,14 @@ export const ExportEnabled: Story = {
     countLabel: `${sample.length} events`,
     enableExport: true,
     exportFileName: 'history-audit-trail-storybook',
+  },
+};
+
+export const MultiModule: Story = {
+  args: {
+    events: sample,
+    countLabel: `${sample.length} events`,
+    moduleSources,
+    primaryModuleSource: '/capevent/package/10001',
   },
 };

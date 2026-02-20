@@ -15,6 +15,10 @@ export const HistoryAuditTrail = ({
   countLabel,
   enableExport = false,
   exportFileName,
+  moduleSources,
+  primaryModuleSource,
+  moduleFilterCallback,
+  allModulesLabel,
   loading = false,
   onItemClick,
   onClear,
@@ -32,6 +36,7 @@ export const HistoryAuditTrail = ({
     filteredRowCount,
     isSearchActive,
     displayedCountLabel,
+    moduleDropdown,
     handleClear,
     onGridReady,
     handleDownloadExcel,
@@ -44,6 +49,10 @@ export const HistoryAuditTrail = ({
     onClear,
     enableExport,
     exportFileName,
+    moduleSources,
+    primaryModuleSource,
+    moduleFilterCallback,
+    allModulesLabel,
   });
 
   return (
@@ -52,6 +61,7 @@ export const HistoryAuditTrail = ({
         title={title}
         countLabel={displayedCountLabel}
         onClear={handleClear}
+        moduleDropdown={moduleDropdown}
         search={{
           searchValue: quickFilterText,
           onSearchValueChange: setQuickFilterText,
@@ -68,9 +78,9 @@ export const HistoryAuditTrail = ({
       />
 
       <Box sx={{ position: 'relative' }}>
-        {loading && events.length === 0 ? (
+        {loading && rowData.length === 0 ? (
           <HistoryAuditTrailLoader />
-        ) : events.length === 0 ? (
+        ) : rowData.length === 0 ? (
           <HistoryAuditTrailEmpty />
         ) : isSearchActive && filteredRowCount === 0 ? (
           <HistoryAuditTrailEmpty message={HISTORY_AUDIT_LABELS.NO_DATA_TO_DISPLAY} />

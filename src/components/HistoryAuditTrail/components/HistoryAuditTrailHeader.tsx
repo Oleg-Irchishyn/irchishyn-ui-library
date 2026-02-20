@@ -3,6 +3,7 @@ import { Box, Chip, IconButton, Typography } from '@mui/material';
 import { CloseIcon, HistoryIcon } from './HistoryAuditTrailIcons';
 import { HistoryAuditTrailSearch } from './HistoryAuditTrailSearch';
 import { HistoryAuditExport } from './HistoryAuditExport';
+import { HistoryAudtitTrailModuleDropdown } from './HistoryAudtitTrailModuleDropdown';
 
 import type { HistoryAuditTrailHeaderProps } from '../types';
 import { HISTORY_AUDIT_LAYOUT } from '../constants';
@@ -11,6 +12,7 @@ export const HistoryAuditTrailHeader = ({
   title,
   countLabel,
   onClear,
+  moduleDropdown,
   search,
   export: exportProps,
 }: HistoryAuditTrailHeaderProps) => {
@@ -41,6 +43,14 @@ export const HistoryAuditTrailHeader = ({
       </Box>
 
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
+        {moduleDropdown ? (
+          <HistoryAudtitTrailModuleDropdown
+            value={moduleDropdown.value}
+            options={moduleDropdown.options}
+            onValueChange={moduleDropdown.onValueChange}
+            allModulesLabel={moduleDropdown.allModulesLabel}
+          />
+        ) : null}
         <HistoryAuditTrailSearch
           searchValue={search?.searchValue}
           onSearchValueChange={search?.onSearchValueChange}

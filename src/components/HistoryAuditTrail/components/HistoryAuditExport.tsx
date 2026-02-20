@@ -49,7 +49,7 @@ export const HistoryAuditExport = ({ onExportExcel, onExportCsv }: HistoryAuditE
           textTransform: 'none',
           borderRadius: HISTORY_AUDIT_LAYOUT.TOOLBAR_BORDER_RADIUS,
           borderColor: theme.palette.divider,
-          backgroundColor: theme.palette.background.paper,
+          backgroundColor: theme.palette.common.white,
           color: theme.palette.text.secondary,
           '&:hover': {
             borderColor: theme.palette.divider,
