@@ -109,6 +109,7 @@ export interface HistoryAuditTrailProps {
   moduleSources?: string[];
   primaryModuleSource?: string;
   moduleFilterCallback?: (event: HistoryAuditTrailEvent, selectedSource: string) => boolean;
+  onModuleSourceChange?: (selectedSource: string) => void;
   allModulesLabel?: string;
   loading?: boolean;
   onItemClick?: (event: HistoryAuditTrailEvent) => void;
@@ -127,5 +128,6 @@ export interface UseHistoryAuditTrailParams {
   moduleSources?: string[];
   primaryModuleSource?: string;
   moduleFilterCallback?: (event: HistoryAuditTrailEvent, selectedSource: string) => boolean;
+  onModuleSourceChange?: (selectedSource: string) => void;
   allModulesLabel?: string;
 }

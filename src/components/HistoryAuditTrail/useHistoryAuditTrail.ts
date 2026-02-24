@@ -139,8 +139,17 @@ export const useHistoryAuditTrail = ({
   moduleSources,
   primaryModuleSource,
   moduleFilterCallback,
+  onModuleSourceChange,
   allModulesLabel = 'All Modules',
 }: UseHistoryAuditTrailParams) => {
+  const handleModuleSourceChange = useCallback(
+    (value: string) => {
+      setSelectedModuleSource(value);
+      onModuleSourceChange?.(value);
+    },
+    [onModuleSourceChange],
+  );
+
   const [quickFilterText, setQuickFilterText] = useState('');
   const [selectedModuleSource, setSelectedModuleSource] = useState(HISTORY_AUDIT_ALL_MODULES_VALUE);
   const gridApiRef = useRef<GridApi<HistoryAuditTrailTableRow> | null>(null);
@@ -214,11 +223,11 @@ export const useHistoryAuditTrail = ({
         ? {
             value: selectedModuleSource,
             options: moduleOptions,
-            onValueChange: setSelectedModuleSource,
+            onValueChange: handleModuleSourceChange,
             allModulesLabel,
           }
         : undefined,
-    [allModulesLabel, isMultiModule, moduleOptions, selectedModuleSource],
+    [allModulesLabel, handleModuleSourceChange, isMultiModule, moduleOptions, selectedModuleSource],
   );
 
   const resolveModuleBadge = useCallback(

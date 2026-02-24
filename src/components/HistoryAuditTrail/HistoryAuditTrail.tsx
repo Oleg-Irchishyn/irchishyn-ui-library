@@ -18,6 +18,7 @@ export const HistoryAuditTrail = ({
   moduleSources,
   primaryModuleSource,
   moduleFilterCallback,
+  onModuleSourceChange,
   allModulesLabel,
   loading = false,
   onItemClick,
@@ -52,6 +53,7 @@ export const HistoryAuditTrail = ({
     moduleSources,
     primaryModuleSource,
     moduleFilterCallback,
+    onModuleSourceChange,
     allModulesLabel,
   });
 
