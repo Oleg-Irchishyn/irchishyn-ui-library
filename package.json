@@ -1,6 +1,6 @@
 {
   "name": "@gen2fund/gen2verse-ui-library",
-  "version": "0.3.2",
+  "version": "0.4.1",
   "description": "Gen2Verse UI component library",
   "license": "UNLICENSED",
   "sideEffects": false,
@@ -53,6 +53,7 @@
     "@types/node": "^25.2.0",
     "@types/react": "^18.3.27",
     "@types/react-dom": "^18.3.7",
+    "@vitejs/plugin-react": "^4.3.0",
     "eslint": "^9.0.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-react": "^7.0.0",

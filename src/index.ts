@@ -5,6 +5,14 @@ export type {
   HistoryAuditEventType,
 } from './components/HistoryAuditTrail';
 
+export { FieldInsertDropdown } from './components/LanguageEditor';
+export type {
+  FieldDefinition,
+  FieldInsertDropdownProps,
+  FieldType,
+  DataType,
+} from './components/LanguageEditor';
+
 export { default as App } from './App';
 export type { AppProps } from './App';
 
