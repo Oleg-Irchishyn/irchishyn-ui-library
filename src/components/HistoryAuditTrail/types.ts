@@ -14,6 +14,7 @@ export type HistoryAuditEventType =
   | (string & {});
 
 export interface HistoryAuditFieldChange {
+  fieldName?: string | null;
   oldValue?: string | null;
   newValue?: string | null;
 }

@@ -22,7 +22,13 @@ import { LanguageEditor } from '@gen2fund/gen2verse-ui-library';
 import type { FieldDefinition } from '@gen2fund/gen2verse-ui-library';
 
 const fieldConfig: FieldDefinition[] = [
-  { name: 'fundName', displayName: 'Fund Name', type: 'Dimension', dataType: 'text', group: 'Identity' },
+  {
+    name: 'fundName',
+    displayName: 'Fund Name',
+    type: 'Dimension',
+    dataType: 'text',
+    group: 'Identity',
+  },
   { name: 'nav', displayName: 'NAV', type: 'Measure', dataType: 'number', group: 'Metrics' },
 ];
 
@@ -46,13 +52,13 @@ export function Example() {
 
 ## Props
 
-| Prop | Type | Required | Description |
-|------|------|----------|-------------|
-| `fieldConfig` | `FieldDefinition[]` | Yes | List of field definitions. See Field configuration schema below. |
-| `content` | `string` | Yes | Rich text with embedded tokens (conditionals and field references). |
-| `readOnly` | `boolean` | No | When `true`, editor is non-editable. Default: `false`. |
-| `onChange` | `(content: string) => void` | No | Called when content changes. |
-| `onValidate` | `(result: ValidationResult) => void` | No | Called when validation runs. See Validation rules below. |
+| Prop          | Type                                 | Required | Description                                                         |
+| ------------- | ------------------------------------ | -------- | ------------------------------------------------------------------- |
+| `fieldConfig` | `FieldDefinition[]`                  | Yes      | List of field definitions. See Field configuration schema below.    |
+| `content`     | `string`                             | Yes      | Rich text with embedded tokens (conditionals and field references). |
+| `readOnly`    | `boolean`                            | No       | When `true`, editor is non-editable. Default: `false`.              |
+| `onChange`    | `(content: string) => void`          | No       | Called when content changes.                                        |
+| `onValidate`  | `(result: ValidationResult) => void` | No       | Called when validation runs. See Validation rules below.            |
 
 ### Events
 
@@ -63,14 +69,14 @@ export function Example() {
 
 Each field has:
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `name` | `string` | Yes | Unique id used in content (e.g. `{{IF fieldName ...}}`, `«fieldName»`). |
-| `displayName` | `string` | Yes | Label in Field Insert dropdown and Conditional Builder. |
-| `type` | `'Dimension' \| 'Measure' \| 'Boolean'` | Yes | Semantic type (Dimension / Measure / Boolean). |
-| `dataType` | `'text' \| 'number' \| 'date' \| 'boolean'` | Yes | Drives allowed operators and **value input behavior**: the value box in the Conditional Builder must accept only input valid for this dataType (e.g. number field → numbers only, date field → date picker or date input, boolean → equals true/false). |
-| `group` | `string` | No | Optional category for grouping fields in the Field Insert dropdown (e.g. "Identity", "Metrics"). |
-| `description` | `string` | No | Optional help text for the field. |
+| Field         | Type                                        | Required | Description                                                                                                                                                                                                                                             |
+| ------------- | ------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`        | `string`                                    | Yes      | Unique id used in content (e.g. `{{IF fieldName ...}}`, `«fieldName»`).                                                                                                                                                                                 |
+| `displayName` | `string`                                    | Yes      | Label in Field Insert dropdown and Conditional Builder.                                                                                                                                                                                                 |
+| `type`        | `'Dimension' \| 'Measure' \| 'Boolean'`     | Yes      | Semantic type (Dimension / Measure / Boolean).                                                                                                                                                                                                          |
+| `dataType`    | `'text' \| 'number' \| 'date' \| 'boolean'` | Yes      | Drives allowed operators and **value input behavior**: the value box in the Conditional Builder must accept only input valid for this dataType (e.g. number field → numbers only, date field → date picker or date input, boolean → equals true/false). |
+| `group`       | `string`                                    | No       | Optional category for grouping fields in the Field Insert dropdown (e.g. "Identity", "Metrics").                                                                                                                                                        |
+| `description` | `string`                                    | No       | Optional help text for the field.                                                                                                                                                                                                                       |
 
 **TypeScript:**
 
@@ -100,47 +106,47 @@ Operators are determined by the field's **dataType**. Display label and value (k
 
 ### text
 
-| Label | Key |
-|-------|-----|
-| Contains | `contains` |
+| Label            | Key          |
+| ---------------- | ------------ |
+| Contains         | `contains`   |
 | Does not contain | `notContain` |
-| Equals | `equals` |
-| Does not equal | `notEqual` |
-| Begins with | `startsWith` |
-| Ends with | `endsWith` |
-| Blank | `blank` |
-| Not Blank | `notBlank` |
+| Equals           | `equals`     |
+| Does not equal   | `notEqual`   |
+| Begins with      | `startsWith` |
+| Ends with        | `endsWith`   |
+| Blank            | `blank`      |
+| Not Blank        | `notBlank`   |
 
 ### number
 
-| Label | Key |
-|-------|-----|
-| Equals | `equals` |
-| Does not equal | `notEqual` |
-| Greater than | `greaterThan` |
+| Label                    | Key                  |
+| ------------------------ | -------------------- |
+| Equals                   | `equals`             |
+| Does not equal           | `notEqual`           |
+| Greater than             | `greaterThan`        |
 | Greater than or equal to | `greaterThanOrEqual` |
-| Less than | `lessThan` |
-| Less than or equal | `lessThanOrEqual` |
-| Between | `inRange` |
-| Blank | `blank` |
-| Not Blank | `notBlank` |
+| Less than                | `lessThan`           |
+| Less than or equal       | `lessThanOrEqual`    |
+| Between                  | `inRange`            |
+| Blank                    | `blank`              |
+| Not Blank                | `notBlank`           |
 
 ### date
 
-| Label | Key |
-|-------|-----|
-| Equals | `equals` |
-| Does not equal | `notEqual` |
-| before | `lessThan` |
-| after | `greaterThan` |
-| Between | `inRange` |
-| Blank | `blank` |
-| Not blank | `notBlank` |
+| Label          | Key           |
+| -------------- | ------------- |
+| Equals         | `equals`      |
+| Does not equal | `notEqual`    |
+| before         | `lessThan`    |
+| after          | `greaterThan` |
+| Between        | `inRange`     |
+| Blank          | `blank`       |
+| Not blank      | `notBlank`    |
 
 ### boolean
 
-| Label | Key |
-|-------|-----|
+| Label  | Key      |
+| ------ | -------- |
 | Equals | `equals` |
 
 ## Validation rules
@@ -154,43 +160,43 @@ Operators are determined by the field's **dataType**. Display label and value (k
 
 Visual treatment must distinguish conditional tokens, field badges, and regular text. **Use the @platform/style library** for colors and fonts; do not hardcode hex values or font names. If the tokens or colors you need are not in @platform/style, request them from the platform team.
 
-| Content type | Appearance (via @platform/style) |
-|--------------|----------------------------------|
-| **Conditional tokens** | `{{IF ...}}`, `{{ELSE IF ...}}`, `{{ELSE}}`, `{{ENDIF}}` — use platform tokens for "conditional" (e.g. orange), monospace. |
-| **Field reference badges** | `«fieldName»` — use platform tokens for "field badge" (e.g. gold/amber), italic, guillemets « ». |
-| **Regular text** | Default text color and font from theme. |
+| Content type               | Appearance (via @platform/style)                                                                                           |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| **Conditional tokens**     | `{{IF ...}}`, `{{ELSE IF ...}}`, `{{ELSE}}`, `{{ENDIF}}` — use platform tokens for "conditional" (e.g. orange), monospace. |
+| **Field reference badges** | `«fieldName»` — use platform tokens for "field badge" (e.g. gold/amber), italic, guillemets « ».                           |
+| **Regular text**           | Default text color and font from theme.                                                                                    |
 
 ## Spec status & review
 
-| Field | Value |
-|-------|--------|
-| **Status** | **In review** (Review cycle 1) |
+| Field            | Value                                                   |
+| ---------------- | ------------------------------------------------------- |
+| **Status**       | **In review** (Review cycle 1)                          |
 | **Doc location** | `src/components/LanguageEditor/LanguageEditor.docs.mdx` |
-| **Reviewers** | Frontend lead, Architect (per AC7) |
+| **Reviewers**    | Frontend lead, Architect (per AC7)                      |
 
 ### Review cycle 1
 
-| Item | Notes |
-|------|--------|
-| **Shared with** | _Frontend lead, Architect_ |
-| **Date shared** | _Fill when sent_ |
-| **Feedback summary** | _Capture feedback here_ |
-| **Outcome** | _e.g. Approved as-is / Changes requested_ |
+| Item                 | Notes                                     |
+| -------------------- | ----------------------------------------- |
+| **Shared with**      | _Frontend lead, Architect_                |
+| **Date shared**      | _Fill when sent_                          |
+| **Feedback summary** | _Capture feedback here_                   |
+| **Outcome**          | _e.g. Approved as-is / Changes requested_ |
 
 ### Review cycle 2 (if needed)
 
-| Item | Notes |
-|------|--------|
-| **Date** | _Fill when run_ |
-| **Feedback / changes** | _Any follow-up_ |
-| **Outcome** | _Approved / Changes requested_ |
+| Item                   | Notes                          |
+| ---------------------- | ------------------------------ |
+| **Date**               | _Fill when run_                |
+| **Feedback / changes** | _Any follow-up_                |
+| **Outcome**            | _Approved / Changes requested_ |
 
 ### Approval (AC7)
 
-| Item | Notes |
-|------|--------|
-| **Approved** | ☐ No → ☐ Yes (update when sign-off received) |
-| **Approved by** | _Frontend lead: ___________  Architect: _____________._ |
-| **Date** | _Fill when approved_ |
+| Item            | Notes                                                        |
+| --------------- | ------------------------------------------------------------ |
+| **Approved**    | ☐ No → ☐ Yes (update when sign-off received)                 |
+| **Approved by** | \_Frontend lead: ****\_\_\_**** Architect: ******\_******.\_ |
+| **Date**        | _Fill when approved_                                         |
 
 Once both approvers have signed off, set Status above to **Approved** and update work item 10920 as needed. Implementation stories 10921–10924 are then unblocked.

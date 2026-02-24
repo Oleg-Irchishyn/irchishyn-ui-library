@@ -40,7 +40,11 @@ const getActivityQuickFilterText = (data: HistoryAuditTrailTableRow) =>
     data.event.details,
     data.event.oldValue,
     data.event.newValue,
-    ...(data.event.fieldChanges ?? []).flatMap((change) => [change.oldValue, change.newValue]),
+    ...(data.event.fieldChanges ?? []).flatMap((change) => [
+      change.fieldName,
+      change.oldValue,
+      change.newValue,
+    ]),
     data.event.auditEventType,
     data.event.source,
   );
@@ -85,6 +89,11 @@ const getEventChangeValues = (event: HistoryAuditTrailEvent) => {
 
 const getFieldChangesSummary = (event: HistoryAuditTrailEvent) => {
   const fieldChangesCount = event.fieldChanges?.length ?? 0;
+  if (fieldChangesCount === 1) {
+    const fieldName = event.fieldChanges?.[0]?.fieldName?.trim();
+    return fieldName ? `Field: ${fieldName}` : null;
+  }
+
   if (fieldChangesCount <= 1) return null;
   return `${fieldChangesCount} fields changed`;
 };
