@@ -5,6 +5,7 @@ export type {
   HistoryAuditEventType,
   HistoryAuditTrailRenderMode,
 } from './components/HistoryAuditTrail';
+export { HISTORY_AUDIT_ADDITIONAL_DETAIL_KEYS } from './components/HistoryAuditTrail';
 
 export { FieldInsertDropdown } from './components/LanguageEditor';
 export type {
