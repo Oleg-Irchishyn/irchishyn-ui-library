@@ -3,8 +3,14 @@ import type { ICellRendererParams } from 'ag-grid-community';
 
 import { HistoryAuditTrailIconForType } from '../HistoryAuditTrailIcons';
 
-import { getHistoryAuditAvatarStyle } from '../../utils';
-import { HISTORY_AUDIT_LAYOUT } from '../../constants';
+import {
+  detailLabelForKey,
+  extractTriggeredBy,
+  getHistoryAuditAvatarStyle,
+  isNonEmptyString,
+  isTriggeredByKey,
+} from '../../utils';
+import { HISTORY_AUDIT_DETAIL_TEXT, HISTORY_AUDIT_LAYOUT } from '../../constants';
 
 import type { HistoryAuditTrailTableRow } from '../../types';
 
@@ -21,7 +27,39 @@ export const HistoryAuditActivityColumns = ({
   const isLast = rowIndex === rowCount - 1;
   const avatarSize = HISTORY_AUDIT_LAYOUT.AVATAR_SIZE;
   const center = avatarSize / 2;
-  const overlap = HISTORY_AUDIT_LAYOUT.TIMELINE_OVERLAP;
+  const overlap = 0;
+
+  const normalizedAdditionalDetails = (data.event.additionalDetails ?? [])
+    .filter((i) => isNonEmptyString(i?.key) && isNonEmptyString(i?.value))
+    .map((i) => ({ key: i.key.trim(), value: i.value.trim() }));
+
+  const triggeredBy = extractTriggeredBy(normalizedAdditionalDetails);
+  const contextualDetails = normalizedAdditionalDetails.filter((i) => !isTriggeredByKey(i.key));
+
+  const detailsText = isNonEmptyString(data.event.details) ? data.event.details : null;
+
+  const resolvedChanges =
+    (
+      data.event.fieldChanges?.filter(
+        (c) => isNonEmptyString(c.fieldName) || c.oldValue != null || c.newValue != null,
+      ) ?? []
+    ).length > 0
+      ? (data.event.fieldChanges ?? [])
+      : data.event.oldValue != null || data.event.newValue != null
+        ? [
+            {
+              fieldName: null,
+              oldValue: data.event.oldValue ?? null,
+              newValue: data.event.newValue ?? null,
+            },
+          ]
+        : [];
+
+  const hasDetailSection =
+    Boolean(detailsText) ||
+    resolvedChanges.length > 0 ||
+    contextualDetails.length > 0 ||
+    Boolean(triggeredBy);
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'stretch', gap: 2, pr: 2, height: '100%' }}>
@@ -125,51 +163,9 @@ export const HistoryAuditActivityColumns = ({
           {data.action}
         </Typography>
 
-        {(data.details || (data.changeFrom && data.changeTo)) && (
-          <Box sx={{ mt: 1 }}>
-            {data.changeFrom && data.changeTo ? (
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
-                <Box
-                  sx={(theme) => ({
-                    px: 1,
-                    py: 0.25,
-                    borderRadius: 0.75,
-                    backgroundColor: `${theme.palette.error.main}14`,
-                    color: theme.palette.error.main,
-                    textDecoration: 'line-through',
-                    fontSize: 12,
-                    maxWidth: '100%',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                  })}
-                  title={data.changeFrom ?? ''}
-                >
-                  {data.changeFrom}
-                </Box>
-                <Typography variant="body2" sx={{ color: 'text.disabled' }}>
-                  →
-                </Typography>
-                <Box
-                  sx={(theme) => ({
-                    px: 1,
-                    py: 0.25,
-                    borderRadius: 0.75,
-                    backgroundColor: `${theme.palette.success.main}14`,
-                    color: theme.palette.success.main,
-                    fontSize: 12,
-                    fontWeight: 600,
-                    maxWidth: '100%',
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                  })}
-                  title={data.changeTo ?? ''}
-                >
-                  {data.changeTo}
-                </Box>
-              </Box>
-            ) : (
+        {hasDetailSection ? (
+          <Box sx={{ mt: 1, display: 'flex', flexDirection: 'column', gap: 1 }}>
+            {detailsText ? (
               <Box
                 sx={(theme) => ({
                   px: 1.5,
@@ -182,19 +178,142 @@ export const HistoryAuditActivityColumns = ({
                   lineHeight: 1.4,
                   color: theme.palette.text.secondary,
                   maxWidth: '100%',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
-                  display: 'flex',
-                  alignItems: 'center',
+                  display: 'block',
+                  whiteSpace: 'normal',
+                  wordBreak: 'break-word',
                 })}
-                title={data.details ?? ''}
               >
-                {data.details}
+                {detailsText}
               </Box>
-            )}
+            ) : null}
+
+            {resolvedChanges.length > 0 ? (
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
+                {resolvedChanges.map((change, idx) => {
+                  const fieldLabel = isNonEmptyString(change.fieldName)
+                    ? change.fieldName.trim()
+                    : null;
+                  const from = change.oldValue ?? null;
+                  const to = change.newValue ?? null;
+
+                  const showFrom = from != null && String(from).trim() !== '';
+                  const showTo = to != null && String(to).trim() !== '';
+
+                  if (!showFrom && !showTo && !fieldLabel) return null;
+
+                  return (
+                    <Box
+                      key={`${data.id}-change-${idx}`}
+                      sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}
+                    >
+                      {fieldLabel ? (
+                        <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                          {`${HISTORY_AUDIT_DETAIL_TEXT.FIELD_LABEL_PREFIX} ${fieldLabel}`}
+                        </Typography>
+                      ) : null}
+
+                      {showFrom || showTo ? (
+                        <Box
+                          sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}
+                        >
+                          {showFrom ? (
+                            <Box
+                              sx={(theme) => ({
+                                px: 1,
+                                py: 0.25,
+                                borderRadius: 0.75,
+                                backgroundColor: `${theme.palette.error.main}14`,
+                                color: theme.palette.error.main,
+                                textDecoration: 'line-through',
+                                fontSize: 12,
+                                maxWidth: '100%',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                whiteSpace: 'nowrap',
+                              })}
+                              title={String(from ?? '')}
+                            >
+                              {String(from)}
+                            </Box>
+                          ) : null}
+                          {showFrom && showTo ? (
+                            <Typography variant="body2" sx={{ color: 'text.disabled' }}>
+                              {HISTORY_AUDIT_DETAIL_TEXT.CHANGE_ARROW}
+                            </Typography>
+                          ) : null}
+                          {showTo ? (
+                            <Box
+                              sx={(theme) => ({
+                                px: 1,
+                                py: 0.25,
+                                borderRadius: 0.75,
+                                backgroundColor: `${theme.palette.success.main}14`,
+                                color: theme.palette.success.main,
+                                fontSize: 12,
+                                fontWeight: 600,
+                                maxWidth: '100%',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                whiteSpace: 'nowrap',
+                              })}
+                              title={String(to ?? '')}
+                            >
+                              {String(to)}
+                            </Box>
+                          ) : null}
+                        </Box>
+                      ) : null}
+                    </Box>
+                  );
+                })}
+              </Box>
+            ) : null}
+
+            {triggeredBy?.userName ? (
+              <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 0.75, flexWrap: 'wrap' }}>
+                <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                  {HISTORY_AUDIT_DETAIL_TEXT.TRIGGERED_BY_LABEL}
+                </Typography>
+                <Typography variant="caption" sx={{ fontWeight: 700, color: 'text.primary' }}>
+                  {triggeredBy.userName}
+                </Typography>
+                {triggeredBy.action ? (
+                  <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                    {`(${triggeredBy.action})`}
+                  </Typography>
+                ) : null}
+              </Box>
+            ) : null}
+
+            {contextualDetails.length > 0 ? (
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1.25 }}>
+                {contextualDetails.map((item, idx) => (
+                  <Box
+                    key={`${data.id}-ctx-${idx}`}
+                    sx={{ display: 'flex', alignItems: 'baseline', gap: 0.5, minWidth: 0 }}
+                    title={`${detailLabelForKey(item.key)}${HISTORY_AUDIT_DETAIL_TEXT.KEY_VALUE_SEPARATOR}${item.value}`}
+                  >
+                    <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                      {`${detailLabelForKey(item.key)}${HISTORY_AUDIT_DETAIL_TEXT.KEY_VALUE_SEPARATOR}`}
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        fontWeight: 700,
+                        color: 'text.primary',
+                        minWidth: 0,
+                        whiteSpace: 'normal',
+                        wordBreak: 'break-word',
+                      }}
+                    >
+                      {item.value}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+            ) : null}
           </Box>
-        )}
+        ) : null}
       </Box>
     </Box>
   );

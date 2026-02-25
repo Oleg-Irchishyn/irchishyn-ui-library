@@ -1,5 +1,6 @@
 export { HistoryAuditTrail } from './HistoryAuditTrail';
 export type {
+  HistoryAuditAdditionalDetail,
   HistoryAuditTrailLoaderProps,
   HistoryAuditTrailEvent,
   HistoryAuditEventType,

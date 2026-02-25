@@ -1,0 +1,41 @@
+export const HISTORY_AUDIT_DETAIL_LABEL_BY_KEY: Record<string, string> = {
+  ITERATION: 'Iteration',
+  CONFIGURATION: 'Configuration',
+  CONFIG_NAME: 'Configuration',
+  CONFIGURATION_NAME: 'Configuration',
+  CONFIG_VERSION: 'Config Version',
+  CONFIGURATION_VERSION: 'Config Version',
+  FIELD_NAME: 'Field',
+  AMOUNT: 'Amount',
+};
+
+export const HISTORY_AUDIT_TRIGGERED_BY_PREFIX = 'TRIGGERED_BY';
+
+export const HISTORY_AUDIT_TRIGGERED_BY_USER_KEYS = [
+  'TRIGGERED_BY_USER',
+  'TRIGGERED_BY_USERNAME',
+  'TRIGGERED_BY',
+] as const;
+
+export const HISTORY_AUDIT_TRIGGERED_BY_USER_KEYS_FALLBACK = [
+  'TRIGGEREDBY',
+  'TRIGGEREDBYUSER',
+] as const;
+
+export const HISTORY_AUDIT_TRIGGERED_BY_ACTION_KEYS = [
+  'TRIGGERED_BY_ACTION',
+  'TRIGGERED_BY_EVENT',
+  'TRIGGERED_BY_SUBJECT',
+] as const;
+
+export const HISTORY_AUDIT_TRIGGERED_BY_ACTION_KEYS_FALLBACK = [
+  'TRIGGEREDBYACTION',
+  'TRIGGEREDBYEVENT',
+] as const;
+
+export const HISTORY_AUDIT_DETAIL_TEXT = {
+  FIELD_LABEL_PREFIX: 'Field:',
+  TRIGGERED_BY_LABEL: 'Triggered by:',
+  KEY_VALUE_SEPARATOR: ': ',
+  CHANGE_ARROW: '→',
+} as const;

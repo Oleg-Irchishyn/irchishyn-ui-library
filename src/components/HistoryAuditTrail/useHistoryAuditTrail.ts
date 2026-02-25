@@ -45,6 +45,7 @@ const getActivityQuickFilterText = (data: HistoryAuditTrailTableRow) =>
       change.oldValue,
       change.newValue,
     ]),
+    ...(data.event.additionalDetails ?? []).flatMap((item) => [item.key, item.value]),
     data.event.auditEventType,
     data.event.source,
   );
@@ -59,6 +60,23 @@ const getActivityExportText = (data: HistoryAuditTrailTableRow) => {
   const changeText =
     data.changeFrom && data.changeTo ? `${data.changeFrom} -> ${data.changeTo}` : undefined;
 
+  const fieldChangesText = (data.event.fieldChanges ?? [])
+    .map((c) =>
+      toQuickFilterText(
+        c.fieldName ? `Field: ${c.fieldName}` : undefined,
+        c.oldValue != null || c.newValue != null
+          ? `${c.oldValue ?? ''} -> ${c.newValue ?? ''}`
+          : '',
+      ),
+    )
+    .filter(Boolean)
+    .join(' | ');
+
+  const additionalDetailsText = (data.event.additionalDetails ?? [])
+    .map((i) => `${i.key}: ${i.value}`)
+    .filter(Boolean)
+    .join(' | ');
+
   return toQuickFilterText(
     data.actor,
     data.badge,
@@ -66,6 +84,9 @@ const getActivityExportText = (data: HistoryAuditTrailTableRow) => {
     data.action,
     data.details,
     changeText,
+    data.event.details,
+    fieldChangesText,
+    additionalDetailsText,
   );
 };
 

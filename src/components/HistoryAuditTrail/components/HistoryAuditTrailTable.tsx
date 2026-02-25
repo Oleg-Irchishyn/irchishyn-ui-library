@@ -1,13 +1,13 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { AgGridReact } from 'ag-grid-react';
-import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
+import { AllCommunityModule, ModuleRegistry, type RowHeightParams } from 'ag-grid-community';
 import { AllEnterpriseModule } from 'ag-grid-enterprise';
 
 import type { HistoryAuditTrailTableProps, HistoryAuditTrailTableRow } from '../types';
 
-import { createHistoryAuditAgGridTheme } from '../utils';
+import { createHistoryAuditAgGridTheme, getHistoryAuditRowHeight } from '../utils';
 
 ModuleRegistry.registerModules([AllCommunityModule, AllEnterpriseModule]);
 
@@ -26,6 +26,10 @@ export const HistoryAuditTrailTable = ({
 }: HistoryAuditTrailTableProps) => {
   const muiTheme = useTheme();
   const agGridTheme = useMemo(() => createHistoryAuditAgGridTheme(muiTheme), [muiTheme]);
+
+  const getRowHeight = useCallback((params: RowHeightParams<HistoryAuditTrailTableRow>) => {
+    return getHistoryAuditRowHeight(params.data?.event);
+  }, []);
 
   return (
     <Box
@@ -61,7 +65,7 @@ export const HistoryAuditTrailTable = ({
         onRowClicked={onRowClicked}
         loading={loading}
         headerHeight={0}
-        rowHeight={112}
+        getRowHeight={getRowHeight}
         suppressContextMenu={false}
         preventDefaultOnContextMenu={true}
         suppressCellFocus={true}

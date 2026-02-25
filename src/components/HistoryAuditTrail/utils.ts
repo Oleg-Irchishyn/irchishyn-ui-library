@@ -2,7 +2,16 @@ import type { Theme } from '@mui/material/styles';
 import { colorSchemeDark, colorSchemeLight, themeAlpine } from 'ag-grid-community';
 import type { Theme as AgGridTheme } from 'ag-grid-community';
 
-import { HISTORY_AUDIT_EVENT_TYPES } from './constants';
+import type { HistoryAuditTrailEvent } from './types';
+import {
+  HISTORY_AUDIT_DETAIL_LABEL_BY_KEY,
+  HISTORY_AUDIT_TRIGGERED_BY_ACTION_KEYS,
+  HISTORY_AUDIT_TRIGGERED_BY_ACTION_KEYS_FALLBACK,
+  HISTORY_AUDIT_TRIGGERED_BY_PREFIX,
+  HISTORY_AUDIT_TRIGGERED_BY_USER_KEYS,
+  HISTORY_AUDIT_TRIGGERED_BY_USER_KEYS_FALLBACK,
+  HISTORY_AUDIT_EVENT_TYPES,
+} from './constants';
 
 export const createHistoryAuditAgGridTheme = (muiTheme: Theme): AgGridTheme => {
   const isDark = muiTheme.palette.mode === 'dark';
@@ -78,4 +87,89 @@ export const getHistoryAuditAvatarStyle = (auditEventType: string) => {
         borderColor: theme.palette.divider,
       });
   }
+};
+
+export const isNonEmptyString = (value: unknown): value is string =>
+  typeof value === 'string' && value.trim().length > 0;
+
+export const normalizeDetailKey = (key: string) => key.trim().toUpperCase();
+
+export const titleCaseFromKey = (key: string) =>
+  key
+    .trim()
+    .replace(/[_-]+/g, ' ')
+    .toLowerCase()
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+
+export const detailLabelForKey = (key: string) => {
+  const k = normalizeDetailKey(key);
+  return HISTORY_AUDIT_DETAIL_LABEL_BY_KEY[k] ?? titleCaseFromKey(key);
+};
+
+export const extractTriggeredBy = (items: Array<{ key: string; value: string }>) => {
+  const get = (wantedKeys: readonly string[]) =>
+    items.find((i) => wantedKeys.includes(normalizeDetailKey(i.key)))?.value?.trim() ?? null;
+
+  const userName =
+    get(HISTORY_AUDIT_TRIGGERED_BY_USER_KEYS) ?? get(HISTORY_AUDIT_TRIGGERED_BY_USER_KEYS_FALLBACK);
+  const action =
+    get(HISTORY_AUDIT_TRIGGERED_BY_ACTION_KEYS) ??
+    get(HISTORY_AUDIT_TRIGGERED_BY_ACTION_KEYS_FALLBACK);
+
+  if (!isNonEmptyString(userName ?? undefined) && !isNonEmptyString(action ?? undefined))
+    return null;
+  return {
+    userName: isNonEmptyString(userName ?? undefined) ? userName : null,
+    action: isNonEmptyString(action ?? undefined) ? action : null,
+  };
+};
+
+export const isTriggeredByKey = (key: string) =>
+  normalizeDetailKey(key).startsWith(HISTORY_AUDIT_TRIGGERED_BY_PREFIX);
+
+export const getHistoryAuditRowHeight = (event?: HistoryAuditTrailEvent | null) => {
+  const baseHeight = 112;
+  if (!event) return baseHeight;
+
+  const hasDetailsText = isNonEmptyString(event.details);
+  const detailsTextLength = hasDetailsText ? event.details!.trim().length : 0;
+  const detailsLines = hasDetailsText
+    ? Math.min(6, Math.max(1, Math.ceil(detailsTextLength / 70)))
+    : 0;
+
+  const fieldChanges = (event.fieldChanges ?? []).filter(
+    (c) => isNonEmptyString(c?.fieldName) || c?.oldValue != null || c?.newValue != null,
+  );
+
+  const fieldChangeLineCount =
+    fieldChanges.length > 0
+      ? fieldChanges.reduce((sum, c) => {
+          const hasFieldLabel = isNonEmptyString(c.fieldName);
+          const hasValueChange = c.oldValue != null || c.newValue != null;
+          return sum + (hasFieldLabel ? 1 : 0) + (hasValueChange ? 1 : 0);
+        }, 0)
+      : event.oldValue != null || event.newValue != null
+        ? 1
+        : 0;
+
+  const additionalDetails = (event.additionalDetails ?? []).filter(
+    (i) => isNonEmptyString(i?.key) && isNonEmptyString(i?.value),
+  );
+  const triggeredByCount = additionalDetails.filter((i) => isTriggeredByKey(i.key)).length;
+  const contextualDetails = additionalDetails.filter((i) => !isTriggeredByKey(i.key));
+
+  const triggeredByLines = triggeredByCount > 0 ? 1 : 0;
+  const contextualLines = contextualDetails.reduce((sum, item) => {
+    const valueLen = item.value.trim().length;
+    const estimatedLines = Math.max(1, Math.ceil(valueLen / 42));
+    return sum + Math.min(3, estimatedLines);
+  }, 0);
+
+  const lineHeight = 26;
+  const extraPadding = 18;
+  return (
+    baseHeight +
+    (detailsLines + fieldChangeLineCount + triggeredByLines + contextualLines) * lineHeight +
+    extraPadding
+  );
 };

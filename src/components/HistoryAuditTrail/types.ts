@@ -19,6 +19,11 @@ export interface HistoryAuditFieldChange {
   newValue?: string | null;
 }
 
+export interface HistoryAuditAdditionalDetail {
+  key: string;
+  value: string;
+}
+
 export interface HistoryAuditTrailEvent {
   id: string;
   source?: string | null;
@@ -29,6 +34,7 @@ export interface HistoryAuditTrailEvent {
   newValue?: string | null;
   fieldChanges?: HistoryAuditFieldChange[] | null;
   details?: string | null;
+  additionalDetails?: HistoryAuditAdditionalDetail[] | null;
   timestamp: string;
 }
 
