@@ -8,21 +8,22 @@ import * as Stories from './HistoryAuditTrail.stories';
 <Subtitle>Activity history timeline (AG Grid + MUI theme)</Subtitle>
 <Description>
   `HistoryAuditTrail` renders an activity history list from a backend response. It supports empty
-  and loading states, a clear button (`onClear`), row click handling (`onItemClick`), quick search,
-  optional CSV/Excel export actions, and multi-module filtering via source paths.
+  and loading states, a panel close callback (`onClear`), row click handling (`onItemClick`), quick
+  search, optional CSV/Excel export actions, multi-module filtering via source paths, and two
+  rendering modes: `panel` (default) and `inline`.
 </Description>
 
 ## Import
 
 ```ts
-import { HistoryAuditTrail } from '@gen2fund/gen2verse-ui-library';
+import { HistoryAuditTrail, HISTORY_AUDIT_RENDER_MODES } from '@gen2fund/gen2verse-ui-library';
 import type { HistoryAuditTrailEvent } from '@gen2fund/gen2verse-ui-library';
 ```
 
 ## Basic usage
 
 ```tsx
-import { HistoryAuditTrail } from '@gen2fund/gen2verse-ui-library';
+import { HistoryAuditTrail, HISTORY_AUDIT_RENDER_MODES } from '@gen2fund/gen2verse-ui-library';
 import type { HistoryAuditTrailEvent } from '@gen2fund/gen2verse-ui-library';
 
 const events: HistoryAuditTrailEvent[] = [
@@ -39,6 +40,7 @@ const events: HistoryAuditTrailEvent[] = [
 export function Example() {
   return (
     <HistoryAuditTrail
+      renderMode={HISTORY_AUDIT_RENDER_MODES.PANEL}
       title="Activity History"
       countLabel={`${events.length} events`}
       events={events}
@@ -53,6 +55,17 @@ export function Example() {
 
 - **Loading**: set `loading={true}` (and typically `events={[]}`) to show the loader.
 - **Empty**: pass `events={[]}` to show the empty state.
+- **Render mode**: use `renderMode={HISTORY_AUDIT_RENDER_MODES.PANEL}` (default) or
+  `renderMode={HISTORY_AUDIT_RENDER_MODES.INLINE}`.
+
+## Render modes
+
+- **Panel mode (`renderMode={HISTORY_AUDIT_RENDER_MODES.PANEL}`)**: shows history icon, title,
+  count badge, module dropdown (when multi-module), search, export, and close button.
+- **Inline mode (`renderMode={HISTORY_AUDIT_RENDER_MODES.INLINE}`)**: shows module dropdown (when
+  multi-module), search, export, and timeline grid only (no panel header/title/close button).
+- The count badge automatically formats as `X of Y events` when filters reduce visible rows.
+- `onClear` is intended for panel close handling (for example, parent hides the panel).
 
 ## Export-enabled usage
 
@@ -139,58 +152,32 @@ moduleFilterCallback={(event, selectedSource) =>
 }
 ```
 
-## All props example
+### `onModuleSourceChange` behavior
+
+Use `onModuleSourceChange` to react when users change the module dropdown selection.
+This is useful for syncing selected module state with parent UI, analytics, or URL params.
 
 ```tsx
-import { HistoryAuditTrail } from '@gen2fund/gen2verse-ui-library';
-import type { HistoryAuditTrailEvent } from '@gen2fund/gen2verse-ui-library';
-
-const events: HistoryAuditTrailEvent[] = [
-  {
-    id: 'event-1',
-    source: '/capevent/package/10001',
-    username: 'SYSTEM',
-    auditEventType: 'OTHER',
-    subject: 'Notice letters generated',
-    details: '18 investors',
-    fieldChanges: [{ oldValue: null, newValue: null }],
-    timestamp: '2026-02-20T11:19:22.4318918Z',
-  },
-];
-
-const moduleSources = [
-  '/capevent/package/10001',
-  '/capevent/configuration/1004',
-  '/capevent/driver-report/3521',
-];
-
-export function AllPropsExample() {
-  return (
-    <HistoryAuditTrail
-      title="Activity History"
-      countLabel={`${events.length} events`}
-      events={events}
-      enableExport={true}
-      exportFileName="history-audit-trail"
-      moduleSources={moduleSources}
-      primaryModuleSource="/capevent/package/10001"
-      moduleFilterCallback={(event, selectedSource) => event.source === selectedSource}
-      allModulesLabel="All Modules"
-      loading={false}
-      onItemClick={(event) => console.log('Clicked event', event.id)}
-      onClear={() => console.log('Clear clicked')}
-      height={420}
-      sx={{ borderRadius: 1 }}
-    />
-  );
-}
+<HistoryAuditTrail
+  events={events}
+  countLabel={`${events.length} events`}
+  moduleSources={moduleSources}
+  onModuleSourceChange={(selectedSource) => {
+    console.log('Selected module source:', selectedSource);
+  }}
+/>
 ```
+
+`onModuleSourceChange` is fired whenever the selected module changes, including when users select
+`All Modules`.
 
 ## Examples
 
 <Canvas of={Stories.Default} />
 <Canvas of={Stories.ExportEnabled} />
 <Canvas of={Stories.MultiModule} />
+<Canvas of={Stories.InlineMode} />
+<Canvas of={Stories.ToggleModes} />
 
 ## Props
 

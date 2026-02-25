@@ -1,8 +1,11 @@
+import { useState } from 'react';
+import type { ComponentProps } from 'react';
+import { Button, Stack } from '@mui/material';
 import type { Meta, StoryObj } from '@storybook/react';
 import { HistoryAuditTrail } from './HistoryAuditTrail';
 
-import { HISTORY_AUDIT_EVENT_TYPES } from './constants';
-import type { HistoryAuditTrailEvent } from './types';
+import { HISTORY_AUDIT_EVENT_TYPES, HISTORY_AUDIT_RENDER_MODES } from './constants';
+import type { HistoryAuditTrailEvent, HistoryAuditTrailRenderMode } from './types';
 
 const sample: HistoryAuditTrailEvent[] = [
   {
@@ -109,8 +112,13 @@ const meta: Meta<typeof HistoryAuditTrail> = {
     onClear: { action: 'cleared' },
     enableExport: { control: 'boolean' },
     exportFileName: { control: 'text' },
+    renderMode: {
+      control: { type: 'inline-radio' },
+      options: [HISTORY_AUDIT_RENDER_MODES.PANEL, HISTORY_AUDIT_RENDER_MODES.INLINE],
+    },
   },
   args: {
+    renderMode: HISTORY_AUDIT_RENDER_MODES.PANEL,
     title: 'Activity History',
     countLabel: `${sample.length} events`,
     events: sample,
@@ -123,6 +131,34 @@ const meta: Meta<typeof HistoryAuditTrail> = {
 
 export default meta;
 type Story = StoryObj<typeof HistoryAuditTrail>;
+
+const ToggleModesStoryRenderer = (args: ComponentProps<typeof HistoryAuditTrail>) => {
+  const [renderMode, setRenderMode] = useState<HistoryAuditTrailRenderMode>(
+    HISTORY_AUDIT_RENDER_MODES.PANEL,
+  );
+
+  return (
+    <Stack spacing={2}>
+      <Stack direction="row" spacing={1}>
+        <Button
+          size="small"
+          variant={renderMode === HISTORY_AUDIT_RENDER_MODES.PANEL ? 'contained' : 'outlined'}
+          onClick={() => setRenderMode(HISTORY_AUDIT_RENDER_MODES.PANEL)}
+        >
+          Panel
+        </Button>
+        <Button
+          size="small"
+          variant={renderMode === HISTORY_AUDIT_RENDER_MODES.INLINE ? 'contained' : 'outlined'}
+          onClick={() => setRenderMode(HISTORY_AUDIT_RENDER_MODES.INLINE)}
+        >
+          Inline
+        </Button>
+      </Stack>
+      <HistoryAuditTrail {...args} renderMode={renderMode} />
+    </Stack>
+  );
+};
 
 export const Default: Story = {
   args: {
@@ -154,5 +190,27 @@ export const MultiModule: Story = {
     countLabel: `${sample.length} events`,
     moduleSources,
     primaryModuleSource: '/capevent/package/10001',
+  },
+};
+
+export const InlineMode: Story = {
+  args: {
+    renderMode: HISTORY_AUDIT_RENDER_MODES.INLINE,
+    events: sample,
+    countLabel: `${sample.length} events`,
+    moduleSources,
+    primaryModuleSource: '/capevent/package/10001',
+    enableExport: true,
+  },
+};
+
+export const ToggleModes: Story = {
+  render: (args) => <ToggleModesStoryRenderer {...args} />,
+  args: {
+    events: sample,
+    countLabel: `${sample.length} events`,
+    moduleSources,
+    primaryModuleSource: '/capevent/package/10001',
+    enableExport: true,
   },
 };

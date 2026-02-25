@@ -3,3 +3,4 @@ export { HISTORY_AUDIT_LABELS } from './historyAuditLabels';
 export { HISTORY_AUDIT_COLUMN_IDS } from './historyAuditColumnIds';
 export { HISTORY_AUDIT_LAYOUT } from './historyAuditLayout';
 export { HISTORY_AUDIT_ALL_MODULES_VALUE } from './historyAuditModules';
+export { HISTORY_AUDIT_RENDER_MODES } from './historyAuditRenderModes';

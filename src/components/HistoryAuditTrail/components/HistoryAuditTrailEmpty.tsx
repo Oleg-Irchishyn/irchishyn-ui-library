@@ -6,7 +6,11 @@ export const HistoryAuditTrailEmpty = ({
   message = 'No activity yet.',
 }: HistoryAuditTrailEmptyProps) => {
   return (
-    <Typography variant="body2" color="text.secondary">
+    <Typography
+      data-testid="history-audit-trail-empty-message"
+      variant="body2"
+      color="text.secondary"
+    >
       {message}
     </Typography>
   );

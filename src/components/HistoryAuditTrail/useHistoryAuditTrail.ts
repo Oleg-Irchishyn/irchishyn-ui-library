@@ -301,13 +301,19 @@ export const useHistoryAuditTrail = ({
   }, [rowData, quickFilterParts]);
   const isSearchActive = Boolean(quickFilterText.trim());
   const countLabelSuffix = countLabel ? countLabel.trim().replace(/^\d+\s*/, '') || 'events' : '';
-  const displayedCountLabel = countLabel ? `${filteredRowCount} ${countLabelSuffix}` : undefined;
+  const totalCountForLabel =
+    isMultiModule && selectedModuleSource !== HISTORY_AUDIT_ALL_MODULES_VALUE
+      ? events.length
+      : rowData.length;
+  const displayedCountLabel = countLabel
+    ? filteredRowCount < totalCountForLabel
+      ? `${filteredRowCount} of ${totalCountForLabel} ${countLabelSuffix}`
+      : `${filteredRowCount} ${countLabelSuffix}`
+    : undefined;
 
   const handleClear = useCallback(() => {
-    setQuickFilterText('');
-    setSelectedModuleSource(HISTORY_AUDIT_ALL_MODULES_VALUE);
     onClear?.();
-  }, [onClear, setQuickFilterText, setSelectedModuleSource]);
+  }, [onClear]);
 
   useEffect(() => {
     if (!isMultiModule) return;

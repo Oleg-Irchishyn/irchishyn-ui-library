@@ -10,6 +10,7 @@ export type {
   HistoryAuditTrailTableProps,
   HistoryAuditTrailTableRow,
   HistoryAuditTrailProps,
+  HistoryAuditTrailRenderMode,
   UseHistoryAuditTrailParams,
 } from './types';
 
@@ -17,4 +18,5 @@ export {
   HISTORY_AUDIT_EVENT_TYPES,
   HISTORY_AUDIT_LABELS,
   HISTORY_AUDIT_COLUMN_IDS,
+  HISTORY_AUDIT_RENDER_MODES,
 } from './constants';

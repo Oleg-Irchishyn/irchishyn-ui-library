@@ -6,11 +6,12 @@ import { HistoryAuditTrailHeader } from './components/HistoryAuditTrailHeader';
 import { HistoryAuditTrailTable } from './components/HistoryAuditTrailTable';
 import { useHistoryAuditTrail } from './useHistoryAuditTrail';
 
-import { HISTORY_AUDIT_LABELS } from './constants';
+import { HISTORY_AUDIT_LABELS, HISTORY_AUDIT_RENDER_MODES } from './constants';
 import type { HistoryAuditTrailProps } from './types';
 
 export const HistoryAuditTrail = ({
   events,
+  renderMode = HISTORY_AUDIT_RENDER_MODES.PANEL,
   title = 'Activity History',
   countLabel,
   enableExport = false,
@@ -60,8 +61,11 @@ export const HistoryAuditTrail = ({
   return (
     <Box data-testid="history-audit-trail" sx={{ width: '100%', ...((sx as object) ?? {}) }}>
       <HistoryAuditTrailHeader
+        renderMode={renderMode}
         title={title}
-        countLabel={displayedCountLabel}
+        countLabel={
+          renderMode === HISTORY_AUDIT_RENDER_MODES.PANEL ? displayedCountLabel : undefined
+        }
         onClear={handleClear}
         moduleDropdown={moduleDropdown}
         search={{

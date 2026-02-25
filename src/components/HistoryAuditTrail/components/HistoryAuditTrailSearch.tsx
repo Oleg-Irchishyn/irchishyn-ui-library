@@ -15,6 +15,7 @@ export const HistoryAuditTrailSearch = ({
 
   return (
     <OutlinedInput
+      data-testid="history-audit-trail-search-input"
       size="small"
       value={searchValue}
       placeholder="Search activity history..."
@@ -35,7 +36,7 @@ export const HistoryAuditTrailSearch = ({
           borderColor: theme.palette.primary.main,
           borderWidth: 1,
         },
-        '& input': { padding: '5px 14px 5px 0' },
+        '& input': { padding: '5px 14px 5px 0', fontSize: '14px' },
         '& input::placeholder': {
           textOverflow: 'clip',
         },

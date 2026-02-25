@@ -3,6 +3,7 @@ export type {
   HistoryAuditTrailProps,
   HistoryAuditTrailEvent,
   HistoryAuditEventType,
+  HistoryAuditTrailRenderMode,
 } from './components/HistoryAuditTrail';
 
 export { FieldInsertDropdown } from './components/LanguageEditor';

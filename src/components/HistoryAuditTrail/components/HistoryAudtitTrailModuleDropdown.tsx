@@ -21,6 +21,7 @@ export const HistoryAudtitTrailModuleDropdown = ({
 
   return (
     <Select
+      data-testid="history-audit-trail-module-dropdown"
       size="small"
       value={value}
       onChange={handleOnValueChange}

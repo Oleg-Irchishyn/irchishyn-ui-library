@@ -48,6 +48,7 @@ export const HistoryAuditTrailTable = ({
       }}
     >
       <AgGridReact<HistoryAuditTrailTableRow>
+        data-testid="history-audit-trail-table"
         theme={agGridTheme}
         rowData={rowData}
         columnDefs={columnDefs}

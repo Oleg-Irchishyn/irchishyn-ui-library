@@ -7,7 +7,7 @@ import type {
   RowClickedEvent,
 } from 'ag-grid-community';
 
-import type { HISTORY_AUDIT_EVENT_TYPES } from './constants';
+import type { HISTORY_AUDIT_EVENT_TYPES, HISTORY_AUDIT_RENDER_MODES } from './constants';
 
 export type HistoryAuditEventType =
   | (typeof HISTORY_AUDIT_EVENT_TYPES)[keyof typeof HISTORY_AUDIT_EVENT_TYPES]
@@ -62,6 +62,7 @@ export interface HistoryAuditTrailExportProps {
 }
 
 export interface HistoryAuditTrailHeaderProps {
+  renderMode?: HistoryAuditTrailRenderMode;
   title: string;
   countLabel?: string;
   onClear?: () => void;
@@ -69,6 +70,9 @@ export interface HistoryAuditTrailHeaderProps {
   search?: HistoryAuditTrailSearchProps;
   export?: HistoryAuditTrailExportProps;
 }
+
+export type HistoryAuditTrailRenderMode =
+  (typeof HISTORY_AUDIT_RENDER_MODES)[keyof typeof HISTORY_AUDIT_RENDER_MODES];
 
 export interface HistoryAuditTrailSearchProps {
   searchValue?: string;
@@ -103,6 +107,7 @@ export interface HistoryAuditTrailTableProps {
 
 export interface HistoryAuditTrailProps {
   events: HistoryAuditTrailEvent[];
+  renderMode?: HistoryAuditTrailRenderMode;
   title?: string;
   countLabel?: string;
   enableExport?: boolean;

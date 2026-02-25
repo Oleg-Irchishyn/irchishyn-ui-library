@@ -35,6 +35,7 @@ export const HistoryAuditExport = ({ onExportExcel, onExportCsv }: HistoryAuditE
     <>
       <Button
         variant="outlined"
+        data-testid="history-audit-trail-export-button"
         size="small"
         onClick={handleClick}
         aria-label="Export"
