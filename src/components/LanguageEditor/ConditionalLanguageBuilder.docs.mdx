@@ -1,0 +1,45 @@
+import { Description, Meta, Subtitle, Title } from '@storybook/blocks';
+
+import * as Stories from './ConditionalLanguageBuilder.stories';
+
+<Meta of={Stories} />
+
+<Title>ConditionalLanguageBuilder</Title>
+<Subtitle>Modal dialog to build conditional blocks (IF / ELSE IF / ELSE)</Subtitle>
+<Description>
+  The **Conditional Language Builder** is a modal dialog that lets users build conditional blocks
+  (`{{IF}}` / `{{ELSE IF}}` / `{{ELSE}}` / `{{ENDIF}}`) with a field, operator, value, and content for each branch.
+  It is intended to be opened from the LanguageEditor toolbar; the parent inserts the returned string at the cursor.
+</Description>
+
+## Import
+
+```ts
+import { ConditionalLanguageBuilder } from '@gen2fund/gen2verse-ui-library';
+import type {
+  ConditionalLanguageBuilderProps,
+  FieldDefinition,
+} from '@gen2fund/gen2verse-ui-library';
+```
+
+## Props
+
+| Prop                  | Type                                | Required | Description                                                                |
+| --------------------- | ----------------------------------- | -------- | -------------------------------------------------------------------------- |
+| `open`                | `boolean`                           | Yes      | Whether the dialog is open.                                                |
+| `onClose`             | `() => void`                        | Yes      | Called when the dialog should close (Cancel or backdrop).                  |
+| `fieldConfig`         | `FieldDefinition[]`                 | Yes      | Same field list as the editor; drives field selector and operator options. |
+| `onInsertConditional` | `(conditionalText: string) => void` | Yes      | Called with the built conditional string when the user clicks Insert.      |
+
+## Usage
+
+Control visibility with `open` and `onClose`. When the user clicks **Insert Language**, the component builds the conditional string and calls `onInsertConditional(text)` then closes. The parent (e.g. LanguageEditor) should insert that string at the current cursor position.
+
+- **Value input** is type-aware per field `dataType`: text, number, date picker, or boolean (true/false).
+- **Blank** and **Not Blank** operators have no value input.
+- **Between** (`inRange`) shows two value inputs (min and max).
+
+## Output format
+
+The component emits a string in the grammar:
+`{{IF fieldName operatorKey value}}content{{ELSE IF ...}}content{{ELSE}}content{{ENDIF}}`.

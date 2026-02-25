@@ -19,3 +19,25 @@ export interface FieldInsertDropdownProps {
   open: boolean;
   id?: string;
 }
+
+/** Single condition clause (IF or ELSE IF): field, operator, value(s), and content to show when condition matches */
+export interface ConditionClause {
+  fieldName: string;
+  operatorKey: string;
+  value: string;
+  value2?: string;
+  content: string;
+}
+
+export interface ConditionalLanguageBuilderProps {
+  open: boolean;
+  onClose: () => void;
+  fieldConfig: FieldDefinition[];
+  onInsertConditional: (conditionalText: string) => void;
+}
+
+export interface UseConditionalLanguageBuilderParams {
+  fieldConfig: FieldDefinition[];
+  onClose: () => void;
+  onInsertConditional: (conditionalText: string) => void;
+}

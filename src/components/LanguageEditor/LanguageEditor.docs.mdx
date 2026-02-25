@@ -52,6 +52,35 @@ export function Example() {
 - **Read-only:** set `readOnly={true}` to disable editing (toolbar and insertion disabled).
 - **Empty content:** pass `content=""` for a blank editor.
 
+## Conditional Language Builder
+
+The **Conditional Language Builder** is a modal dialog component that lets users build conditional blocks (`{{IF}}` / `{{ELSE IF}}` / `{{ELSE}}` / `{{ENDIF}}`) without typing the syntax. It is intended to be opened from the LanguageEditor toolbar (e.g. a “Conditional” or “# Conditional” button); the parent is responsible for inserting the returned string at the cursor.
+
+**Import:**
+
+```ts
+import { ConditionalLanguageBuilder } from '@gen2fund/gen2verse-ui-library';
+import type {
+  FieldDefinition,
+  ConditionalLanguageBuilderProps,
+} from '@gen2fund/gen2verse-ui-library';
+```
+
+**Usage:**
+
+- Control visibility with `open` and `onClose`.
+- Pass `fieldConfig` (same as for LanguageEditor / Field Insert).
+- On “Insert Language”, the component calls `onInsertConditional(conditionalText)` with the built string, then closes. The parent should insert that text into the editor at the current cursor position.
+
+**Behaviour:**
+
+- **Field:** Selected from `fieldConfig`; same list as in Field Insert.
+- **Operators:** Options depend on the field’s `dataType` (text / number / date / boolean) per the Operators per dataType tables below. Value-less operators (Blank, Not Blank) hide the value input; “Between” shows two value inputs.
+- **Value input:** Type-aware: text field, number input, date input/picker, or true/false for boolean.
+- **Content per clause:** Each IF, ELSE IF, and ELSE has a content area (textarea) for the text to display when that branch matches. The built string uses this content between the condition tokens.
+
+See the **ConditionalLanguageBuilder** stories for examples.
+
 ## Props
 
 | Prop          | Type                                 | Required | Description                                                         |
@@ -97,6 +126,24 @@ interface FieldDefinition {
 ```
 
 **Value input (type-aware):** For each field used in a conditional, the value input next to the operator must respect `dataType`: text → text input, number → number-only input, date → date input/picker, boolean → equals with true/false. This applies in the Conditional Language Builder UI.
+
+## Conditional Language Builder
+
+The **Conditional Language Builder** is a modal dialog component that lets users build conditional blocks (`{{IF}}` / `{{ELSE IF}}` / `{{ELSE}}` / `{{ENDIF}}`) with field, operator, value, and content for each branch. It is intended to be opened from the LanguageEditor toolbar (e.g. a “Conditional” or “Insert conditional” button); the parent inserts the returned string at the cursor.
+
+**Import:**
+
+```ts
+import { ConditionalLanguageBuilder } from '@gen2fund/gen2verse-ui-library';
+import type {
+  ConditionalLanguageBuilderProps,
+  FieldDefinition,
+} from '@gen2fund/gen2verse-ui-library';
+```
+
+**Props:** `open`, `onClose`, `fieldConfig` (same `FieldDefinition[]` as the editor), `onInsertConditional: (conditionalText: string) => void`. When the user clicks **Insert Language**, the component builds the conditional string and calls `onInsertConditional(text)` then closes. The value input is type-aware per field `dataType` (text, number, date, boolean); operators **Blank** and **Not Blank** have no value input; **Between** uses two value inputs.
+
+**Usage:** Control visibility with `open` and `onClose`. On `onInsertConditional`, insert the returned string into the editor content at the current cursor position (handled by the parent LanguageEditor shell).
 
 ## Conditional syntax grammar
 
