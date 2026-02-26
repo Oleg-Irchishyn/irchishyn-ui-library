@@ -36,7 +36,6 @@ export function LanguageEditor({
     handleInsertConditional,
     handleValidateClick,
     handleClearValidation,
-    getFormattedContent,
     syncEditorContent,
   } = useLanguageEditor({
     content,
@@ -49,12 +48,6 @@ export function LanguageEditor({
   useEffect(() => {
     syncEditorContent();
   }, [syncEditorContent]);
-
-  useEffect(() => {
-    if (editorRef.current) {
-      editorRef.current.innerHTML = getFormattedContent();
-    }
-  }, []);
 
   return (
     <Paper variant="outlined" sx={{ overflow: 'hidden' }}>

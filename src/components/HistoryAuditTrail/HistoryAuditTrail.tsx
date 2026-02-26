@@ -11,6 +11,8 @@ import type { HistoryAuditTrailProps } from './types';
 
 export const HistoryAuditTrail = ({
   events,
+  actionStyles,
+  defaultActionStyle,
   renderMode = HISTORY_AUDIT_RENDER_MODES.PANEL,
   title = 'Activity History',
   countLabel,
@@ -34,6 +36,7 @@ export const HistoryAuditTrail = ({
     onRowClicked,
     getRowId,
     quickFilterText,
+    quickFilterParser,
     setQuickFilterText,
     filteredRowCount,
     isSearchActive,
@@ -46,6 +49,8 @@ export const HistoryAuditTrail = ({
     getContextMenuItems,
   } = useHistoryAuditTrail({
     events,
+    actionStyles,
+    defaultActionStyle,
     onItemClick,
     countLabel,
     onClear,
@@ -98,6 +103,7 @@ export const HistoryAuditTrail = ({
             onRowClicked={onRowClicked}
             getRowId={getRowId}
             quickFilterText={quickFilterText}
+            quickFilterParser={quickFilterParser}
             getContextMenuItems={getContextMenuItems}
             onGridReady={onGridReady}
             height={height}

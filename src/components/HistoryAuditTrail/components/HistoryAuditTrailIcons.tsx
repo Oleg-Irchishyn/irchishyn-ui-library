@@ -1,4 +1,6 @@
 import {
+  Bot as BotIconLucide,
+  Check as CheckIconLucide,
   ChevronDown as ChevronDownIconLucide,
   Download as DownloadIconLucide,
   FileSpreadsheet as FileSpreadsheetIconLucide,
@@ -23,6 +25,8 @@ export const SearchIcon = () => <SearchIconLucide size={16} />;
 export const DownloadIcon = () => <DownloadIconLucide size={16} />;
 export const ChevronDownIcon = () => <ChevronDownIconLucide size={16} />;
 export const FileSpreadsheetIcon = () => <FileSpreadsheetIconLucide size={16} />;
+export const BotIcon = () => <BotIconLucide size={16} />;
+export const CheckIcon = () => <CheckIconLucide size={14} />;
 
 export const HistoryAuditTrailIconForType = ({ type }: { type: string }) => {
   switch (type) {

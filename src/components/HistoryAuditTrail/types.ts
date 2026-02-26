@@ -1,7 +1,9 @@
+import type { ReactNode } from 'react';
 import type { SxProps, Theme } from '@mui/material/styles';
 import type {
   ColDef,
   GetContextMenuItems,
+  ICellRendererParams,
   GetRowIdParams,
   GridReadyEvent,
   RowClickedEvent,
@@ -53,6 +55,20 @@ export interface HistoryAuditTrailTableRow {
   timestamp: string;
 }
 
+export interface HistoryAuditActionStyle {
+  icon?: ReactNode;
+  backgroundColor?: string;
+  iconColor?: string;
+  borderColor?: string;
+}
+
+export type HistoryAuditActionStyleMap = Record<string, HistoryAuditActionStyle>;
+
+export interface HistoryAuditActivityRendererParams extends ICellRendererParams<HistoryAuditTrailTableRow> {
+  actionStyles?: HistoryAuditActionStyleMap;
+  defaultActionStyle?: HistoryAuditActionStyle;
+}
+
 export interface HistoryAuditTrailLoaderProps {
   label?: string;
 }
@@ -102,6 +118,7 @@ export interface HistoryAuditTrailTableProps {
   columnDefs: ColDef<HistoryAuditTrailTableRow>[];
   defaultColDef: ColDef<HistoryAuditTrailTableRow>;
   quickFilterText?: string;
+  quickFilterParser?: (quickFilter: string) => string[];
   getContextMenuItems?: GetContextMenuItems<HistoryAuditTrailTableRow>;
   onGridReady?: (event: GridReadyEvent<HistoryAuditTrailTableRow>) => void;
   loading?: boolean;
@@ -113,6 +130,8 @@ export interface HistoryAuditTrailTableProps {
 
 export interface HistoryAuditTrailProps {
   events: HistoryAuditTrailEvent[];
+  actionStyles?: HistoryAuditActionStyleMap;
+  defaultActionStyle?: HistoryAuditActionStyle;
   renderMode?: HistoryAuditTrailRenderMode;
   title?: string;
   countLabel?: string;
@@ -132,6 +151,8 @@ export interface HistoryAuditTrailProps {
 
 export interface UseHistoryAuditTrailParams {
   events: HistoryAuditTrailEvent[];
+  actionStyles?: HistoryAuditActionStyleMap;
+  defaultActionStyle?: HistoryAuditActionStyle;
   onItemClick?: (event: HistoryAuditTrailEvent) => void;
   countLabel?: string;
   onClear?: () => void;

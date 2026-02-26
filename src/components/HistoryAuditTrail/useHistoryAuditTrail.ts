@@ -26,6 +26,22 @@ import { colors, primary, secondary } from '@gen2fund/platform.style';
 const toQuickFilterText = (...values: Array<string | null | undefined>) =>
   values.filter((value): value is string => Boolean(value)).join(' ');
 
+const parseHistoryAuditQuickFilter = (quickFilterText: string) => {
+  const text = quickFilterText.trim();
+  if (!text) return [];
+
+  // Support quoted phrases while keeping space-delimited search for unquoted input.
+  return (text.match(/"[^"]+"|[^\s]+/g) ?? [])
+    .map((part) => {
+      const token = part.trim();
+      if (token.startsWith('"') && token.endsWith('"')) {
+        return token.slice(1, -1).trim();
+      }
+      return token;
+    })
+    .filter(Boolean);
+};
+
 const getActivityQuickFilterText = (data: HistoryAuditTrailTableRow) =>
   toQuickFilterText(
     data.actor,
@@ -35,23 +51,19 @@ const getActivityQuickFilterText = (data: HistoryAuditTrailTableRow) =>
     data.details,
     data.changeFrom,
     data.changeTo,
-    data.event.username,
-    data.event.subject,
-    data.event.details,
-    data.event.oldValue,
-    data.event.newValue,
+    // Keep quick filter aligned with user-visible content in the Activity cell.
+    // Avoid indexing hidden/internal fields that can produce false-positive matches.
     ...(data.event.fieldChanges ?? []).flatMap((change) => [
       change.fieldName,
       change.oldValue,
       change.newValue,
     ]),
     ...(data.event.additionalDetails ?? []).flatMap((item) => [item.key, item.value]),
-    data.event.auditEventType,
-    data.event.source,
   );
 
 const getTimestampQuickFilterText = (data: HistoryAuditTrailTableRow) =>
-  toQuickFilterText(data.timeAgo, data.timestamp, data.event.timestamp);
+  // Only searchable timestamp strings that are visible in the Timestamp column.
+  toQuickFilterText(data.timeAgo, data.timestamp);
 
 const getRowQuickFilterText = (data: HistoryAuditTrailTableRow) =>
   toQuickFilterText(getActivityQuickFilterText(data), getTimestampQuickFilterText(data));
@@ -161,6 +173,8 @@ const buildModuleOption = (source: string): HistoryAuditTrailModuleOption => ({
 
 export const useHistoryAuditTrail = ({
   events,
+  actionStyles,
+  defaultActionStyle,
   onItemClick,
   countLabel,
   onClear,
@@ -227,14 +241,25 @@ export const useHistoryAuditTrail = ({
   }, [moduleOptions, resolvedPrimaryModuleSource]);
 
   const filteredEvents = useMemo(() => {
-    if (!isMultiModule || selectedModuleSource === HISTORY_AUDIT_ALL_MODULES_VALUE) return events;
+    const visibleEvents =
+      !isMultiModule || selectedModuleSource === HISTORY_AUDIT_ALL_MODULES_VALUE
+        ? events
+        : events.filter((event) => {
+            if (moduleFilterCallback) {
+              return moduleFilterCallback(event, selectedModuleSource);
+            }
 
-    return events.filter((event) => {
-      if (moduleFilterCallback) {
-        return moduleFilterCallback(event, selectedModuleSource);
-      }
+            return event.source === selectedModuleSource;
+          });
 
-      return event.source === selectedModuleSource;
+    return [...visibleEvents].sort((a, b) => {
+      const left = new Date(a.timestamp).getTime();
+      const right = new Date(b.timestamp).getTime();
+
+      if (Number.isNaN(left) && Number.isNaN(right)) return 0;
+      if (Number.isNaN(left)) return 1;
+      if (Number.isNaN(right)) return -1;
+      return right - left;
     });
   }, [events, moduleFilterCallback, selectedModuleSource, isMultiModule]);
 
@@ -307,7 +332,7 @@ export const useHistoryAuditTrail = ({
   );
 
   const quickFilterParts = useMemo(
-    () => quickFilterText.trim().toUpperCase().split(/\s+/).filter(Boolean),
+    () => parseHistoryAuditQuickFilter(quickFilterText).map((part) => part.toUpperCase()),
     [quickFilterText],
   );
 
@@ -407,6 +432,10 @@ export const useHistoryAuditTrail = ({
         colId: HISTORY_AUDIT_COLUMN_IDS.ACTIVITY,
         headerName: 'Activity',
         cellRenderer: HistoryAuditActivityColumns,
+        cellRendererParams: {
+          actionStyles,
+          defaultActionStyle,
+        },
         valueGetter: ({ data }) => (data ? getActivityExportText(data) : ''),
         getQuickFilterText: ({ data }) => (data ? getActivityQuickFilterText(data) : ''),
         flex: 1,
@@ -425,7 +454,7 @@ export const useHistoryAuditTrail = ({
         resizable: false,
       },
     ],
-    [],
+    [actionStyles, defaultActionStyle],
   );
 
   const onRowClicked = useCallback(
@@ -450,6 +479,7 @@ export const useHistoryAuditTrail = ({
       getRowId,
       isInteractive,
       quickFilterText,
+      quickFilterParser: parseHistoryAuditQuickFilter,
       setQuickFilterText,
       filteredRowCount,
       isSearchActive,

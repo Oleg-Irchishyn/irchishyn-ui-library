@@ -25,7 +25,11 @@ export const HistoryAuditTrailSearch = ({
         height: HISTORY_AUDIT_LAYOUT.TOOLBAR_INPUT_HEIGHT,
         minHeight: HISTORY_AUDIT_LAYOUT.TOOLBAR_INPUT_HEIGHT,
         borderRadius: HISTORY_AUDIT_LAYOUT.TOOLBAR_BORDER_RADIUS,
-        backgroundColor: theme.palette.common.white,
+        backgroundColor:
+          theme.palette.mode === 'dark'
+            ? theme.palette.background.paper
+            : theme.palette.common.white,
+        color: theme.palette.text.primary,
         '& .MuiOutlinedInput-notchedOutline': {
           borderColor: theme.palette.divider,
         },
@@ -36,13 +40,19 @@ export const HistoryAuditTrailSearch = ({
           borderColor: theme.palette.primary.main,
           borderWidth: 1,
         },
-        '& input': { padding: '5px 14px 5px 0', fontSize: '14px' },
+        '& input': {
+          padding: '5px 14px 5px 0',
+          fontSize: '14px',
+          color: theme.palette.text.primary,
+        },
         '& input::placeholder': {
+          color: theme.palette.text.secondary,
+          opacity: 1,
           textOverflow: 'clip',
         },
       })}
       startAdornment={
-        <InputAdornment position="start">
+        <InputAdornment position="start" sx={(theme) => ({ color: theme.palette.text.secondary })}>
           <SearchIcon />
         </InputAdornment>
       }

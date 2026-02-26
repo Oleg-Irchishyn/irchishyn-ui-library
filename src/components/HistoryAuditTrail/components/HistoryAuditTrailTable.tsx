@@ -16,6 +16,7 @@ export const HistoryAuditTrailTable = ({
   columnDefs,
   defaultColDef,
   quickFilterText,
+  quickFilterParser,
   getContextMenuItems,
   onGridReady,
   loading = false,
@@ -59,6 +60,7 @@ export const HistoryAuditTrailTable = ({
         defaultColDef={defaultColDef}
         popupParent={typeof document !== 'undefined' ? document.body : undefined}
         quickFilterText={quickFilterText}
+        quickFilterParser={quickFilterParser}
         getContextMenuItems={getContextMenuItems}
         onGridReady={onGridReady}
         getRowId={getRowId}

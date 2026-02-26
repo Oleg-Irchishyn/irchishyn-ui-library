@@ -62,28 +62,46 @@ export const getHistoryAuditAvatarStyle = (auditEventType: string) => {
     case HISTORY_AUDIT_EVENT_TYPES.ADDED:
     case HISTORY_AUDIT_EVENT_TYPES.CREATED:
       return (theme: Theme) => ({
-        bgcolor: theme.palette.info.light,
-        color: theme.palette.info.dark,
-        borderColor: `${theme.palette.info.main}55`,
+        bgcolor:
+          theme.palette.mode === 'dark' ? `${theme.palette.info.main}26` : theme.palette.info.light,
+        color: theme.palette.mode === 'dark' ? theme.palette.info.light : theme.palette.info.dark,
+        borderColor:
+          theme.palette.mode === 'dark'
+            ? `${theme.palette.info.main}80`
+            : `${theme.palette.info.main}55`,
       });
     case HISTORY_AUDIT_EVENT_TYPES.UPDATED:
       return (theme: Theme) => ({
-        bgcolor: theme.palette.warning.light,
-        color: theme.palette.warning.dark,
-        borderColor: `${theme.palette.warning.main}55`,
+        bgcolor:
+          theme.palette.mode === 'dark'
+            ? `${theme.palette.warning.main}26`
+            : theme.palette.warning.light,
+        color:
+          theme.palette.mode === 'dark' ? theme.palette.warning.light : theme.palette.warning.dark,
+        borderColor:
+          theme.palette.mode === 'dark'
+            ? `${theme.palette.warning.main}80`
+            : `${theme.palette.warning.main}55`,
       });
     case HISTORY_AUDIT_EVENT_TYPES.DELETED:
     case HISTORY_AUDIT_EVENT_TYPES.REMOVED:
       return (theme: Theme) => ({
-        bgcolor: theme.palette.error.light,
-        color: theme.palette.error.dark,
-        borderColor: `${theme.palette.error.main}55`,
+        bgcolor:
+          theme.palette.mode === 'dark'
+            ? `${theme.palette.error.main}26`
+            : theme.palette.error.light,
+        color: theme.palette.mode === 'dark' ? theme.palette.error.light : theme.palette.error.dark,
+        borderColor:
+          theme.palette.mode === 'dark'
+            ? `${theme.palette.error.main}80`
+            : `${theme.palette.error.main}55`,
       });
     case HISTORY_AUDIT_EVENT_TYPES.OTHER:
     default:
       return (theme: Theme) => ({
-        bgcolor: theme.palette.grey[100],
-        color: theme.palette.text.secondary,
+        bgcolor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : theme.palette.grey[100],
+        color:
+          theme.palette.mode === 'dark' ? theme.palette.text.primary : theme.palette.text.secondary,
         borderColor: theme.palette.divider,
       });
   }

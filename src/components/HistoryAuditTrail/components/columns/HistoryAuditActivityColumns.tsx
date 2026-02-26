@@ -1,7 +1,6 @@
 import { Avatar, Box, Chip, Typography } from '@mui/material';
-import type { ICellRendererParams } from 'ag-grid-community';
 
-import { HistoryAuditTrailIconForType } from '../HistoryAuditTrailIcons';
+import { BotIcon, HistoryAuditTrailIconForType } from '../HistoryAuditTrailIcons';
 
 import {
   detailLabelForKey,
@@ -12,13 +11,15 @@ import {
 } from '../../utils';
 import { HISTORY_AUDIT_DETAIL_TEXT, HISTORY_AUDIT_LAYOUT } from '../../constants';
 
-import type { HistoryAuditTrailTableRow } from '../../types';
+import type { HistoryAuditActivityRendererParams } from '../../types';
 
 export const HistoryAuditActivityColumns = ({
   data,
   node,
   api,
-}: ICellRendererParams<HistoryAuditTrailTableRow>) => {
+  actionStyles,
+  defaultActionStyle,
+}: HistoryAuditActivityRendererParams) => {
   if (!data) return null;
 
   const rowIndex = node?.rowIndex ?? 0;
@@ -60,6 +61,8 @@ export const HistoryAuditActivityColumns = ({
     resolvedChanges.length > 0 ||
     contextualDetails.length > 0 ||
     Boolean(triggeredBy);
+  const isSystemActivity = Boolean(data.badge);
+  const actionStyle = actionStyles?.[data.event.auditEventType] ?? defaultActionStyle;
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'stretch', gap: 2, pr: 2, height: '100%' }}>
@@ -100,6 +103,9 @@ export const HistoryAuditActivityColumns = ({
         <Avatar
           sx={(theme) => ({
             ...getHistoryAuditAvatarStyle(data.event.auditEventType)(theme),
+            ...(actionStyle?.backgroundColor ? { bgcolor: actionStyle.backgroundColor } : {}),
+            ...(actionStyle?.iconColor ? { color: actionStyle.iconColor } : {}),
+            ...(actionStyle?.borderColor ? { borderColor: actionStyle.borderColor } : {}),
             width: avatarSize,
             height: avatarSize,
             borderRadius: '999px',
@@ -107,7 +113,11 @@ export const HistoryAuditActivityColumns = ({
             zIndex: 1,
           })}
         >
-          <HistoryAuditTrailIconForType type={data.event.auditEventType} />
+          {isSystemActivity ? (
+            <BotIcon />
+          ) : (
+            (actionStyle?.icon ?? <HistoryAuditTrailIconForType type={data.event.auditEventType} />)
+          )}
         </Avatar>
       </Box>
 
@@ -130,7 +140,10 @@ export const HistoryAuditActivityColumns = ({
                 fontSize: '0.7rem',
                 fontWeight: 500,
                 borderRadius: '1px',
-                bgcolor: theme.palette.grey[100],
+                bgcolor:
+                  theme.palette.mode === 'dark'
+                    ? theme.palette.action.hover
+                    : theme.palette.grey[100],
                 color: theme.palette.text.secondary,
                 '& .MuiChip-label': { px: 1 },
               })}
@@ -147,7 +160,9 @@ export const HistoryAuditActivityColumns = ({
                 borderRadius: '1px',
                 bgcolor: data.moduleBadgeColor
                   ? `${data.moduleBadgeColor}14`
-                  : theme.palette.grey[100],
+                  : theme.palette.mode === 'dark'
+                    ? theme.palette.action.hover
+                    : theme.palette.grey[100],
                 color: data.moduleBadgeColor ?? theme.palette.text.secondary,
                 border: '1px solid',
                 borderColor: data.moduleBadgeColor
@@ -173,10 +188,13 @@ export const HistoryAuditActivityColumns = ({
                   borderRadius: 1,
                   border: `1px solid ${theme.palette.divider}`,
                   boxShadow: 'none',
-                  backgroundColor: theme.palette.grey[50],
+                  backgroundColor:
+                    theme.palette.mode === 'dark'
+                      ? theme.palette.action.hover
+                      : theme.palette.grey[50],
                   fontSize: 12,
                   lineHeight: 1.4,
-                  color: theme.palette.text.secondary,
+                  color: theme.palette.text.primary,
                   maxWidth: '100%',
                   display: 'block',
                   whiteSpace: 'normal',
@@ -254,10 +272,15 @@ export const HistoryAuditActivityColumns = ({
                             px: 1,
                             py: 0.25,
                             borderRadius: 0.75,
-                            backgroundColor: `${theme.palette.success.main}14`,
-                            color: theme.palette.success.main,
+                            backgroundColor: showFrom
+                              ? `${theme.palette.success.main}14`
+                              : `${theme.palette.text.primary}08`,
+                            color: showFrom
+                              ? theme.palette.success.main
+                              : theme.palette.text.secondary,
+                            border: showFrom ? 'none' : `1px solid ${theme.palette.divider}`,
                             fontSize: 12,
-                            fontWeight: 600,
+                            fontWeight: showFrom ? 600 : 400,
                             maxWidth: '100%',
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
