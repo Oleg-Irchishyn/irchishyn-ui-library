@@ -7,8 +7,15 @@ export type {
 } from './components/HistoryAuditTrail';
 export { HISTORY_AUDIT_ADDITIONAL_DETAIL_KEYS } from './components/HistoryAuditTrail';
 
-export { FieldInsertDropdown, ConditionalLanguageBuilder } from './components/LanguageEditor';
+export {
+  LanguageEditor,
+  LanguageEditorToolbar,
+  FieldInsertDropdown,
+  ConditionalLanguageBuilder,
+} from './components/LanguageEditor';
 export type {
+  LanguageEditorProps,
+  LanguageEditorToolbarProps,
   FieldDefinition,
   FieldInsertDropdownProps,
   FieldType,
@@ -16,8 +23,16 @@ export type {
   ConditionClause,
   ConditionalLanguageBuilderProps,
   UseConditionalLanguageBuilderParams,
+  ValidationResult,
+  ValidationError,
 } from './components/LanguageEditor';
-export { useConditionalLanguageBuilder } from './components/LanguageEditor';
+export { useConditionalLanguageBuilder, useLanguageEditor } from './components/LanguageEditor';
+export {
+  formatConditionalSyntax,
+  stripConditionalFormatting,
+  validateContent,
+  formatFieldReference,
+} from './components/LanguageEditor';
 
 export { default as App } from './App';
 export type { AppProps } from './App';

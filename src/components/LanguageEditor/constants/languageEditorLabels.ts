@@ -20,4 +20,13 @@ export const LANGUAGE_EDITOR_LABELS = {
   CLB_VALUE_MIN: 'Min value...',
   CLB_VALUE_MAX: 'Max value...',
   CLB_AND: 'AND',
+  TOOLBAR_BOLD: 'Bold',
+  TOOLBAR_ITALIC: 'Italic',
+  TOOLBAR_UNDERLINE: 'Underline',
+  TOOLBAR_INSERT_FIELD: 'Insert Field',
+  TOOLBAR_CONDITIONAL: 'Conditional Language Builder',
+  TOOLBAR_VALIDATE: 'Validate',
+  VALIDATION_PASSED: 'Validation passed! All fields and syntax are correct.',
+  VALIDATION_ERRORS: 'Errors:',
+  EDITOR_PLACEHOLDER: 'Enter content with field references and conditional logic...',
 } as const;

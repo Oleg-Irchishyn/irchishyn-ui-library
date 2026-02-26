@@ -41,3 +41,51 @@ export interface UseConditionalLanguageBuilderParams {
   onClose: () => void;
   onInsertConditional: (conditionalText: string) => void;
 }
+
+/** Validation error with message and optional position info */
+export interface ValidationError {
+  message: string;
+  offset?: number;
+  length?: number;
+}
+
+/** Result of content validation */
+export interface ValidationResult {
+  valid: boolean;
+  errors?: ValidationError[];
+}
+
+/** Props for the LanguageEditor component */
+export interface LanguageEditorProps {
+  /** List of field definitions for field insertion and validation */
+  fieldConfig: FieldDefinition[];
+  /** Rich text content with embedded tokens (conditionals and field references) */
+  content: string;
+  /** Callback when content changes; payload is the plain text with tokens */
+  onChange?: (content: string) => void;
+  /** Callback when validation runs; payload is the validation result */
+  onValidate?: (result: ValidationResult) => void;
+  /** When true, editor is non-editable but token rendering is preserved */
+  readOnly?: boolean;
+  /** Placeholder text shown when content is empty */
+  placeholder?: string;
+  /** Minimum height of the editor area */
+  minHeight?: string;
+}
+
+/** Props for the LanguageEditorToolbar component */
+export interface LanguageEditorToolbarProps {
+  onBold: () => void;
+  onItalic: () => void;
+  onUnderline: () => void;
+  onInsertFieldClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onConditionalClick: () => void;
+  onValidateClick: () => void;
+  fieldDropdownAnchor: HTMLElement | null;
+  fieldDropdownOpen: boolean;
+  onFieldDropdownClose: () => void;
+  onInsertField: (fieldName: string) => void;
+  fieldConfig: FieldDefinition[];
+  validationResult: ValidationResult | null;
+  disabled?: boolean;
+}
