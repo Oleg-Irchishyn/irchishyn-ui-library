@@ -204,63 +204,68 @@ export const HistoryAuditActivityColumns = ({
                   return (
                     <Box
                       key={`${data.id}-change-${idx}`}
-                      sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1,
+                        flexWrap: 'wrap',
+                        minWidth: 0,
+                      }}
                     >
                       {fieldLabel ? (
-                        <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                        <Typography
+                          variant="caption"
+                          sx={{ color: 'text.secondary', flexShrink: 0 }}
+                        >
                           {`${HISTORY_AUDIT_DETAIL_TEXT.FIELD_LABEL_PREFIX} ${fieldLabel}`}
                         </Typography>
                       ) : null}
 
-                      {showFrom || showTo ? (
+                      {showFrom ? (
                         <Box
-                          sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}
+                          sx={(theme) => ({
+                            px: 1,
+                            py: 0.25,
+                            borderRadius: 0.75,
+                            backgroundColor: `${theme.palette.error.main}14`,
+                            color: theme.palette.error.main,
+                            textDecoration: 'line-through',
+                            fontSize: 12,
+                            maxWidth: '100%',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                          })}
+                          title={String(from ?? '')}
                         >
-                          {showFrom ? (
-                            <Box
-                              sx={(theme) => ({
-                                px: 1,
-                                py: 0.25,
-                                borderRadius: 0.75,
-                                backgroundColor: `${theme.palette.error.main}14`,
-                                color: theme.palette.error.main,
-                                textDecoration: 'line-through',
-                                fontSize: 12,
-                                maxWidth: '100%',
-                                overflow: 'hidden',
-                                textOverflow: 'ellipsis',
-                                whiteSpace: 'nowrap',
-                              })}
-                              title={String(from ?? '')}
-                            >
-                              {String(from)}
-                            </Box>
-                          ) : null}
-                          {showFrom && showTo ? (
-                            <Typography variant="body2" sx={{ color: 'text.disabled' }}>
-                              {HISTORY_AUDIT_DETAIL_TEXT.CHANGE_ARROW}
-                            </Typography>
-                          ) : null}
-                          {showTo ? (
-                            <Box
-                              sx={(theme) => ({
-                                px: 1,
-                                py: 0.25,
-                                borderRadius: 0.75,
-                                backgroundColor: `${theme.palette.success.main}14`,
-                                color: theme.palette.success.main,
-                                fontSize: 12,
-                                fontWeight: 600,
-                                maxWidth: '100%',
-                                overflow: 'hidden',
-                                textOverflow: 'ellipsis',
-                                whiteSpace: 'nowrap',
-                              })}
-                              title={String(to ?? '')}
-                            >
-                              {String(to)}
-                            </Box>
-                          ) : null}
+                          {String(from)}
+                        </Box>
+                      ) : null}
+
+                      {showFrom && showTo ? (
+                        <Typography variant="body2" sx={{ color: 'text.disabled' }}>
+                          {HISTORY_AUDIT_DETAIL_TEXT.CHANGE_ARROW}
+                        </Typography>
+                      ) : null}
+
+                      {showTo ? (
+                        <Box
+                          sx={(theme) => ({
+                            px: 1,
+                            py: 0.25,
+                            borderRadius: 0.75,
+                            backgroundColor: `${theme.palette.success.main}14`,
+                            color: theme.palette.success.main,
+                            fontSize: 12,
+                            fontWeight: 600,
+                            maxWidth: '100%',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                          })}
+                          title={String(to ?? '')}
+                        >
+                          {String(to)}
                         </Box>
                       ) : null}
                     </Box>

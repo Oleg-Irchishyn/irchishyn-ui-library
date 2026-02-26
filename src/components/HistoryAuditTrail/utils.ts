@@ -143,11 +143,7 @@ export const getHistoryAuditRowHeight = (event?: HistoryAuditTrailEvent | null) 
 
   const fieldChangeLineCount =
     fieldChanges.length > 0
-      ? fieldChanges.reduce((sum, c) => {
-          const hasFieldLabel = isNonEmptyString(c.fieldName);
-          const hasValueChange = c.oldValue != null || c.newValue != null;
-          return sum + (hasFieldLabel ? 1 : 0) + (hasValueChange ? 1 : 0);
-        }, 0)
+      ? fieldChanges.length
       : event.oldValue != null || event.newValue != null
         ? 1
         : 0;
