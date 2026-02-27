@@ -31,6 +31,19 @@ export default [
       'react/react-in-jsx-scope': 'off',
     },
   },
+  {
+    files: ['**/__tests__/**/*.{ts,tsx}', '**/*.spec.ts', '**/*.spec.tsx'],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'error',
+    },
+  },
+  {
+    files: ['scripts/**/*.cjs'],
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+      'no-undef': 'off',
+    },
+  },
 
   // Must be last: turns off rules conflicting with Prettier.
   prettierConfig,

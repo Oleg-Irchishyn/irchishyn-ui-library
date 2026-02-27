@@ -39,6 +39,21 @@ npm run build
 npm run type-check
 ```
 
+### Test
+
+```bash
+npm run test
+npm run test:watch
+```
+
+### Test coverage
+
+```bash
+npm run test:coverage
+```
+
+Coverage summary is generated in `TEST_COVERAGE.md`, with HTML details in `coverage/index.html`.
+
 ### Build Storybook (static)
 
 ```bash

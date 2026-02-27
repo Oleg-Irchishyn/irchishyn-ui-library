@@ -3,4 +3,5 @@ dist
 storybook-static
 .DS_Store
 *.log
+coverage
 
