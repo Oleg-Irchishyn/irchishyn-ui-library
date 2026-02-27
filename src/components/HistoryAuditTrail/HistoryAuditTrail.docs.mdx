@@ -20,6 +20,40 @@ import { HistoryAuditTrail, HISTORY_AUDIT_RENDER_MODES } from '@gen2fund/gen2ver
 import type { HistoryAuditTrailEvent } from '@gen2fund/gen2verse-ui-library';
 ```
 
+## Quick start (rapid integration)
+
+1. Install the UI library package in your frontend module.
+2. Return audit entries from your backend using the `HistoryAuditTrailEvent` shape.
+3. Pass entries to `events` and render in panel mode.
+4. Verify search/filter and optional export with real module data.
+
+```bash
+npm install @gen2fund/gen2verse-ui-library
+```
+
+```tsx
+import { HistoryAuditTrail, HISTORY_AUDIT_RENDER_MODES } from '@gen2fund/gen2verse-ui-library';
+import type { HistoryAuditTrailEvent } from '@gen2fund/gen2verse-ui-library';
+
+export function QuickStartAudit({
+  events,
+  onClose,
+}: {
+  events: HistoryAuditTrailEvent[];
+  onClose: () => void;
+}) {
+  return (
+    <HistoryAuditTrail
+      renderMode={HISTORY_AUDIT_RENDER_MODES.PANEL}
+      title="Activity History"
+      countLabel={`${events.length} events`}
+      events={events}
+      onClear={onClose}
+    />
+  );
+}
+```
+
 ## Basic usage
 
 ```tsx
@@ -58,6 +92,53 @@ export function Example() {
 - **Render mode**: use `renderMode={HISTORY_AUDIT_RENDER_MODES.PANEL}` (default) or
   `renderMode={HISTORY_AUDIT_RENDER_MODES.INLINE}`.
 
+## Backend integration (entry contract + mapping)
+
+`HistoryAuditTrail` is frontend-only and expects backend data mapped to `HistoryAuditTrailEvent[]`.
+The key contract is: one entry per activity, globally unique `id`, and a valid `timestamp`.
+
+```ts
+// Example backend response contract (server DTO)
+type AuditApiEntry = {
+  eventId: string;
+  sourcePath: string; // e.g. /capevent/configuration/1003
+  actor: string;
+  actionType: 'ADDED' | 'UPDATED' | 'REMOVED' | 'OTHER';
+  subject: string;
+  details?: string | null;
+  changedFields?: Array<{ name?: string | null; from?: string | null; to?: string | null }>;
+  metadata?: Record<string, string>;
+  createdAtUtc: string;
+};
+
+// Mapping server response to UI library shape
+const toHistoryAuditEvents = (entries: AuditApiEntry[]): HistoryAuditTrailEvent[] =>
+  entries.map((entry) => ({
+    id: entry.eventId,
+    source: entry.sourcePath,
+    username: entry.actor,
+    auditEventType: entry.actionType,
+    subject: entry.subject,
+    details: entry.details ?? null,
+    fieldChanges:
+      entry.changedFields?.map((f) => ({
+        fieldName: f.name ?? null,
+        oldValue: f.from ?? null,
+        newValue: f.to ?? null,
+      })) ?? null,
+    additionalDetails: entry.metadata
+      ? Object.entries(entry.metadata).map(([key, value]) => ({ key, value }))
+      : null,
+    timestamp: entry.createdAtUtc,
+  }));
+```
+
+Notes:
+
+- `oldValue/newValue` and `fieldChanges[]` are both supported.
+- Include `source` when you want module-level filtering/dropdown behavior.
+- Keep timestamps in ISO format for stable sorting and formatting.
+
 ## Render modes
 
 - **Panel mode (`renderMode={HISTORY_AUDIT_RENDER_MODES.PANEL}`)**: shows history icon, title,
@@ -66,6 +147,36 @@ export function Example() {
   multi-module), search, export, and timeline grid only (no panel header/title/close button).
 - The count badge automatically formats as `X of Y events` when filters reduce visible rows.
 - `onClear` is intended for panel close handling (for example, parent hides the panel).
+
+## Action style configuration (icon + color mapping)
+
+Use `actionStyles` to override icon and colors per `auditEventType`. Use `defaultActionStyle` as fallback
+for custom action types your backend may emit.
+
+```tsx
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+<HistoryAuditTrail
+  events={events}
+  countLabel={`${events.length} events`}
+  actionStyles={{
+    ADDED: { icon: <AddIcon fontSize="small" />, backgroundColor: '#E8F5E9', iconColor: '#2E7D32' },
+    UPDATED: {
+      icon: <EditIcon fontSize="small" />,
+      backgroundColor: '#E3F2FD',
+      iconColor: '#1565C0',
+    },
+    REMOVED: {
+      icon: <DeleteIcon fontSize="small" />,
+      backgroundColor: '#FFEBEE',
+      iconColor: '#C62828',
+    },
+  }}
+  defaultActionStyle={{ backgroundColor: '#F3F4F6', iconColor: '#374151', borderColor: '#D1D5DB' }}
+/>;
+```
 
 ## Export-enabled usage
 
@@ -133,6 +244,8 @@ Multi-module behavior:
 - `All Modules` shows all events across configured sources
 - Secondary module entries show color-coded badges; primary module entries do not
 - Change rendering supports both `oldValue/newValue` and `fieldChanges[]` response formats
+- First `moduleSources` item is used as primary if `primaryModuleSource` is not provided
+- For related module data, pass all relevant entries in one response time window (same business action)
 
 ### `moduleFilterCallback` behavior
 
@@ -171,10 +284,59 @@ This is useful for syncing selected module state with parent UI, analytics, or U
 `onModuleSourceChange` is fired whenever the selected module changes, including when users select
 `All Modules`.
 
+## Extend search and export with module-specific fields
+
+Built-in quick search and export already include:
+
+- standard activity/timestamp data
+- `fieldChanges[]` values
+- `additionalDetails[]` key/value pairs
+
+Recommended extension pattern: send module-specific fields via `additionalDetails` so they are visible
+in UI details, searchable in quick search, and included in export text.
+
+```tsx
+const events: HistoryAuditTrailEvent[] = [
+  {
+    id: 'evt-42',
+    source: '/capevent/package/10001',
+    username: 'SYSTEM',
+    auditEventType: 'OTHER',
+    subject: 'Distribution recalculated',
+    details: 'Recalculation completed',
+    additionalDetails: [
+      { key: 'INVESTOR_CLASS', value: 'Class B' },
+      { key: 'FX_BOOK', value: 'USD_HEDGE_01' },
+      { key: 'ALLOCATION_BATCH_ID', value: 'BA-2026-02-17-003' },
+    ],
+    timestamp: '2026-02-17T14:25:11.000Z',
+  },
+];
+```
+
+## Troubleshooting
+
+- **No rows shown:** verify `events` is non-empty and each item has unique `id`.
+- **Wrong module filter results:** verify `source` values match configured `moduleSources` exactly, or provide `moduleFilterCallback`.
+- **Unexpected sort order:** verify valid ISO timestamps (invalid values are pushed to the bottom).
+- **Search misses module-specific info:** ensure custom fields are sent in `additionalDetails` or `fieldChanges`.
+- **Export option is missing:** set `enableExport` and use activity/timestamp cells for context-menu export.
+
+## Independent integration review checklist
+
+Use this with a developer who has not implemented the component before:
+
+- Can they integrate the component using only this page and props table?
+- Can they map backend payloads to `HistoryAuditTrailEvent` without platform support?
+- Can they configure action style mapping for module actions?
+- Can they set up multi-module behavior and explain primary vs secondary module behavior?
+- Can they validate search/export for module-specific data and resolve common troubleshooting items?
+
 ## Examples
 
 <Canvas of={Stories.Default} />
 <Canvas of={Stories.ExportEnabled} />
+<Canvas of={Stories.ActionStyles} />
 <Canvas of={Stories.MultiModule} />
 <Canvas of={Stories.InlineMode} />
 <Canvas of={Stories.ToggleModes} />

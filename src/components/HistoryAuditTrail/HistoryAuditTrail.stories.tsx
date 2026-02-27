@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import type { ComponentProps } from 'react';
 import { Button, Stack } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import type { Meta, StoryObj } from '@storybook/react';
 import { HistoryAuditTrail } from './HistoryAuditTrail';
 
@@ -246,6 +249,35 @@ export const ExportEnabled: Story = {
     countLabel: `${sample.length} events`,
     enableExport: true,
     exportFileName: 'history-audit-trail-storybook',
+  },
+};
+
+export const ActionStyles: Story = {
+  args: {
+    events: sample,
+    countLabel: `${sample.length} events`,
+    actionStyles: {
+      [HISTORY_AUDIT_EVENT_TYPES.ADDED]: {
+        icon: <AddIcon fontSize="small" />,
+        backgroundColor: '#E8F5E9',
+        iconColor: '#2E7D32',
+      },
+      [HISTORY_AUDIT_EVENT_TYPES.UPDATED]: {
+        icon: <EditIcon fontSize="small" />,
+        backgroundColor: '#E3F2FD',
+        iconColor: '#1565C0',
+      },
+      [HISTORY_AUDIT_EVENT_TYPES.REMOVED]: {
+        icon: <DeleteIcon fontSize="small" />,
+        backgroundColor: '#FFEBEE',
+        iconColor: '#C62828',
+      },
+    },
+    defaultActionStyle: {
+      backgroundColor: '#F3F4F6',
+      iconColor: '#374151',
+      borderColor: '#D1D5DB',
+    },
   },
 };
 
