@@ -1,0 +1,200 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pr:
+  branches:
+    include:
+      - main
+   
+pool:
+  vmImage: "ubuntu-latest"
+
+parameters:
+  - name: coverageMin
+    displayName: "Minimum line coverage %"
+    type: number
+    default: 80
+
+variables:
+  nodeVersion: "20.x"
+  npmCacheFolder: "$(Pipeline.Workspace)/.npm"
+  artifactName: "package"
+  runStorybookBuild: "true"
+  enableRelease: "true"
+
+
+stages:
+
+  - stage: Build
+    displayName: "Build Library (and Storybook)"
+
+    jobs:
+      - job: BuildJob
+        displayName: "Build (tsup) + publish build artifacts"
+        steps:
+
+          - task: NodeTool@0
+            displayName: "Use Node $(nodeVersion)"
+            inputs:
+              versionSpec: "$(nodeVersion)"
+
+          - task: Cache@2
+            displayName: "Cache npm"
+            inputs:
+              key: 'npm | "$(Agent.OS)" | package-lock.json'
+              restoreKeys: |
+                npm | "$(Agent.OS)"
+              path: "$(npmCacheFolder)"
+
+          - task: npmAuthenticate@0
+            displayName: "Aunthenticate to npm feed"
+            inputs:
+              workingFile:  ".npmrc"              
+
+          - script: |
+              npm config set cache "$(npmCacheFolder)" --global
+              npm ci
+            displayName: "Install dependencies (npm ci)"
+
+          - script: npm run build
+            displayName: "Build library (tsup)"
+
+          - script: npm run build-storybook
+            displayName: "Build Storybook"
+            condition: and(succeeded(), eq(variables['runStorybookBuild'], 'true'))
+
+          - task: CopyFiles@2
+            displayName: "Copy outputs to staging"
+            inputs:
+              SourceFolder: "$(System.DefaultWorkingDirectory)"
+              Contents: |
+                dist/**
+                package.json
+                package-lock.json
+                storybook-static/**
+                README.md
+                CHANGELOG.md
+              TargetFolder: "$(Build.ArtifactStagingDirectory)"
+
+          - task: PublishPipelineArtifact@1
+            displayName: "Publish artifact"
+            inputs:
+              targetPath: "$(Build.ArtifactStagingDirectory)"
+              artifact: "$(artifactName)"
+
+  - stage: Test
+    displayName: "Test & Coverage Gate"
+    dependsOn: Build
+    condition: succeeded()
+
+    jobs:
+      - job: TestJob
+        displayName: "Lint, Typecheck, Unit Tests with coverage"
+        steps:
+
+          - task: NodeTool@0
+            displayName: "Use Node $(nodeVersion)"
+            inputs:
+              versionSpec: "$(nodeVersion)"
+
+          - task: Cache@2
+            displayName: "Cache npm"
+            inputs:
+              key: 'npm | "$(Agent.OS)" | package-lock.json'
+              restoreKeys: |
+                npm | "$(Agent.OS)"
+              path: "$(npmCacheFolder)"
+
+          - task: npmAuthenticate@0
+            displayName: "Aunthenticate to npm feed"
+            inputs:
+              workingFile:  ".npmrc"
+
+          - script: |
+              npm config set cache "$(npmCacheFolder)" --global
+              npm ci
+            displayName: "Install dependencies (npm ci)"
+
+          - script: npm run lint
+            displayName: "Lint"
+
+          - script: npm run type-check
+            displayName: "Typecheck"
+
+          - script: npm run test:coverage
+            displayName: "Unit tests with coverage"
+
+          - task: Bash@3
+            displayName: "Fail if coverage < ${{ parameters.coverageMin }}%"
+            inputs:
+              targetType: inline
+              script: |
+                set -e
+                test -f coverage/lcov.info || (echo "ERROR: coverage/lcov.info not found." && exit 1)
+
+                python3 - << 'PY'
+                import os, sys
+                min_cov = float(os.environ["COVERAGE_MIN"])
+                total = hit = 0
+                for line in open("coverage/lcov.info", encoding="utf-8"):
+                  if line.startswith("DA:"):
+                    hits = int(line.strip().split(",")[1])
+                    total += 1
+                    if hits > 0:
+                      hit += 1
+                if total == 0:
+                  print("ERROR: No line coverage data in lcov.info")
+                  sys.exit(1)
+                pct = hit * 100.0 / total
+                print(f"Line coverage: {pct:.2f}% (min required: {min_cov:.2f}%)")
+                if pct < min_cov:
+                  print("ERROR: Coverage gate failed")
+                  sys.exit(2)
+                PY
+            env:
+              COVERAGE_MIN: "${{ parameters.coverageMin }}"
+
+  - stage: Release
+    displayName: "Release (version bump + changelog + publish)"
+    dependsOn: Test
+    condition: |
+      and(
+        succeeded(),
+        eq(variables['Build.SourceBranch'], 'refs/heads/main'),
+        ne(variables['Build.Reason'], 'PullRequest'),
+        eq(variables['enableRelease'], 'true')
+      )
+    jobs:
+      - job: ReleaseJob
+        displayName: "semantic-release"
+        steps:
+          - task: NodeTool@0
+            displayName: "Use Node $(nodeVersion)"
+            inputs:
+              versionSpec: "$(nodeVersion)"
+
+          - task: Cache@2
+            displayName: "Cache npm"
+            inputs:
+              key: 'npm | "$(Agent.OS)" | package-lock.json'
+              restoreKeys: |
+                npm | "$(Agent.OS)"
+              path: "$(npmCacheFolder)"
+
+          - task: npmAuthenticate@0
+            displayName: "Authenticate with Azure Artifacts (.npmrc)"
+            inputs:
+              workingFile: ".npmrc"
+
+          - script: |
+              npm config set cache "$(npmCacheFolder)" --global
+              npm ci
+            displayName: "Install dependencies (npm ci)"
+
+          - script: |
+              npx semantic-release
+            displayName: "Run semantic-release"
+            env:
+              SYSTEM_ACCESSTOKEN: $(System.AccessToken) 
