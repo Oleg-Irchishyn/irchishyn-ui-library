@@ -7,68 +7,65 @@ pr:
   branches:
     include:
       - main
-   
+
 pool:
-  vmImage: "ubuntu-latest"
+  vmImage: 'ubuntu-latest'
 
 parameters:
   - name: coverageMin
-    displayName: "Minimum line coverage %"
+    displayName: 'Minimum line coverage %'
     type: number
     default: 80
 
 variables:
-  nodeVersion: "20.x"
-  npmCacheFolder: "$(Pipeline.Workspace)/.npm"
-  artifactName: "package"
-  runStorybookBuild: "true"
-  enableRelease: "true"
-
+  nodeVersion: '20.x'
+  npmCacheFolder: '$(Pipeline.Workspace)/.npm'
+  artifactName: 'package'
+  runStorybookBuild: 'true'
+  enableRelease: 'true'
 
 stages:
-
   - stage: Build
-    displayName: "Build Library (and Storybook)"
+    displayName: 'Build Library (and Storybook)'
 
     jobs:
       - job: BuildJob
-        displayName: "Build (tsup) + publish build artifacts"
+        displayName: 'Build (tsup) + publish build artifacts'
         steps:
-
           - task: NodeTool@0
-            displayName: "Use Node $(nodeVersion)"
+            displayName: 'Use Node $(nodeVersion)'
             inputs:
-              versionSpec: "$(nodeVersion)"
+              versionSpec: '$(nodeVersion)'
 
           - task: Cache@2
-            displayName: "Cache npm"
+            displayName: 'Cache npm'
             inputs:
               key: 'npm | "$(Agent.OS)" | package-lock.json'
               restoreKeys: |
                 npm | "$(Agent.OS)"
-              path: "$(npmCacheFolder)"
+              path: '$(npmCacheFolder)'
 
           - task: npmAuthenticate@0
-            displayName: "Aunthenticate to npm feed"
+            displayName: 'Aunthenticate to npm feed'
             inputs:
-              workingFile:  ".npmrc"              
+              workingFile: '.npmrc'
 
           - script: |
               npm config set cache "$(npmCacheFolder)" --global
               npm ci
-            displayName: "Install dependencies (npm ci)"
+            displayName: 'Install dependencies (npm ci)'
 
           - script: npm run build
-            displayName: "Build library (tsup)"
+            displayName: 'Build library (tsup)'
 
           - script: npm run build-storybook
-            displayName: "Build Storybook"
+            displayName: 'Build Storybook'
             condition: and(succeeded(), eq(variables['runStorybookBuild'], 'true'))
 
           - task: CopyFiles@2
-            displayName: "Copy outputs to staging"
+            displayName: 'Copy outputs to staging'
             inputs:
-              SourceFolder: "$(System.DefaultWorkingDirectory)"
+              SourceFolder: '$(System.DefaultWorkingDirectory)'
               Contents: |
                 dist/**
                 package.json
@@ -76,58 +73,57 @@ stages:
                 storybook-static/**
                 README.md
                 CHANGELOG.md
-              TargetFolder: "$(Build.ArtifactStagingDirectory)"
+              TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
           - task: PublishPipelineArtifact@1
-            displayName: "Publish artifact"
+            displayName: 'Publish artifact'
             inputs:
-              targetPath: "$(Build.ArtifactStagingDirectory)"
-              artifact: "$(artifactName)"
+              targetPath: '$(Build.ArtifactStagingDirectory)'
+              artifact: '$(artifactName)'
 
   - stage: Test
-    displayName: "Test & Coverage Gate"
+    displayName: 'Test & Coverage Gate'
     dependsOn: Build
     condition: succeeded()
 
     jobs:
       - job: TestJob
-        displayName: "Lint, Typecheck, Unit Tests with coverage"
+        displayName: 'Lint, Typecheck, Unit Tests with coverage'
         steps:
-
           - task: NodeTool@0
-            displayName: "Use Node $(nodeVersion)"
+            displayName: 'Use Node $(nodeVersion)'
             inputs:
-              versionSpec: "$(nodeVersion)"
+              versionSpec: '$(nodeVersion)'
 
           - task: Cache@2
-            displayName: "Cache npm"
+            displayName: 'Cache npm'
             inputs:
               key: 'npm | "$(Agent.OS)" | package-lock.json'
               restoreKeys: |
                 npm | "$(Agent.OS)"
-              path: "$(npmCacheFolder)"
+              path: '$(npmCacheFolder)'
 
           - task: npmAuthenticate@0
-            displayName: "Aunthenticate to npm feed"
+            displayName: 'Aunthenticate to npm feed'
             inputs:
-              workingFile:  ".npmrc"
+              workingFile: '.npmrc'
 
           - script: |
               npm config set cache "$(npmCacheFolder)" --global
               npm ci
-            displayName: "Install dependencies (npm ci)"
+            displayName: 'Install dependencies (npm ci)'
 
           - script: npm run lint
-            displayName: "Lint"
+            displayName: 'Lint'
 
           - script: npm run type-check
-            displayName: "Typecheck"
+            displayName: 'Typecheck'
 
           - script: npm run test:coverage
-            displayName: "Unit tests with coverage"
+            displayName: 'Unit tests with coverage'
 
           - task: Bash@3
-            displayName: "Fail if coverage < ${{ parameters.coverageMin }}%"
+            displayName: 'Fail if coverage < ${{ parameters.coverageMin }}%'
             inputs:
               targetType: inline
               script: |
@@ -154,10 +150,10 @@ stages:
                   sys.exit(2)
                 PY
             env:
-              COVERAGE_MIN: "${{ parameters.coverageMin }}"
+              COVERAGE_MIN: '${{ parameters.coverageMin }}'
 
   - stage: Release
-    displayName: "Release (version bump + changelog + publish)"
+    displayName: 'Release (version bump + changelog + publish)'
     dependsOn: Test
     condition: |
       and(
@@ -168,33 +164,33 @@ stages:
       )
     jobs:
       - job: ReleaseJob
-        displayName: "semantic-release"
+        displayName: 'semantic-release'
         steps:
           - task: NodeTool@0
-            displayName: "Use Node $(nodeVersion)"
+            displayName: 'Use Node $(nodeVersion)'
             inputs:
-              versionSpec: "$(nodeVersion)"
+              versionSpec: '$(nodeVersion)'
 
           - task: Cache@2
-            displayName: "Cache npm"
+            displayName: 'Cache npm'
             inputs:
               key: 'npm | "$(Agent.OS)" | package-lock.json'
               restoreKeys: |
                 npm | "$(Agent.OS)"
-              path: "$(npmCacheFolder)"
+              path: '$(npmCacheFolder)'
 
           - task: npmAuthenticate@0
-            displayName: "Authenticate with Azure Artifacts (.npmrc)"
+            displayName: 'Authenticate with Azure Artifacts (.npmrc)'
             inputs:
-              workingFile: ".npmrc"
+              workingFile: '.npmrc'
 
           - script: |
               npm config set cache "$(npmCacheFolder)" --global
               npm ci
-            displayName: "Install dependencies (npm ci)"
+            displayName: 'Install dependencies (npm ci)'
 
           - script: |
               npx semantic-release
-            displayName: "Run semantic-release"
+            displayName: 'Run semantic-release'
             env:
-              SYSTEM_ACCESSTOKEN: $(System.AccessToken) 
+              SYSTEM_ACCESSTOKEN: $(System.AccessToken)

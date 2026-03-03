@@ -8,6 +8,7 @@ import { AllEnterpriseModule } from 'ag-grid-enterprise';
 import type { HistoryAuditTrailTableProps, HistoryAuditTrailTableRow } from '../types';
 
 import { createHistoryAuditAgGridTheme, getHistoryAuditRowHeight } from '../utils';
+import { getHistoryAuditTableStyles } from './styles';
 
 ModuleRegistry.registerModules([AllCommunityModule, AllEnterpriseModule]);
 
@@ -33,25 +34,7 @@ export const HistoryAuditTrailTable = ({
   }, []);
 
   return (
-    <Box
-      sx={{
-        width: '100%',
-        height,
-        '& .ag-header': { borderBottom: 'none !important' },
-        '& .ag-header-cell': { paddingLeft: '0 !important', paddingRight: '0 !important' },
-        '& .ag-cell': {
-          paddingLeft: '16px !important',
-          paddingRight: '16px !important',
-          border: 'none !important',
-        },
-        '& .ag-row': { borderBottom: 'none !important' },
-        '& .ag-row-hover': { backgroundColor: 'transparent !important' },
-        '& .ag-row-hover .ag-cell': { backgroundColor: 'transparent !important' },
-        '& .ag-row-hover::before': { backgroundColor: 'transparent !important' },
-        '& .ag-root-wrapper': { border: 'none !important' },
-        ...(sx as object),
-      }}
-    >
+    <Box sx={getHistoryAuditTableStyles(height, sx)}>
       <AgGridReact<HistoryAuditTrailTableRow>
         data-testid="history-audit-trail-table"
         theme={agGridTheme}

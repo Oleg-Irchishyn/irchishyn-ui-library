@@ -9,6 +9,13 @@ import {
 } from '../constants';
 import type { ConditionClause, DataType, FieldDefinition } from '../types';
 import { ConditionalLanguageBuilderValueInput } from './ConditionalLanguageBuilderValueInput';
+import {
+  languageEditorClauseFormControlStyles,
+  languageEditorClauseRangeAndStyles,
+  languageEditorClauseRangeWrapStyles,
+  languageEditorClauseRemoveButtonStyles,
+  languageEditorClauseRowStyles,
+} from './styles';
 
 function getFieldByName(fieldConfig: FieldDefinition[], name: string): FieldDefinition | undefined {
   return fieldConfig.find((f) => f.name === name);
@@ -49,8 +56,8 @@ export function ConditionalLanguageBuilderClauseRow({
   };
 
   return (
-    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, alignItems: 'flex-start' }}>
-      <FormControl size="small" sx={{ minWidth: 180 }}>
+    <Box sx={languageEditorClauseRowStyles}>
+      <FormControl size="small" sx={languageEditorClauseFormControlStyles}>
         <InputLabel id={`field-${clause.fieldName}`}>
           {LANGUAGE_EDITOR_LABELS.CLB_SELECT_FIELD}
         </InputLabel>
@@ -67,7 +74,7 @@ export function ConditionalLanguageBuilderClauseRow({
           ))}
         </Select>
       </FormControl>
-      <FormControl size="small" sx={{ minWidth: 180 }}>
+      <FormControl size="small" sx={languageEditorClauseFormControlStyles}>
         <InputLabel>Operator</InputLabel>
         <Select
           value={clause.operatorKey}
@@ -89,14 +96,14 @@ export function ConditionalLanguageBuilderClauseRow({
         />
       )}
       {inRange && (
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Box sx={languageEditorClauseRangeWrapStyles}>
           <ConditionalLanguageBuilderValueInput
             dataType={dataType}
             value={clause.value}
             onChange={(v) => onChange({ ...clause, value: v })}
             placeholder={LANGUAGE_EDITOR_LABELS.CLB_VALUE_MIN}
           />
-          <Box component="span" sx={{ fontSize: 12, color: 'text.secondary' }}>
+          <Box component="span" sx={languageEditorClauseRangeAndStyles}>
             {LANGUAGE_EDITOR_LABELS.CLB_AND}
           </Box>
           <ConditionalLanguageBuilderValueInput
@@ -108,7 +115,12 @@ export function ConditionalLanguageBuilderClauseRow({
         </Box>
       )}
       {showRemove && onRemove && (
-        <Button size="small" onClick={onRemove} sx={{ minWidth: 36 }} aria-label="Remove condition">
+        <Button
+          size="small"
+          onClick={onRemove}
+          sx={languageEditorClauseRemoveButtonStyles}
+          aria-label="Remove condition"
+        >
           <X size={18} />
         </Button>
       )}

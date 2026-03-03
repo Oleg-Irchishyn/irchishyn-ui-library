@@ -1,8 +1,12 @@
 import { Box, TextField } from '@mui/material';
 
-import { neutral } from '@gen2fund/platform.style';
-
 import { LANGUAGE_EDITOR_LABELS } from '../constants';
+import {
+  languageEditorElseBlockHeaderStyles,
+  languageEditorElseBodyStyles,
+  languageEditorIfElseBlockRootStyles,
+  languageEditorIfElseHeaderTextStyles,
+} from './styles';
 
 export interface ConditionalLanguageBuilderElseBlockProps {
   content: string;
@@ -14,28 +18,13 @@ export function ConditionalLanguageBuilderElseBlock({
   onContentChange,
 }: ConditionalLanguageBuilderElseBlockProps) {
   return (
-    <Box
-      sx={{
-        border: 1,
-        borderColor: 'divider',
-        borderRadius: 1,
-        overflow: 'hidden',
-      }}
-    >
-      <Box
-        sx={{
-          px: 2,
-          py: 1,
-          bgcolor: neutral[200],
-          borderBottom: 1,
-          borderColor: 'divider',
-        }}
-      >
-        <Box component="span" sx={{ fontSize: 14, fontWeight: 500 }}>
+    <Box sx={languageEditorIfElseBlockRootStyles}>
+      <Box sx={languageEditorElseBlockHeaderStyles}>
+        <Box component="span" sx={languageEditorIfElseHeaderTextStyles}>
           {LANGUAGE_EDITOR_LABELS.CLB_ELSE_LABEL} — {LANGUAGE_EDITOR_LABELS.CLB_ELSE_WHEN}
         </Box>
       </Box>
-      <Box sx={{ p: 2 }}>
+      <Box sx={languageEditorElseBodyStyles}>
         <TextField
           fullWidth
           multiline

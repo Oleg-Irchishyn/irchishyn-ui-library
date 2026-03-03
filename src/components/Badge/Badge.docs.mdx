@@ -1,0 +1,44 @@
+import { ArgTypes, Canvas, Description, Meta, Subtitle, Title } from '@storybook/blocks';
+
+import * as Stories from './Badge.stories';
+
+<Meta of={Stories} />
+
+<Title>Badge</Title>
+<Subtitle>Reusable status/tag pill for semantic labels</Subtitle>
+<Description>
+  `Badge` is a typed status-tag component for short classifications like `Capital Call`,
+  `Preparation`, `In-Preparation`, `Editable`, and `System`. It supports filled/outlined variants,
+  optional leading icon, semantic color presets, and light/dark theme compatibility via MUI theme
+  tokens.
+</Description>
+
+## Import
+
+```ts
+import { Badge } from '@gen2fund/gen2verse-ui-library';
+```
+
+## Basic usage
+
+```tsx
+import { FileText } from 'lucide-react';
+
+<Badge label="Capital Call" variant="filled" color="info" />
+<Badge label="In-Preparation" variant="outlined" color="info" />
+<Badge label="Preparation" color="warning" icon={<FileText size={12} strokeWidth={2} />} />
+```
+
+## Examples
+
+<Canvas of={Stories.Default} />
+<Canvas of={Stories.Outlined} />
+<Canvas of={Stories.WithIcon} />
+<Canvas of={Stories.SemanticColors} />
+<Canvas of={Stories.CustomColor} />
+<Canvas of={Stories.Sizes} />
+<Canvas of={Stories.ThemeCompatibility} />
+
+## Props
+
+<ArgTypes of={Stories.Default} />

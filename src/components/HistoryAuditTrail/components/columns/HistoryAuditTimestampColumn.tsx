@@ -2,6 +2,13 @@ import { Box, Typography } from '@mui/material';
 import type { ICellRendererParams } from 'ag-grid-community';
 
 import type { HistoryAuditTrailTableRow } from '../../types';
+import {
+  historyAuditTimestampAgoStyles,
+  historyAuditTimestampDotStyles,
+  historyAuditTimestampRootStyles,
+  historyAuditTimestampTopRowStyles,
+  historyAuditTimestampValueStyles,
+} from './styles';
 
 export const HistoryAuditTimestampColumn = ({
   data,
@@ -9,14 +16,14 @@ export const HistoryAuditTimestampColumn = ({
   if (!data) return null;
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', py: 2 }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-        <Box sx={{ width: 6, height: 6, borderRadius: 999, bgcolor: 'text.disabled' }} />
-        <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+    <Box sx={historyAuditTimestampRootStyles}>
+      <Box sx={historyAuditTimestampTopRowStyles}>
+        <Box sx={historyAuditTimestampDotStyles} />
+        <Typography variant="caption" sx={historyAuditTimestampAgoStyles}>
           {data.timeAgo}
         </Typography>
       </Box>
-      <Typography variant="caption" sx={{ color: 'text.disabled', mt: 0.25 }}>
+      <Typography variant="caption" sx={historyAuditTimestampValueStyles}>
         {data.timestamp}
       </Typography>
     </Box>

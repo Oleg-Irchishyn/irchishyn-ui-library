@@ -8,6 +8,7 @@ import { useHistoryAuditTrail } from './useHistoryAuditTrail';
 
 import { HISTORY_AUDIT_LABELS, HISTORY_AUDIT_RENDER_MODES } from './constants';
 import type { HistoryAuditTrailProps } from './types';
+import { getHistoryAuditTrailRootStyles, historyAuditTrailContentStyles } from './styles';
 
 export const HistoryAuditTrail = ({
   events,
@@ -64,7 +65,7 @@ export const HistoryAuditTrail = ({
   });
 
   return (
-    <Box data-testid="history-audit-trail" sx={{ width: '100%', ...((sx as object) ?? {}) }}>
+    <Box data-testid="history-audit-trail" sx={getHistoryAuditTrailRootStyles(sx)}>
       <HistoryAuditTrailHeader
         renderMode={renderMode}
         title={title}
@@ -88,7 +89,7 @@ export const HistoryAuditTrail = ({
         }
       />
 
-      <Box sx={{ position: 'relative' }}>
+      <Box sx={historyAuditTrailContentStyles}>
         {loading && rowData.length === 0 ? (
           <HistoryAuditTrailLoader />
         ) : rowData.length === 0 ? (

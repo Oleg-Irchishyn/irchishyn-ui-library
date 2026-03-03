@@ -169,4 +169,135 @@ describe('useHistoryAuditTrail', () => {
     });
     expect(onItemClick).toHaveBeenCalledWith(events[0]);
   });
+
+  it('uses moduleFilterCallback and exposes undefined count label when no countLabel is provided', () => {
+    const moduleFilterCallback = vi.fn((event, selectedSource) => event.source !== selectedSource);
+
+    const { result } = renderHook(() =>
+      useHistoryAuditTrail({
+        events,
+        moduleSources: ['/capevent/package/10001', '/capevent/allocations/10001'],
+        primaryModuleSource: '/capevent/package/10001',
+        moduleFilterCallback,
+      }),
+    );
+
+    act(() => {
+      result.current.moduleDropdown?.onValueChange('/capevent/package/10001');
+    });
+
+    expect(moduleFilterCallback).toHaveBeenCalled();
+    expect(result.current.displayedCountLabel).toBeUndefined();
+  });
+
+  it('resets selected module to all when selected source disappears', () => {
+    const initialEvents: HistoryAuditTrailEvent[] = [
+      {
+        id: 'a',
+        source: '/source/a',
+        username: 'u1',
+        auditEventType: 'UPDATED',
+        subject: 'A',
+        timestamp: '2026-01-03T00:00:00.000Z',
+      },
+      {
+        id: 'b',
+        source: '/source/b',
+        username: 'u2',
+        auditEventType: 'UPDATED',
+        subject: 'B',
+        timestamp: '2026-01-02T00:00:00.000Z',
+      },
+    ];
+    const nextEvents: HistoryAuditTrailEvent[] = [
+      {
+        id: 'c',
+        source: '/source/c',
+        username: 'u3',
+        auditEventType: 'UPDATED',
+        subject: 'C',
+        timestamp: '2026-01-01T00:00:00.000Z',
+      },
+      {
+        id: 'd',
+        source: '/source/d',
+        username: 'u4',
+        auditEventType: 'UPDATED',
+        subject: 'D',
+        timestamp: '2025-12-31T00:00:00.000Z',
+      },
+    ];
+
+    const { result, rerender } = renderHook(
+      ({ inputEvents }) =>
+        useHistoryAuditTrail({
+          events: inputEvents,
+          moduleSources: ['/source/a', '/source/b', '/source/c', '/source/d'],
+        }),
+      { initialProps: { inputEvents: initialEvents } },
+    );
+
+    act(() => {
+      result.current.moduleDropdown?.onValueChange('/source/b');
+    });
+    expect(result.current.moduleDropdown?.value).toBe('/source/b');
+
+    rerender({ inputEvents: nextEvents });
+    expect(result.current.moduleDropdown?.value).toBe(HISTORY_AUDIT_ALL_MODULES_VALUE);
+  });
+
+  it('does not export when export is disabled and returns base context menu for unknown column', () => {
+    const exportDataAsExcel = vi.fn();
+    const exportDataAsCsv = vi.fn();
+
+    const { result } = renderHook(() =>
+      useHistoryAuditTrail({
+        events,
+        enableExport: false,
+      }),
+    );
+
+    act(() => {
+      result.current.onGridReady({
+        api: {
+          exportDataAsExcel,
+          exportDataAsCsv,
+        },
+      } as never);
+    });
+
+    act(() => {
+      result.current.handleDownloadExcel();
+      result.current.handleDownloadCsv();
+    });
+
+    expect(exportDataAsExcel).not.toHaveBeenCalled();
+    expect(exportDataAsCsv).not.toHaveBeenCalled();
+
+    const menuItems = result.current.getContextMenuItems({
+      column: { getColId: () => 'unknown' },
+      api: { exportDataAsCsv, exportDataAsExcel },
+    } as never);
+    expect(menuItems).toEqual(['cut', 'copy', 'copyWithHeaders', 'copyWithGroupHeaders', 'paste']);
+  });
+
+  it('covers getRowId and ignores row click without callback', () => {
+    const { result } = renderHook(() =>
+      useHistoryAuditTrail({
+        events,
+      }),
+    );
+
+    expect(
+      result.current.getRowId({
+        data: { id: 'row-42' },
+      } as never),
+    ).toBe('row-42');
+
+    expect(() =>
+      result.current.onRowClicked({
+        data: { event: events[0] },
+      } as never),
+    ).not.toThrow();
+  });
 });

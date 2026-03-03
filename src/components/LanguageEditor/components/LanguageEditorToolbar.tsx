@@ -4,6 +4,13 @@ import { Bold, CheckCircle, Code, Hash, Italic, Underline } from 'lucide-react';
 import { LANGUAGE_EDITOR_LABELS } from '../constants';
 import type { LanguageEditorToolbarProps } from '../types';
 import { FieldInsertDropdown } from './FieldInsertDropdown';
+import {
+  languageEditorToolbarActionButtonStyles,
+  languageEditorToolbarButtonsGroupStyles,
+  languageEditorToolbarDividerStyles,
+  languageEditorToolbarSpacerStyles,
+  languageEditorToolbarStyles,
+} from './styles';
 
 export function LanguageEditorToolbar({
   onBold,
@@ -26,19 +33,8 @@ export function LanguageEditorToolbar({
   };
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 0.5,
-        p: 1,
-        borderBottom: 1,
-        borderColor: 'divider',
-        backgroundColor: 'grey.50',
-        flexWrap: 'wrap',
-      }}
-    >
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+    <Box sx={languageEditorToolbarStyles}>
+      <Box sx={languageEditorToolbarButtonsGroupStyles}>
         <Tooltip title={LANGUAGE_EDITOR_LABELS.TOOLBAR_BOLD}>
           <span>
             <IconButton size="small" onClick={onBold} disabled={disabled}>
@@ -62,7 +58,7 @@ export function LanguageEditorToolbar({
         </Tooltip>
       </Box>
 
-      <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
+      <Divider orientation="vertical" flexItem sx={languageEditorToolbarDividerStyles} />
 
       <Button
         size="small"
@@ -70,7 +66,7 @@ export function LanguageEditorToolbar({
         startIcon={<Hash size={16} />}
         onClick={onInsertFieldClick}
         disabled={disabled}
-        sx={{ textTransform: 'none', fontSize: 13 }}
+        sx={languageEditorToolbarActionButtonStyles}
       >
         {LANGUAGE_EDITOR_LABELS.TOOLBAR_INSERT_FIELD}
       </Button>
@@ -83,7 +79,7 @@ export function LanguageEditorToolbar({
         onInsertField={onInsertField}
       />
 
-      <Divider orientation="vertical" flexItem sx={{ mx: 1 }} />
+      <Divider orientation="vertical" flexItem sx={languageEditorToolbarDividerStyles} />
 
       <Button
         size="small"
@@ -91,12 +87,12 @@ export function LanguageEditorToolbar({
         startIcon={<Code size={16} />}
         onClick={onConditionalClick}
         disabled={disabled}
-        sx={{ textTransform: 'none', fontSize: 13 }}
+        sx={languageEditorToolbarActionButtonStyles}
       >
         {LANGUAGE_EDITOR_LABELS.TOOLBAR_CONDITIONAL}
       </Button>
 
-      <Box sx={{ flex: 1 }} />
+      <Box sx={languageEditorToolbarSpacerStyles} />
 
       <Tooltip title={LANGUAGE_EDITOR_LABELS.TOOLBAR_VALIDATE}>
         <span>
@@ -107,7 +103,7 @@ export function LanguageEditorToolbar({
             startIcon={<CheckCircle size={16} />}
             onClick={onValidateClick}
             disabled={disabled}
-            sx={{ textTransform: 'none', fontSize: 13 }}
+            sx={languageEditorToolbarActionButtonStyles}
           >
             {LANGUAGE_EDITOR_LABELS.TOOLBAR_VALIDATE}
           </Button>

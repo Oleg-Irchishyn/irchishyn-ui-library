@@ -2,6 +2,10 @@ import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/mater
 
 import { LANGUAGE_EDITOR_LABELS } from '../constants';
 import type { DataType } from '../types';
+import {
+  languageEditorClauseBooleanValueControlStyles,
+  languageEditorClauseTextValueInputStyles,
+} from './styles';
 
 export interface ConditionalLanguageBuilderValueInputProps {
   dataType: DataType;
@@ -18,7 +22,7 @@ export function ConditionalLanguageBuilderValueInput({
 }: ConditionalLanguageBuilderValueInputProps) {
   if (dataType === 'boolean') {
     return (
-      <FormControl size="small" sx={{ minWidth: 120 }}>
+      <FormControl size="small" sx={languageEditorClauseBooleanValueControlStyles}>
         <InputLabel>Value</InputLabel>
         <Select value={value} label="Value" onChange={(e) => onChange(e.target.value)}>
           <MenuItem value="true">true</MenuItem>
@@ -35,7 +39,7 @@ export function ConditionalLanguageBuilderValueInput({
       value={value}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
-      sx={{ minWidth: 140 }}
+      sx={languageEditorClauseTextValueInputStyles}
       inputProps={dataType === 'number' ? { inputMode: 'numeric' } : undefined}
     />
   );

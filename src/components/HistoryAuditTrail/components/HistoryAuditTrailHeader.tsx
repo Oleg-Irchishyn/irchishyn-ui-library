@@ -4,9 +4,17 @@ import { CloseIcon, HistoryIcon } from './HistoryAuditTrailIcons';
 import { HistoryAuditTrailSearch } from './HistoryAuditTrailSearch';
 import { HistoryAuditExport } from './HistoryAuditExport';
 import { HistoryAudtitTrailModuleDropdown } from './HistoryAudtitTrailModuleDropdown';
+import {
+  historyAuditHeaderCountChipStyles,
+  historyAuditHeaderIconStyles,
+  historyAuditHeaderLeftStyles,
+  historyAuditHeaderRightStyles,
+  historyAuditHeaderStyles,
+  historyAuditHeaderTitleStyles,
+} from './styles';
 
 import type { HistoryAuditTrailHeaderProps } from '../types';
-import { HISTORY_AUDIT_LAYOUT, HISTORY_AUDIT_RENDER_MODES } from '../constants';
+import { HISTORY_AUDIT_RENDER_MODES } from '../constants';
 
 export const HistoryAuditTrailHeader = ({
   renderMode = HISTORY_AUDIT_RENDER_MODES.PANEL,
@@ -20,20 +28,13 @@ export const HistoryAuditTrailHeader = ({
   const isPanelMode = renderMode === HISTORY_AUDIT_RENDER_MODES.PANEL;
 
   return (
-    <Box
-      data-testid="history-audit-trail-header"
-      sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}
-    >
+    <Box data-testid="history-audit-trail-header" sx={historyAuditHeaderStyles}>
       {isPanelMode ? (
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, minWidth: 0 }}>
-          <Box sx={(theme) => ({ color: theme.palette.info.main, display: 'flex' })}>
+        <Box sx={historyAuditHeaderLeftStyles}>
+          <Box sx={historyAuditHeaderIconStyles}>
             <HistoryIcon />
           </Box>
-          <Typography
-            variant="subtitle2"
-            sx={(theme) => ({ fontWeight: 600, color: theme.palette.text.primary })}
-            noWrap
-          >
+          <Typography variant="subtitle2" sx={historyAuditHeaderTitleStyles} noWrap>
             {title}
           </Typography>
           {countLabel ? (
@@ -41,10 +42,7 @@ export const HistoryAuditTrailHeader = ({
               size="small"
               label={countLabel}
               variant="outlined"
-              sx={(theme) => ({
-                borderRadius: HISTORY_AUDIT_LAYOUT.TOOLBAR_BORDER_RADIUS,
-                borderColor: theme.palette.divider,
-              })}
+              sx={historyAuditHeaderCountChipStyles}
             />
           ) : null}
         </Box>
@@ -52,7 +50,7 @@ export const HistoryAuditTrailHeader = ({
         <Box />
       )}
 
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
+      <Box sx={historyAuditHeaderRightStyles}>
         {moduleDropdown ? (
           <HistoryAudtitTrailModuleDropdown
             value={moduleDropdown.value}

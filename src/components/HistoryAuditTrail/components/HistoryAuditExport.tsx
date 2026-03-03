@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Button, ListItemIcon, Menu, MenuItem } from '@mui/material';
 
-import { HISTORY_AUDIT_LAYOUT } from '../constants';
 import { ChevronDownIcon, DownloadIcon, FileSpreadsheetIcon } from './HistoryAuditTrailIcons';
+import { historyAuditExportButtonStyles, historyAuditListItemIconStyles } from './styles';
 
 export interface HistoryAuditExportProps {
   onExportExcel?: () => void;
@@ -44,22 +44,7 @@ export const HistoryAuditExport = ({ onExportExcel, onExportCsv }: HistoryAuditE
         aria-expanded={open ? 'true' : undefined}
         startIcon={<DownloadIcon />}
         endIcon={<ChevronDownIcon />}
-        sx={(theme) => ({
-          height: HISTORY_AUDIT_LAYOUT.TOOLBAR_INPUT_HEIGHT,
-          minHeight: HISTORY_AUDIT_LAYOUT.TOOLBAR_INPUT_HEIGHT,
-          textTransform: 'none',
-          borderRadius: HISTORY_AUDIT_LAYOUT.TOOLBAR_BORDER_RADIUS,
-          borderColor: theme.palette.divider,
-          backgroundColor:
-            theme.palette.mode === 'dark'
-              ? theme.palette.background.paper
-              : theme.palette.common.white,
-          color: theme.palette.text.secondary,
-          '&:hover': {
-            borderColor: theme.palette.divider,
-            backgroundColor: theme.palette.action.hover,
-          },
-        })}
+        sx={historyAuditExportButtonStyles}
       >
         Export
       </Button>
@@ -81,13 +66,13 @@ export const HistoryAuditExport = ({ onExportExcel, onExportCsv }: HistoryAuditE
         }}
       >
         <MenuItem onClick={handleExportExcel}>
-          <ListItemIcon sx={{ minWidth: 32 }}>
+          <ListItemIcon sx={historyAuditListItemIconStyles}>
             <FileSpreadsheetIcon />
           </ListItemIcon>
           Export to Excel
         </MenuItem>
         <MenuItem onClick={handleExportCsv}>
-          <ListItemIcon sx={{ minWidth: 32 }}>
+          <ListItemIcon sx={historyAuditListItemIconStyles}>
             <FileSpreadsheetIcon />
           </ListItemIcon>
           Export to CSV

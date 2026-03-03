@@ -21,7 +21,7 @@ import type {
   HistoryAuditTrailTableRow,
   UseHistoryAuditTrailParams,
 } from './types';
-import { colors, primary, secondary } from '@gen2fund/platform.style';
+import type { BadgeColorPreset } from '../../types';
 
 const toQuickFilterText = (...values: Array<string | null | undefined>) =>
   values.filter((value): value is string => Boolean(value)).join(' ');
@@ -131,28 +131,7 @@ const getFieldChangesSummary = (event: HistoryAuditTrailEvent) => {
   return `${fieldChangesCount} fields changed`;
 };
 
-const safeGetToken = (obj: unknown, path: string, fallback: string): string => {
-  if (obj === null || obj === undefined) return fallback;
-
-  const keys = path.split('.');
-  let result: unknown = obj;
-
-  for (const key of keys) {
-    if (result === null || result === undefined || typeof result !== 'object') return fallback;
-    result = (result as Record<string, unknown>)[key];
-  }
-
-  return typeof result === 'string' ? result : fallback;
-};
-
-const MODULE_BADGE_COLORS = [
-  safeGetToken(primary, 'dark', '#7E57C2'),
-  safeGetToken(secondary, 'main', '#F57C00'),
-  safeGetToken(colors, 'info.main', '#00ACC1'),
-  safeGetToken(colors, 'error.main', '#E91E63'),
-  safeGetToken(colors, 'success.main', '#43A047'),
-  safeGetToken(colors, 'warning.dark', '#546E7A'),
-];
+const MODULE_BADGE_COLOR_PRESETS: BadgeColorPreset[] = ['info', 'warning', 'success', 'neutral'];
 
 const sourceToModuleName = (source: string): string => {
   const parts = source.split('/').filter(Boolean);
@@ -227,17 +206,11 @@ export const useHistoryAuditTrail = ({
       .filter((value) => value !== resolvedPrimaryModuleSource)
       .sort();
 
-    return secondarySources.reduce<Map<string, string>>((colorMap, source, index) => {
-      const firstSecondaryColor = safeGetToken(colors, 'info.main', '#00ACC1');
-      const otherSecondaryColor = safeGetToken(colors, 'warning.dark', '#F57C00');
-      const fallbackColor = MODULE_BADGE_COLORS[index % MODULE_BADGE_COLORS.length];
-
-      const moduleColor =
-        index === 0 ? firstSecondaryColor : index > 0 ? otherSecondaryColor : fallbackColor;
-
+    return secondarySources.reduce<Map<string, BadgeColorPreset>>((colorMap, source, index) => {
+      const moduleColor = MODULE_BADGE_COLOR_PRESETS[index % MODULE_BADGE_COLOR_PRESETS.length];
       colorMap.set(source, moduleColor);
       return colorMap;
-    }, new Map<string, string>());
+    }, new Map<string, BadgeColorPreset>());
   }, [moduleOptions, resolvedPrimaryModuleSource]);
 
   const filteredEvents = useMemo(() => {

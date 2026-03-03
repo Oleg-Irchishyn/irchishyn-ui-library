@@ -7,6 +7,14 @@ import { useLanguageEditor } from '../hooks/useLanguageEditor';
 import type { LanguageEditorProps } from '../types';
 import { ConditionalLanguageBuilder } from './ConditionalLanguageBuilder';
 import { LanguageEditorToolbar } from './LanguageEditorToolbar';
+import {
+  getLanguageEditorEditableAreaStyles,
+  getLanguageEditorValidationBannerStyles,
+  languageEditorPaperStyles,
+  languageEditorValidationCloseButtonStyles,
+  languageEditorValidationContentStyles,
+  languageEditorValidationErrorItemStyles,
+} from './styles';
 
 export function LanguageEditor({
   fieldConfig,
@@ -50,7 +58,7 @@ export function LanguageEditor({
   }, [syncEditorContent]);
 
   return (
-    <Paper variant="outlined" sx={{ overflow: 'hidden' }}>
+    <Paper variant="outlined" sx={languageEditorPaperStyles}>
       {!readOnly && (
         <LanguageEditorToolbar
           onBold={handleBold}
@@ -70,19 +78,8 @@ export function LanguageEditor({
       )}
 
       {validationResult && (
-        <Box
-          sx={{
-            px: 2,
-            py: 1,
-            borderBottom: 1,
-            borderColor: 'divider',
-            backgroundColor: validationResult.valid ? 'success.light' : 'error.light',
-            display: 'flex',
-            alignItems: 'flex-start',
-            gap: 1,
-          }}
-        >
-          <Box sx={{ flex: 1 }}>
+        <Box sx={getLanguageEditorValidationBannerStyles(validationResult.valid)}>
+          <Box sx={languageEditorValidationContentStyles}>
             {validationResult.valid ? (
               <Typography variant="body2" color="success.dark">
                 {LANGUAGE_EDITOR_LABELS.VALIDATION_PASSED}
@@ -93,14 +90,23 @@ export function LanguageEditor({
                   {LANGUAGE_EDITOR_LABELS.VALIDATION_ERRORS}
                 </Typography>
                 {validationResult.errors?.map((error, index) => (
-                  <Typography key={index} variant="body2" color="error.dark" sx={{ ml: 1 }}>
+                  <Typography
+                    key={index}
+                    variant="body2"
+                    color="error.dark"
+                    sx={languageEditorValidationErrorItemStyles}
+                  >
                     • {error.message}
                   </Typography>
                 ))}
               </Box>
             )}
           </Box>
-          <IconButton size="small" onClick={handleClearValidation} sx={{ mt: -0.5 }}>
+          <IconButton
+            size="small"
+            onClick={handleClearValidation}
+            sx={languageEditorValidationCloseButtonStyles}
+          >
             <X size={16} />
           </IconButton>
         </Box>
@@ -113,26 +119,7 @@ export function LanguageEditor({
         onInput={readOnly ? undefined : handleInput}
         onBlur={readOnly ? undefined : handleBlur}
         data-placeholder={placeholder}
-        sx={{
-          p: 2,
-          minHeight,
-          outline: 'none',
-          cursor: readOnly ? 'default' : 'text',
-          '&:empty::before': {
-            content: 'attr(data-placeholder)',
-            color: 'text.secondary',
-            fontStyle: 'italic',
-          },
-          '& b, & strong': {
-            fontWeight: 700,
-          },
-          '& i, & em': {
-            fontStyle: 'italic',
-          },
-          '& u': {
-            textDecoration: 'underline',
-          },
-        }}
+        sx={getLanguageEditorEditableAreaStyles(minHeight, readOnly)}
       />
 
       {!readOnly && (

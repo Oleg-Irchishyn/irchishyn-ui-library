@@ -40,3 +40,8 @@ export type { AppProps } from './App';
 export { createAppTheme } from './theme';
 export { Gen2ThemeProvider } from './providers';
 export type { Gen2ThemeProviderProps } from './providers';
+
+export { Badge } from './components/Badge';
+export type { BadgeProps, BadgeVariant, BadgeSize } from './components/Badge';
+export type { BadgeColorPreset } from './types';
+export { BADGE_VARIANTS, BADGE_SIZES, BADGE_COLOR_PRESETS } from './components/Badge';

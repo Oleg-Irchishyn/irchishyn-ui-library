@@ -7,6 +7,13 @@ import { useConditionalLanguageBuilder } from '../useConditionalLanguageBuilder'
 import { ConditionalLanguageBuilderElseBlock } from './ConditionalLanguageBuilderElseBlock';
 import { ConditionalLanguageBuilderElseIfBlock } from './ConditionalLanguageBuilderElseIfBlock';
 import { ConditionalLanguageBuilderIfBlock } from './ConditionalLanguageBuilderIfBlock';
+import {
+  languageEditorDialogActionsStyles,
+  languageEditorDialogContentStyles,
+  languageEditorDialogDescriptionStyles,
+  languageEditorDialogPaperStyles,
+  languageEditorDialogTitleStyles,
+} from './styles';
 
 export function ConditionalLanguageBuilder({
   open,
@@ -38,14 +45,14 @@ export function ConditionalLanguageBuilder({
       onClose={handleClose}
       maxWidth="md"
       fullWidth
-      PaperProps={{ sx: { maxHeight: '85vh' } }}
+      PaperProps={{ sx: languageEditorDialogPaperStyles }}
     >
-      <DialogTitle sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+      <DialogTitle sx={languageEditorDialogTitleStyles}>
         <Code size={22} />
         {LANGUAGE_EDITOR_LABELS.CLB_TITLE}
       </DialogTitle>
-      <DialogContent dividers sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-        <Box component="p" sx={{ m: 0, color: 'text.secondary', fontSize: 14 }}>
+      <DialogContent dividers sx={languageEditorDialogContentStyles}>
+        <Box component="p" sx={languageEditorDialogDescriptionStyles}>
           {LANGUAGE_EDITOR_LABELS.CLB_DESCRIPTION}
         </Box>
 
@@ -74,7 +81,7 @@ export function ConditionalLanguageBuilder({
           onContentChange={setElseContent}
         />
       </DialogContent>
-      <DialogActions sx={{ px: 2, py: 1.5 }}>
+      <DialogActions sx={languageEditorDialogActionsStyles}>
         <Button onClick={handleClose}>{LANGUAGE_EDITOR_LABELS.CLB_CANCEL}</Button>
         <Button variant="contained" onClick={handleInsert} disabled={!canInsert}>
           {LANGUAGE_EDITOR_LABELS.CLB_INSERT}
