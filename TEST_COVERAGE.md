@@ -8,16 +8,16 @@
 
 | Statements | Branches | Functions | Lines |
 |------------|----------|-----------|-------|
-| 95.59% | 72.31% | 93.77% | 97.12% |
+| 95.46% | 72.38% | 94.07% | 96.88% |
 
 ## Summary (covered / total)
 
 | Metric      | Coverage | Covered / Total |
 |------------|----------|-----------------|
-| Statements | 95.59%    | 824 / 862        |
-| Branches   | 72.31%    | 525 / 726        |
-| Functions  | 93.77%   | 241 / 257         |
-| Lines      | 97.12%   | 742 / 764        |
+| Statements | 95.46%    | 863 / 904        |
+| Branches   | 72.38%    | 540 / 746        |
+| Functions  | 94.07%   | 254 / 270         |
+| Lines      | 96.88%   | 778 / 803        |
 
 ## Coverage by file
 
@@ -71,6 +71,8 @@
 | src/components/LanguageEditor/useConditionalLanguageBuilder.ts | 88.57% | 63.63% | 80.00% | 96.55% |
 | src/components/LanguageEditor/utils/buildConditionalString.ts | 100.00% | 100.00% | 100.00% | 100.00% |
 | src/components/LanguageEditor/utils/languageEditorUtils.ts | 98.33% | 75.00% | 100.00% | 98.21% |
+| src/components/SearchTextBox/constants.ts | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/SearchTextBox/SearchTextBox.tsx | 92.68% | 75.00% | 100.00% | 92.10% |
 | src/providers/Gen2ThemeProvider.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
 | src/theme.ts | 80.00% | 42.42% | 100.00% | 100.00% |
 

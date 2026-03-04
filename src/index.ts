@@ -34,6 +34,13 @@ export {
   formatFieldReference,
 } from './components/LanguageEditor';
 
+export { SearchTextBox, useSearchTextBox } from './components/SearchTextBox';
+export type {
+  SearchTextBoxProps,
+  UseSearchTextBoxParams,
+  UseSearchTextBoxResult,
+} from './components/SearchTextBox';
+
 export { default as App } from './App';
 export type { AppProps } from './App';
 
