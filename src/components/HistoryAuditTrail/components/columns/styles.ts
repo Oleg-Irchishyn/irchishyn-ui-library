@@ -80,6 +80,15 @@ export const historyAuditActorStyles: SxProps<Theme> = {
   minWidth: 0,
 };
 
+export const historyAuditCreatedByStyles: SxProps<Theme> = {
+  display: 'block',
+  color: 'text.secondary',
+  mb: 0.5,
+  minWidth: 0,
+  whiteSpace: 'normal',
+  wordBreak: 'break-word',
+};
+
 export const historyAuditSmallBadgeStyles: SxProps<Theme> = {
   height: 20,
   fontSize: '0.7rem',

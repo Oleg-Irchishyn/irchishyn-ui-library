@@ -44,6 +44,7 @@ export const HISTORY_AUDIT_TRIGGERED_BY_ACTION_KEYS_FALLBACK = [
 export const HISTORY_AUDIT_DETAIL_TEXT = {
   FIELD_LABEL_PREFIX: 'Field:',
   TRIGGERED_BY_LABEL: 'Triggered by:',
+  CREATED_BY_LABEL: 'Created by:',
   KEY_VALUE_SEPARATOR: ': ',
   CHANGE_ARROW: '→',
 } as const;

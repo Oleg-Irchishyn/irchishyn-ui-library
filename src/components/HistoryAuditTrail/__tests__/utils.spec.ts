@@ -94,8 +94,23 @@ describe('HistoryAudit utils', () => {
         { key: 'CONFIGURATION', value: 'Very long configuration value for wrapping checks' },
       ],
     });
+    const detailedWithCreatedBy = getHistoryAuditRowHeight({
+      id: '2',
+      username: 'SYSTEM',
+      createdBy: 'workflow.engine@gen2fund.com',
+      auditEventType: 'UPDATED',
+      timestamp: '2026-01-01T00:00:00.000Z',
+      details:
+        'This is a long details value that should increase the rendered row height with multiple lines.',
+      fieldChanges: [{ fieldName: 'Status', oldValue: 'Pending', newValue: 'Approved' }],
+      additionalDetails: [
+        { key: 'TRIGGERED_BY_USER', value: 'Workflow Engine' },
+        { key: 'CONFIGURATION', value: 'Very long configuration value for wrapping checks' },
+      ],
+    });
 
     expect(base).toBe(112);
     expect(detailed).toBeGreaterThan(base);
+    expect(detailedWithCreatedBy).toBeGreaterThan(detailed);
   });
 });

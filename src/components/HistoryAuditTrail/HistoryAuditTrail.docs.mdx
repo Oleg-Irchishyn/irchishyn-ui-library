@@ -103,6 +103,7 @@ type AuditApiEntry = {
   eventId: string;
   sourcePath: string; // e.g. /capevent/configuration/1003
   actor: string;
+  actorEmail?: string | null; // from JWT / createdBy
   actionType: 'ADDED' | 'UPDATED' | 'REMOVED' | 'OTHER';
   subject: string;
   details?: string | null;
@@ -117,6 +118,7 @@ const toHistoryAuditEvents = (entries: AuditApiEntry[]): HistoryAuditTrailEvent[
     id: entry.eventId,
     source: entry.sourcePath,
     username: entry.actor,
+    createdBy: entry.actorEmail ?? null,
     auditEventType: entry.actionType,
     subject: entry.subject,
     details: entry.details ?? null,

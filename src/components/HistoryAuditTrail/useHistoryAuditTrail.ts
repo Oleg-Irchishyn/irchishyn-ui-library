@@ -45,6 +45,7 @@ const parseHistoryAuditQuickFilter = (quickFilterText: string) => {
 const getActivityQuickFilterText = (data: HistoryAuditTrailTableRow) =>
   toQuickFilterText(
     data.actor,
+    data.event.createdBy,
     data.badge,
     data.moduleBadge,
     data.action,
@@ -91,6 +92,7 @@ const getActivityExportText = (data: HistoryAuditTrailTableRow) => {
 
   return toQuickFilterText(
     data.actor,
+    data.event.createdBy,
     data.badge,
     data.moduleBadge,
     data.action,

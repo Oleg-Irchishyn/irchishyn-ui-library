@@ -37,6 +37,7 @@ describe('HistoryAuditActivityColumns', () => {
       event: {
         id: 'evt-1',
         username: 'SYSTEM',
+        createdBy: 'workflow.engine@gen2fund.com',
         auditEventType: 'UPDATED',
         details: 'A detailed description',
         fieldChanges: [{ fieldName: 'Status', oldValue: 'Pending', newValue: 'Approved' }],
@@ -64,6 +65,7 @@ describe('HistoryAuditActivityColumns', () => {
     expect(screen.getByText('Pending')).toBeTruthy();
     expect(screen.getByText('Approved')).toBeTruthy();
     expect(screen.getByText('Triggered by:')).toBeTruthy();
+    expect(screen.getByText('Created by: workflow.engine@gen2fund.com')).toBeTruthy();
     expect(screen.getByText('Workflow Engine')).toBeTruthy();
     expect(screen.getByText('(Auto Approve)')).toBeTruthy();
     expect(screen.getByText('Configuration:')).toBeTruthy();

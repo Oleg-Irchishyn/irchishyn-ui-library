@@ -22,6 +22,7 @@ import {
   historyAuditActivityRootStyles,
   historyAuditActorStyles,
   historyAuditArrowStyles,
+  historyAuditCreatedByStyles,
   historyAuditContextDetailItemStyles,
   historyAuditContextDetailKeyStyles,
   historyAuditContextDetailValueStyles,
@@ -66,6 +67,7 @@ export const HistoryAuditActivityColumns = ({
   const contextualDetails = normalizedAdditionalDetails.filter((i) => !isTriggeredByKey(i.key));
 
   const detailsText = isNonEmptyString(data.event.details) ? data.event.details : null;
+  const createdByText = isNonEmptyString(data.event.createdBy) ? data.event.createdBy.trim() : null;
 
   const resolvedChanges =
     (
@@ -140,6 +142,12 @@ export const HistoryAuditActivityColumns = ({
         <Typography variant="body2" sx={historyAuditActionTextStyles}>
           {data.action}
         </Typography>
+
+        {createdByText ? (
+          <Typography variant="caption" sx={historyAuditCreatedByStyles}>
+            {`${HISTORY_AUDIT_DETAIL_TEXT.CREATED_BY_LABEL} ${createdByText}`}
+          </Typography>
+        ) : null}
 
         {hasDetailSection ? (
           <Box sx={historyAuditDetailsSectionStyles}>

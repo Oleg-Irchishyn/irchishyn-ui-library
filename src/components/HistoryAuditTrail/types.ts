@@ -30,6 +30,7 @@ export interface HistoryAuditTrailEvent {
   id: string;
   source?: string | null;
   username: string;
+  createdBy?: string | null;
   auditEventType: HistoryAuditEventType;
   subject?: string | null;
   oldValue?: string | null;

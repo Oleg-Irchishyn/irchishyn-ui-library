@@ -148,6 +148,7 @@ export const isTriggeredByKey = (key: string) =>
 export const getHistoryAuditRowHeight = (event?: HistoryAuditTrailEvent | null) => {
   const baseHeight = 112;
   if (!event) return baseHeight;
+  const hasCreatedBy = isNonEmptyString(event.createdBy);
 
   const hasDetailsText = isNonEmptyString(event.details);
   const detailsTextLength = hasDetailsText ? event.details!.trim().length : 0;
@@ -183,7 +184,12 @@ export const getHistoryAuditRowHeight = (event?: HistoryAuditTrailEvent | null) 
   const extraPadding = 18;
   return (
     baseHeight +
-    (detailsLines + fieldChangeLineCount + triggeredByLines + contextualLines) * lineHeight +
+    (Number(hasCreatedBy) +
+      detailsLines +
+      fieldChangeLineCount +
+      triggeredByLines +
+      contextualLines) *
+      lineHeight +
     extraPadding
   );
 };
