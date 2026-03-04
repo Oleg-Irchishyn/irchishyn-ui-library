@@ -166,6 +166,9 @@ stages:
       - job: ReleaseJob
         displayName: 'semantic-release'
         steps:
+          - checkout: self
+            persistCredentials: true
+
           - task: NodeTool@0
             displayName: 'Use Node $(nodeVersion)'
             inputs:
