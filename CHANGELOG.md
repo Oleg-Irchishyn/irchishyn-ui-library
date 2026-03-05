@@ -1,3 +1,10 @@
+# [1.1.0](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.0.0...v1.1.0) (2026-03-05)
+
+
+### Features
+
+* [TASK-11777]: [FE] Add Alert Component to Gen2Verse.UI.Library ([658bd5a](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/658bd5a8d3fbbfb5b44b98c546a818207c89e444)), closes [#11777](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/11777)
+
 # 1.0.0 (2026-03-04)
 
 ### Features
