@@ -15,7 +15,7 @@ parameters:
   - name: coverageMin
     displayName: 'Minimum line coverage %'
     type: number
-    default: 80
+    default: '80'
 
 variables:
   nodeVersion: '22.x'
@@ -167,7 +167,8 @@ stages:
         displayName: 'semantic-release'
         steps:
           - checkout: self
-            persistCredentials: true
+            persistCredentials: 'true'
+            fetchDepth: '0'
 
           - task: NodeTool@0
             displayName: 'Use Node $(nodeVersion)'
