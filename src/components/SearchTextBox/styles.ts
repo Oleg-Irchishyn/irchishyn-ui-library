@@ -2,9 +2,7 @@ import type { SxProps, Theme } from '@mui/material/styles';
 
 export const getSearchTextBoxBaseStyles = (): SxProps<Theme> => (theme: Theme) => ({
   backgroundColor:
-    theme.palette.mode === 'dark'
-      ? theme.palette.background.paper
-      : theme.palette.common.white,
+    theme.palette.mode === 'dark' ? theme.palette.background.paper : theme.palette.common.white,
   color: theme.palette.text.primary,
   '& .MuiOutlinedInput-root': {
     '& .MuiOutlinedInput-notchedOutline': {

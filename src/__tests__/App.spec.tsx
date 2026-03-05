@@ -24,6 +24,9 @@ vi.mock('../providers', () => ({
       {children}
     </div>
   ),
+  AlertToastProvider: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="toast-provider">{children}</div>
+  ),
 }));
 
 describe('App', () => {
@@ -35,6 +38,10 @@ describe('App', () => {
     );
 
     expect(screen.getByTestId('theme-provider').getAttribute('data-mode')).toBe('light');
+    expect(
+      screen.getByTestId('theme-provider').contains(screen.getByTestId('toast-provider')),
+    ).toBe(true);
+    expect(screen.getByTestId('toast-provider').contains(screen.getByTestId('app-box'))).toBe(true);
     expect(screen.getByTestId('app-box').getAttribute('data-padding')).toBe('2');
     expect(screen.getByText('Child content')).toBeTruthy();
   });
@@ -47,6 +54,10 @@ describe('App', () => {
     );
 
     expect(screen.getByTestId('theme-provider').getAttribute('data-mode')).toBe('dark');
+    expect(
+      screen.getByTestId('theme-provider').contains(screen.getByTestId('toast-provider')),
+    ).toBe(true);
+    expect(screen.getByTestId('toast-provider').contains(screen.getByTestId('app-box'))).toBe(true);
     expect(screen.getByTestId('app-box').getAttribute('data-padding')).toBe('6');
     expect(screen.getByText('Custom child')).toBeTruthy();
   });

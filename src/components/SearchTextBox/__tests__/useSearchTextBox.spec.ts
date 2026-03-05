@@ -16,9 +16,7 @@ describe('useSearchTextBox', () => {
 
   it('returns localValue synced to value and showClearButton false when empty', () => {
     const onChange = vi.fn();
-    const { result } = renderHook(() =>
-      useSearchTextBox({ value: '', onChange }),
-    );
+    const { result } = renderHook(() => useSearchTextBox({ value: '', onChange }));
 
     expect(result.current.localValue).toBe('');
     expect(result.current.showClearButton).toBe(false);
@@ -26,10 +24,9 @@ describe('useSearchTextBox', () => {
 
   it('syncs localValue when value prop changes', () => {
     const onChange = vi.fn();
-    const { result, rerender } = renderHook(
-      (props) => useSearchTextBox(props),
-      { initialProps: { value: '', onChange } },
-    );
+    const { result, rerender } = renderHook((props) => useSearchTextBox(props), {
+      initialProps: { value: '', onChange },
+    });
 
     expect(result.current.localValue).toBe('');
 
@@ -39,9 +36,7 @@ describe('useSearchTextBox', () => {
 
   it('updates localValue and calls onChange after debounce when handleChange is called', () => {
     const onChange = vi.fn();
-    const { result } = renderHook(() =>
-      useSearchTextBox({ value: '', onChange, debounceMs: 300 }),
-    );
+    const { result } = renderHook(() => useSearchTextBox({ value: '', onChange, debounceMs: 300 }));
 
     act(() => {
       result.current.handleChange({
@@ -61,9 +56,7 @@ describe('useSearchTextBox', () => {
 
   it('calls onChange immediately when debounceMs is 0', () => {
     const onChange = vi.fn();
-    const { result } = renderHook(() =>
-      useSearchTextBox({ value: '', onChange, debounceMs: 0 }),
-    );
+    const { result } = renderHook(() => useSearchTextBox({ value: '', onChange, debounceMs: 0 }));
 
     act(() => {
       result.current.handleChange({
@@ -97,9 +90,7 @@ describe('useSearchTextBox', () => {
 
   it('showClearButton is true when localValue is non-empty', () => {
     const onChange = vi.fn();
-    const { result } = renderHook(() =>
-      useSearchTextBox({ value: 'x', onChange }),
-    );
+    const { result } = renderHook(() => useSearchTextBox({ value: 'x', onChange }));
 
     expect(result.current.showClearButton).toBe(true);
   });

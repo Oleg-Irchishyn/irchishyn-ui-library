@@ -69,7 +69,9 @@ export const SearchTextBox = ({
           </InputAdornment>
         ) : null,
       }}
-      sx={(sx ? [getSearchTextBoxBaseStyles(), sx] : getSearchTextBoxBaseStyles()) as SxProps<Theme>}
+      sx={
+        (sx ? [getSearchTextBoxBaseStyles(), sx] : getSearchTextBoxBaseStyles()) as SxProps<Theme>
+      }
       {...rest}
     />
   );
