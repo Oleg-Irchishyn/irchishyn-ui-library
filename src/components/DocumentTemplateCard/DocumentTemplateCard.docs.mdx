@@ -1,0 +1,63 @@
+import { ArgTypes, Canvas, Description, Meta, Subtitle, Title } from '@storybook/blocks';
+
+import * as Stories from './DocumentTemplateCard.stories';
+
+<Meta of={Stories} />
+
+<Title>DocumentTemplateCard</Title>
+<Subtitle>Selectable document/template card with badge and actions</Subtitle>
+<Description>
+  `DocumentTemplateCard` renders a reusable file card for template flows (Cover Letter, Template,
+  Addendum, or custom type). It supports badge colors by type, file-kind icon behavior (PDF vs
+  document), selected state, configurable top-right actions (swap/delete/settings), and filename
+  truncation with overflow tooltip.
+</Description>
+
+## Import
+
+```ts
+import {
+  DocumentTemplateCard,
+  DOCUMENT_TEMPLATE_CARD_ACTION_TYPES,
+} from '@gen2fund/gen2verse-ui-library';
+import type { DocumentTemplateCardAction } from '@gen2fund/gen2verse-ui-library';
+```
+
+## Basic usage
+
+```tsx
+const actions: DocumentTemplateCardAction[] = [
+  { type: DOCUMENT_TEMPLATE_CARD_ACTION_TYPES.SWAP, onClick: () => {} },
+  { type: DOCUMENT_TEMPLATE_CARD_ACTION_TYPES.SETTINGS, onClick: () => {} },
+];
+
+<DocumentTemplateCard
+  type="Template"
+  label="Template"
+  fileName="CapitalCall_Template_v3.docx"
+  selected
+  actions={actions}
+  onClick={() => {}}
+/>;
+```
+
+## Notes
+
+- **Type badge colors:** Cover Letter -> info (blue), Template -> primary (teal), Addendum -> warning (amber).
+- **File icon:** template type always renders document icon; non-template uses PDF icon when filename ends with `.pdf`.
+- **Action callbacks:** each action receives context (`cardType`, `label`, `fileName`, `selected`, `actionType`).
+- **Accessibility:** card supports keyboard activation (`Enter`/`Space`) when `onClick` is provided.
+- **Theme compatibility:** styles are token-based and adapt automatically in light and dark modes.
+
+## Examples
+
+<Canvas of={Stories.CoverLetter} />
+<Canvas of={Stories.TemplateSelected} />
+<Canvas of={Stories.Addendum} />
+<Canvas of={Stories.InteractiveSet} />
+<Canvas of={Stories.Actions} />
+<Canvas of={Stories.DarkMode} />
+
+## Props
+
+<ArgTypes of={Stories.CoverLetter} />

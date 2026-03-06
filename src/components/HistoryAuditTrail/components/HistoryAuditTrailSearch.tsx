@@ -1,7 +1,6 @@
-import { InputAdornment, OutlinedInput } from '@mui/material';
-
-import { SearchIcon } from './HistoryAuditTrailIcons';
-import { historyAuditSearchAdornmentStyles, historyAuditSearchInputStyles } from './styles';
+import { useCallback } from 'react';
+import { SearchTextBox } from '../../SearchTextBox';
+import { historyAuditSearchInputStyles } from './styles';
 
 import type { HistoryAuditTrailSearchProps } from '../types';
 
@@ -9,24 +8,20 @@ export const HistoryAuditTrailSearch = ({
   searchValue = '',
   onSearchValueChange,
 }: HistoryAuditTrailSearchProps) => {
-  const handleSearchValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onSearchValueChange?.(event.target.value);
-  };
+  const handleSearchValueChange = useCallback(
+    (value: string) => onSearchValueChange?.(value),
+    [onSearchValueChange],
+  );
 
   return (
-    <OutlinedInput
+    <SearchTextBox
       data-testid="history-audit-trail-search-input"
-      size="small"
+      debounceMs={0}
       value={searchValue}
       placeholder="Search activity history..."
       onChange={handleSearchValueChange}
       sx={historyAuditSearchInputStyles}
-      startAdornment={
-        <InputAdornment position="start" sx={historyAuditSearchAdornmentStyles}>
-          <SearchIcon />
-        </InputAdornment>
-      }
-      inputProps={{ 'aria-label': 'Search activity history' }}
+      ariaLabel="Search activity history"
     />
   );
 };

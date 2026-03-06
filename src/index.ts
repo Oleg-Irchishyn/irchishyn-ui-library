@@ -41,6 +41,21 @@ export type {
   UseSearchTextBoxResult,
 } from './components/SearchTextBox';
 
+export { DocumentTemplateCard, useDocumentTemplateCard } from './components/DocumentTemplateCard';
+export type {
+  DocumentTemplateCardProps,
+  DocumentTemplateCardAction,
+  DocumentTemplateCardActionContext,
+  DocumentTemplateCardActionType,
+  DocumentTemplateCardFileKind,
+  UseDocumentTemplateCardParams,
+  UseDocumentTemplateCardResult,
+} from './components/DocumentTemplateCard';
+export {
+  DOCUMENT_TEMPLATE_CARD_TYPES,
+  DOCUMENT_TEMPLATE_CARD_ACTION_TYPES,
+} from './components/DocumentTemplateCard';
+
 export { default as App } from './App';
 export type { AppProps } from './App';
 
