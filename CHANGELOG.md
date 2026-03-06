@@ -1,3 +1,10 @@
+# [1.3.0](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.2.0...v1.3.0) (2026-03-06)
+
+
+### Features
+
+* [TASK-11851]: [FE] : Add Document / Template Card Component into Gen2Verse.UI.Library ([5376732](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/5376732a3d42e408d2258f40eaa232df633cde42)), closes [#11851](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/11851)
+
 # [1.2.0](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.1.0...v1.2.0) (2026-03-06)
 
 ### Features
