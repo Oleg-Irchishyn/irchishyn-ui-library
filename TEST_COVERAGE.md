@@ -4,20 +4,20 @@
 
 ## Overall coverage
 
-**91.98%** (average of statements, branches, functions, lines)
+**92.32%** (average of statements, branches, functions, lines)
 
 | Statements | Branches | Functions | Lines  |
 | ---------- | -------- | --------- | ------ |
-| 95.69%     | 80.81%   | 94.42%    | 96.98% |
+| 95.89%     | 81.49%   | 94.70%    | 97.19% |
 
 ## Summary (covered / total)
 
 | Metric     | Coverage | Covered / Total |
 | ---------- | -------- | --------------- |
-| Statements | 95.69%   | 890 / 930       |
-| Branches   | 80.81%   | 653 / 808       |
-| Functions  | 94.42%   | 271 / 287       |
-| Lines      | 96.98%   | 803 / 828       |
+| Statements | 95.89%   | 957 / 998       |
+| Branches   | 81.49%   | 700 / 859       |
+| Functions  | 94.70%   | 286 / 302       |
+| Lines      | 97.19%   | 865 / 890       |
 
 ## Coverage by file
 
@@ -30,6 +30,10 @@
 | src/components/Badge/Badge.tsx                                                      | 100.00%    | 80.00%   | 100.00%   | 100.00% |
 | src/components/Badge/styles.ts                                                      | 100.00%    | 95.45%   | 100.00%   | 100.00% |
 | src/components/Badge/utils.ts                                                       | 100.00%    | 100.00%  | 100.00%   | 100.00% |
+| src/components/FileUpload/FileUpload.tsx                                            | 100.00%    | 85.71%   | 100.00%   | 100.00% |
+| src/components/FileUpload/styles.ts                                                 | 100.00%    | 92.85%   | 100.00%   | 100.00% |
+| src/components/FileUpload/useFileUpload.ts                                          | 97.36%     | 87.50%   | 100.00%   | 100.00% |
+| src/components/FileUpload/utils.ts                                                  | 100.00%    | 100.00%  | 100.00%   | 100.00% |
 | src/components/HistoryAuditTrail/components/columns/HistoryAuditActivityColumns.tsx | 96.96%     | 68.88%   | 100.00%   | 100.00% |
 | src/components/HistoryAuditTrail/components/columns/HistoryAuditTimestampColumn.tsx | 100.00%    | 100.00%  | 100.00%   | 100.00% |
 | src/components/HistoryAuditTrail/components/columns/styles.ts                       | 100.00%    | 100.00%  | 100.00%   | 100.00% |

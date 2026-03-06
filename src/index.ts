@@ -65,3 +65,10 @@ export type {
   UseAlertResult,
 } from './components/Alert';
 export { ALERT_SEVERITIES, ALERT_VARIANTS } from './components/Alert';
+
+export { FileUpload, useFileUpload } from './components/FileUpload';
+export type {
+  FileUploadProps,
+  UseFileUploadParams,
+  UseFileUploadResult,
+} from './components/FileUpload';

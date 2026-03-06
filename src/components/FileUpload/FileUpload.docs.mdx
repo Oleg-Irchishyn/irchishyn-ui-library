@@ -1,0 +1,67 @@
+import { ArgTypes, Canvas, Description, Meta, Subtitle, Title } from '@storybook/blocks';
+
+import * as Stories from './FileUpload.stories';
+
+<Meta of={Stories} />
+
+<Title>FileUpload</Title>
+<Subtitle>Drop zone and browse for file selection with validation</Subtitle>
+<Description>
+  `FileUpload` is a reusable component that renders a dashed-border drop zone with an upload icon, a
+  "Drop or browse" label, and a **Browse** button. Users can add files by dragging and dropping onto
+  the zone or by clicking Browse to open the system file picker. The component supports configurable
+  accepted file types (`accept`), optional maximum file size (`maxSizeBytes`), single or multiple
+  selection (`multiple`), and a disabled state. Invalid files (wrong type or over size) show a
+  user-friendly error message and do not call `onFileSelect`. Styling uses MUI theme tokens for
+  light/dark compatibility. For custom UI with the same logic, use the `useFileUpload` hook.
+</Description>
+
+## Import
+
+```ts
+import { FileUpload } from '@gen2fund/gen2verse-ui-library';
+```
+
+```ts
+import { FileUpload, useFileUpload } from '@gen2fund/gen2verse-ui-library';
+```
+
+## Basic usage
+
+```tsx
+<FileUpload
+  onFileSelect={(files) => {
+    const list = Array.isArray(files) ? files : [files];
+    console.log(
+      'Selected:',
+      list.map((f) => f.name),
+    );
+  }}
+/>
+```
+
+With accepted types and max size:
+
+```tsx
+<FileUpload
+  accept=".pdf,.docx"
+  multiple
+  maxSizeBytes={5 * 1024 * 1024}
+  onFileSelect={(files) => handleUpload(Array.isArray(files) ? files : [files])}
+/>
+```
+
+## Examples
+
+<Canvas of={Stories.Default} />
+<Canvas of={Stories.SingleFile} />
+<Canvas of={Stories.MultipleFiles} />
+<Canvas of={Stories.WithMaxSize} />
+<Canvas of={Stories.Disabled} />
+<Canvas of={Stories.WithCallback} />
+<Canvas of={Stories.AllStates} />
+<Canvas of={Stories.DarkMode} />
+
+## Props
+
+<ArgTypes of={Stories.Default} />
