@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/.azuredevops/**)",
+      "Read(**/node_modules/**)",
+      "Read(**/dist/**)",
+      "Read(**/.git/**)",
+      "Write(**/.env)",
+      "Write(**/.env.*)"
+    ]
+  }
+}
