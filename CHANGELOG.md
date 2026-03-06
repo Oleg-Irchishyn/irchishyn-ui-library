@@ -1,3 +1,10 @@
+# [1.2.0](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.1.0...v1.2.0) (2026-03-06)
+
+
+### Features
+
+* [TASK-11860]: [FE] Configure Directory Access Limitations for Claude Code ([6a9d268](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/6a9d268907134c3ac7234df30c66ced6514b6404)), closes [#11861](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/11861)
+
 # [1.1.0](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.0.0...v1.1.0) (2026-03-05)
 
 
