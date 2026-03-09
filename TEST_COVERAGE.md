@@ -4,20 +4,20 @@
 
 ## Overall coverage
 
-**92.73%** (average of statements, branches, functions, lines)
+**92.70%** (average of statements, branches, functions, lines)
 
 | Statements | Branches | Functions | Lines |
 |------------|----------|-----------|-------|
-| 96.09% | 82.79% | 94.73% | 97.33% |
+| 96.26% | 82.28% | 94.83% | 97.43% |
 
 ## Summary (covered / total)
 
 | Metric      | Coverage | Covered / Total |
 |------------|----------|-----------------|
-| Statements | 96.09%    | 1057 / 1100        |
-| Branches   | 82.79%    | 770 / 930        |
-| Functions  | 94.73%   | 324 / 342         |
-| Lines      | 97.33%   | 951 / 977        |
+| Statements | 96.26%    | 1108 / 1151        |
+| Branches   | 82.28%    | 808 / 982        |
+| Functions  | 94.83%   | 349 / 368         |
+| Lines      | 97.43%   | 988 / 1014        |
 
 ## Coverage by file
 
@@ -70,6 +70,9 @@
 | src/components/LanguageEditor/useConditionalLanguageBuilder.ts | 88.57% | 63.63% | 80.00% | 96.55% |
 | src/components/LanguageEditor/utils/buildConditionalString.ts | 100.00% | 100.00% | 100.00% | 100.00% |
 | src/components/LanguageEditor/utils/languageEditorUtils.ts | 98.33% | 75.00% | 100.00% | 98.21% |
+| src/components/OutputConfigurationPanel/OutputConfigurationPanel.tsx | 100.00% | 70.00% | 80.00% | 100.00% |
+| src/components/OutputConfigurationPanel/OutputFormatSection.styles.ts | 100.00% | 60.00% | 100.00% | 100.00% |
+| src/components/OutputConfigurationPanel/OutputFormatSection.tsx | 100.00% | 78.12% | 100.00% | 100.00% |
 | src/components/SearchTextBox/SearchTextBox.tsx | 100.00% | 90.00% | 100.00% | 100.00% |
 | src/components/SearchTextBox/styles.ts | 100.00% | 50.00% | 100.00% | 100.00% |
 | src/components/SearchTextBox/useSearchTextBox.ts | 90.32% | 77.77% | 100.00% | 90.32% |

@@ -87,3 +87,27 @@ export type {
   UseFileUploadParams,
   UseFileUploadResult,
 } from './components/FileUpload';
+
+export {
+  OutputConfigurationPanel,
+  OutputFormatSection,
+  useOutputFormatSection,
+  useOutputConfigurationPanel,
+} from './components/OutputConfigurationPanel';
+export type {
+  OutputConfigurationPanelProps,
+  OutputFormatSectionProps,
+  OutputFormatItem,
+  UseOutputFormatSectionParams,
+  UseOutputFormatSectionResult,
+  UseOutputConfigurationPanelParams,
+  UseOutputConfigurationPanelResult,
+} from './components/OutputConfigurationPanel';
+export {
+  DEFAULT_OUTPUT_FORMATS,
+  DEFAULT_SELECTED_FORMATS,
+  DEFAULT_MIN_SELECTED_FORMATS,
+  OUTPUT_FORMAT_ID_PDF,
+  OUTPUT_FORMAT_ID_WORD,
+  OUTPUT_FORMAT_MIN_SELECTED_MESSAGE,
+} from './components/OutputConfigurationPanel';
