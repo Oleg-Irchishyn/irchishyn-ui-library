@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material';
 
+import { FileSplittingSection } from './FileSplittingSection';
 import { OutputFormatSection } from './OutputFormatSection';
 import {
   getOutputConfigurationPanelRootStyles,
@@ -10,19 +11,18 @@ import { useOutputConfigurationPanel } from './useOutputConfigurationPanel';
 
 export function OutputConfigurationPanel({
   outputFormat,
+  fileSplitting,
   sx,
 }: OutputConfigurationPanelProps) {
-  const { outputFormatProps } = useOutputConfigurationPanel({ outputFormat });
+  const { outputFormatProps, fileSplittingProps } = useOutputConfigurationPanel({
+    outputFormat,
+    fileSplitting,
+  });
 
   return (
-    <Box
-      data-testid="output-configuration-panel"
-      sx={getOutputConfigurationPanelRootStyles(sx)}
-    >
+    <Box data-testid="output-configuration-panel" sx={getOutputConfigurationPanelRootStyles(sx)}>
       <OutputFormatSection {...outputFormatProps} />
-      <Box component="section" sx={outputConfigurationPanelPlaceholderStyles}>
-        <Typography component="span">File Splitting — coming soon</Typography>
-      </Box>
+      <FileSplittingSection {...fileSplittingProps} />
       <Box component="section" sx={outputConfigurationPanelPlaceholderStyles}>
         <Typography component="span">File Naming Convention — coming soon</Typography>
       </Box>

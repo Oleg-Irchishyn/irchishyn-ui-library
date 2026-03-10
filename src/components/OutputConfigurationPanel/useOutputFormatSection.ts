@@ -38,8 +38,7 @@ export function useOutputFormatSection({
   );
 
   const displayError =
-    error ??
-    (showMinSelectedError ? OUTPUT_FORMAT_MIN_SELECTED_MESSAGE : undefined);
+    error ?? (showMinSelectedError ? OUTPUT_FORMAT_MIN_SELECTED_MESSAGE : undefined);
 
   return { handleChange, displayError };
 }

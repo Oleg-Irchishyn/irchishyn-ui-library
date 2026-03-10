@@ -29,10 +29,23 @@ export type OutputFormatSectionProps = {
   sx?: SxProps<Theme>;
 };
 
+/** File splitting mode: single document vs per-investor */
+export type SplitMode = 'consolidated' | 'splitPerInvestor';
+
+/** Props for the File Splitting subsection */
+export type FileSplittingSectionProps = {
+  splitMode: SplitMode;
+  onSplitModeChange: (mode: SplitMode) => void;
+  /** Optional MUI sx for the section container */
+  sx?: SxProps<Theme>;
+};
+
 /** Props for the full Output Configuration Panel (shell; more sections later) */
 export type OutputConfigurationPanelProps = {
   /** Output Format subsection props; if omitted, section uses internal defaults for demo */
   outputFormat?: OutputFormatSectionProps;
+  /** File Splitting subsection props; if omitted, section uses internal defaults */
+  fileSplitting?: FileSplittingSectionProps;
   /** Optional styles for the panel container */
   sx?: SxProps<Theme>;
 };

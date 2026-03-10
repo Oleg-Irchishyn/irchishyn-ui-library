@@ -6,14 +6,15 @@ import { action } from '@storybook/addon-actions';
 import { FileText, FileType } from 'lucide-react';
 
 import { Gen2ThemeProvider } from '../../providers';
-import { OutputConfigurationPanel, OutputFormatSection } from '.';
+import { OutputConfigurationPanel, OutputFormatSection, FileSplittingSection } from '.';
 import {
   DEFAULT_OUTPUT_FORMATS,
   DEFAULT_SELECTED_FORMATS,
+  DEFAULT_SPLIT_MODE,
   OUTPUT_FORMAT_ID_PDF,
   OUTPUT_FORMAT_ID_WORD,
 } from './constants';
-import type { OutputFormatItem } from './types';
+import type { OutputFormatItem, SplitMode } from './types';
 
 const meta: Meta<typeof OutputConfigurationPanel> = {
   title: 'Components/OutputConfigurationPanel',
@@ -30,12 +31,13 @@ const meta: Meta<typeof OutputConfigurationPanel> = {
     docs: {
       description: {
         component:
-          'Reusable Output Configuration Panel with Output Format section (PDF/Word multi-select with validation), and placeholders for File Splitting and File Naming Convention.',
+          'Reusable Output Configuration Panel with Output Format, File Splitting (radio options), and File Naming Convention placeholder.',
       },
     },
   },
   argTypes: {
     outputFormat: { control: false },
+    fileSplitting: { control: false },
     sx: { control: false },
   },
 };
@@ -80,14 +82,40 @@ function PanelWithState(props: { defaultSelected?: string[] }) {
   );
 }
 
+function PanelWithFileSplittingState() {
+  const [selectedFormats, setSelectedFormats] = useState<string[]>(DEFAULT_SELECTED_FORMATS);
+  const [splitMode, setSplitMode] = useState<SplitMode>(DEFAULT_SPLIT_MODE);
+  const theme = useTheme();
+  const formatsWithIcons = useMemo(() => getFormatsWithIcons(theme), [theme]);
+
+  return (
+    <OutputConfigurationPanel
+      outputFormat={{
+        formats: formatsWithIcons,
+        selectedFormats,
+        onFormatsChange: (ids) => {
+          action('onFormatsChange')(ids);
+          setSelectedFormats(ids);
+        },
+        minSelected: 1,
+      }}
+      fileSplitting={{
+        splitMode,
+        onSplitModeChange: (mode) => {
+          action('onSplitModeChange')(mode);
+          setSplitMode(mode);
+        },
+      }}
+    />
+  );
+}
+
 export const Default: Story = {
   render: () => <PanelWithState />,
 };
 
 export const BothFormatsSelected: Story = {
-  render: () => (
-    <PanelWithState defaultSelected={[OUTPUT_FORMAT_ID_PDF, OUTPUT_FORMAT_ID_WORD]} />
-  ),
+  render: () => <PanelWithState defaultSelected={[OUTPUT_FORMAT_ID_PDF, OUTPUT_FORMAT_ID_WORD]} />,
 };
 
 export const ValidationWhenDeselectingLast: Story = {
@@ -100,6 +128,18 @@ export const ValidationWhenDeselectingLast: Story = {
     },
   },
   render: () => <PanelWithState defaultSelected={[OUTPUT_FORMAT_ID_PDF]} />,
+};
+
+export const WithFileSplittingInteractive: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Panel with Output Format and File Splitting; toggle split mode to see onSplitModeChange.',
+      },
+    },
+  },
+  render: () => <PanelWithFileSplittingState />,
 };
 
 function OutputFormatSectionStandaloneWrapper() {
@@ -131,4 +171,28 @@ export const OutputFormatSectionStandalone: Story = {
     },
   },
   render: () => <OutputFormatSectionStandaloneWrapper />,
+};
+
+function FileSplittingSectionStandaloneWrapper() {
+  const [splitMode, setSplitMode] = useState<SplitMode>(DEFAULT_SPLIT_MODE);
+  return (
+    <FileSplittingSection
+      splitMode={splitMode}
+      onSplitModeChange={(mode) => {
+        action('onSplitModeChange')(mode);
+        setSplitMode(mode);
+      }}
+    />
+  );
+}
+
+export const FileSplittingSectionStandalone: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story: 'File Splitting section only (Consolidated File / Split Per Investor).',
+      },
+    },
+  },
+  render: () => <FileSplittingSectionStandaloneWrapper />,
 };

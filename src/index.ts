@@ -91,6 +91,7 @@ export type {
 export {
   OutputConfigurationPanel,
   OutputFormatSection,
+  FileSplittingSection,
   useOutputFormatSection,
   useOutputConfigurationPanel,
 } from './components/OutputConfigurationPanel';
@@ -98,6 +99,8 @@ export type {
   OutputConfigurationPanelProps,
   OutputFormatSectionProps,
   OutputFormatItem,
+  SplitMode,
+  FileSplittingSectionProps,
   UseOutputFormatSectionParams,
   UseOutputFormatSectionResult,
   UseOutputConfigurationPanelParams,
@@ -110,4 +113,8 @@ export {
   OUTPUT_FORMAT_ID_PDF,
   OUTPUT_FORMAT_ID_WORD,
   OUTPUT_FORMAT_MIN_SELECTED_MESSAGE,
+  DEFAULT_SPLIT_MODE,
+  SPLIT_MODE_CONSOLIDATED,
+  SPLIT_MODE_SPLIT_PER_INVESTOR,
+  DEFAULT_FILE_SPLITTING_OPTIONS,
 } from './components/OutputConfigurationPanel';

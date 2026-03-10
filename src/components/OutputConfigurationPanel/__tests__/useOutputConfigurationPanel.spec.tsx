@@ -1,13 +1,15 @@
 import React from 'react';
-import { renderHook } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { describe, expect, it, vi } from 'vitest';
 
 import {
-  DEFAULT_SELECTED_FORMATS,
   DEFAULT_MIN_SELECTED_FORMATS,
+  DEFAULT_SELECTED_FORMATS,
+  DEFAULT_SPLIT_MODE,
   OUTPUT_FORMAT_ID_PDF,
   OUTPUT_FORMAT_ID_WORD,
+  SPLIT_MODE_SPLIT_PER_INVESTOR,
 } from '../constants';
 import { useOutputConfigurationPanel } from '../useOutputConfigurationPanel';
 
@@ -63,9 +65,7 @@ describe('useOutputConfigurationPanel', () => {
 
   it('works with dark theme', () => {
     const darkWrapper = ({ children }: { children: React.ReactNode }) => (
-      <ThemeProvider theme={createTheme({ palette: { mode: 'dark' } })}>
-        {children}
-      </ThemeProvider>
+      <ThemeProvider theme={createTheme({ palette: { mode: 'dark' } })}>{children}</ThemeProvider>
     );
     const { result } = renderHook(() => useOutputConfigurationPanel({}), {
       wrapper: darkWrapper,
@@ -73,5 +73,34 @@ describe('useOutputConfigurationPanel', () => {
 
     expect(result.current.outputFormatProps.formats).toHaveLength(2);
     expect(result.current.outputFormatProps.selectedFormats).toEqual(DEFAULT_SELECTED_FORMATS);
+  });
+
+  it('when fileSplitting is undefined, internal state allows radio to toggle (AC4)', () => {
+    const { result } = renderHook(() => useOutputConfigurationPanel({}), { wrapper });
+
+    expect(result.current.fileSplittingProps.splitMode).toBe(DEFAULT_SPLIT_MODE);
+
+    act(() => {
+      result.current.fileSplittingProps.onSplitModeChange(SPLIT_MODE_SPLIT_PER_INVESTOR);
+    });
+
+    expect(result.current.fileSplittingProps.splitMode).toBe(SPLIT_MODE_SPLIT_PER_INVESTOR);
+  });
+
+  it('when fileSplitting is provided, returns it unchanged (controlled)', () => {
+    const onSplitModeChange = vi.fn();
+    const { result } = renderHook(
+      () =>
+        useOutputConfigurationPanel({
+          fileSplitting: {
+            splitMode: SPLIT_MODE_SPLIT_PER_INVESTOR,
+            onSplitModeChange,
+          },
+        }),
+      { wrapper },
+    );
+
+    expect(result.current.fileSplittingProps.splitMode).toBe(SPLIT_MODE_SPLIT_PER_INVESTOR);
+    expect(result.current.fileSplittingProps.onSplitModeChange).toBe(onSplitModeChange);
   });
 });

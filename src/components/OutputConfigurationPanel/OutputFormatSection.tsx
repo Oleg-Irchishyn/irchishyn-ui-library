@@ -1,10 +1,4 @@
-import {
-  Box,
-  Checkbox,
-  FormControlLabel,
-  FormHelperText,
-  Typography,
-} from '@mui/material';
+import { Box, Checkbox, FormControlLabel, FormHelperText, Typography } from '@mui/material';
 import type { ChangeEvent } from 'react';
 
 import type { OutputFormatSectionProps } from './types';
@@ -43,7 +37,9 @@ export function OutputFormatSection({
       component="section"
       data-testid="output-format-section"
       aria-labelledby="output-format-heading"
-      aria-describedby={displayError != null || helperText != null ? 'output-format-helper' : undefined}
+      aria-describedby={
+        displayError != null || helperText != null ? 'output-format-helper' : undefined
+      }
       sx={[getOutputFormatSectionStyles(), ...(Array.isArray(sx) ? sx : sx ? [sx] : [])]}
     >
       <Typography
@@ -54,11 +50,7 @@ export function OutputFormatSection({
       >
         {SECTION_TITLE}
       </Typography>
-      <Box
-        role="group"
-        aria-label={SECTION_TITLE}
-        sx={getOutputFormatOptionsRowStyles()}
-      >
+      <Box role="group" aria-label={SECTION_TITLE} sx={getOutputFormatOptionsRowStyles()}>
         {formats.map((format) => {
           const isChecked = selectedFormats.includes(format.id);
           return (

@@ -4,20 +4,20 @@
 
 ## Overall coverage
 
-**92.70%** (average of statements, branches, functions, lines)
+**92.71%** (average of statements, branches, functions, lines)
 
 | Statements | Branches | Functions | Lines |
 |------------|----------|-----------|-------|
-| 96.26% | 82.28% | 94.83% | 97.43% |
+| 96.35% | 82.18% | 94.83% | 97.47% |
 
 ## Summary (covered / total)
 
 | Metric      | Coverage | Covered / Total |
 |------------|----------|-----------------|
-| Statements | 96.26%    | 1108 / 1151        |
-| Branches   | 82.28%    | 808 / 982        |
-| Functions  | 94.83%   | 349 / 368         |
-| Lines      | 97.43%   | 988 / 1014        |
+| Statements | 96.35%    | 1138 / 1181        |
+| Branches   | 82.18%    | 812 / 988        |
+| Functions  | 94.83%   | 367 / 387         |
+| Lines      | 97.47%   | 1004 / 1030        |
 
 ## Coverage by file
 
@@ -70,9 +70,14 @@
 | src/components/LanguageEditor/useConditionalLanguageBuilder.ts | 88.57% | 63.63% | 80.00% | 96.55% |
 | src/components/LanguageEditor/utils/buildConditionalString.ts | 100.00% | 100.00% | 100.00% | 100.00% |
 | src/components/LanguageEditor/utils/languageEditorUtils.ts | 98.33% | 75.00% | 100.00% | 98.21% |
-| src/components/OutputConfigurationPanel/OutputConfigurationPanel.tsx | 100.00% | 70.00% | 80.00% | 100.00% |
+| src/components/OutputConfigurationPanel/FileSplittingSection.styles.ts | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/OutputConfigurationPanel/FileSplittingSection.tsx | 100.00% | 50.00% | 100.00% | 100.00% |
+| src/components/OutputConfigurationPanel/OutputConfigurationPanel.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
 | src/components/OutputConfigurationPanel/OutputFormatSection.styles.ts | 100.00% | 60.00% | 100.00% | 100.00% |
-| src/components/OutputConfigurationPanel/OutputFormatSection.tsx | 100.00% | 78.12% | 100.00% | 100.00% |
+| src/components/OutputConfigurationPanel/OutputFormatSection.tsx | 100.00% | 70.83% | 100.00% | 100.00% |
+| src/components/OutputConfigurationPanel/styles.ts | 100.00% | 50.00% | 100.00% | 100.00% |
+| src/components/OutputConfigurationPanel/useOutputConfigurationPanel.tsx | 100.00% | 87.50% | 66.66% | 100.00% |
+| src/components/OutputConfigurationPanel/useOutputFormatSection.ts | 100.00% | 100.00% | 100.00% | 100.00% |
 | src/components/SearchTextBox/SearchTextBox.tsx | 100.00% | 90.00% | 100.00% | 100.00% |
 | src/components/SearchTextBox/styles.ts | 100.00% | 50.00% | 100.00% | 100.00% |
 | src/components/SearchTextBox/useSearchTextBox.ts | 90.32% | 77.77% | 100.00% | 90.32% |
