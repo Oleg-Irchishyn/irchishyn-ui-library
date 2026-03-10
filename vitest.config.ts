@@ -8,6 +8,14 @@ export default defineConfig({
         __dirname,
         'src/__tests__/mocks/platformStyleMock.ts',
       ),
+      '@mui/material/useMediaQuery': path.resolve(
+        __dirname,
+        'node_modules/@mui/material/node/useMediaQuery/index.js',
+      ),
+      '@mui/material/styles': path.resolve(
+        __dirname,
+        'node_modules/@mui/material/node/styles/index.js',
+      ),
     },
   },
   test: {

@@ -113,7 +113,7 @@ describe('FileUpload utils', () => {
 
     it('returns first error when multiple files and first is invalid', () => {
       const validFile = createFile('a.pdf', 100);
-      const tooBig = createFile('big.pdf', 2000);
+      const tooBig = createFile('big.pdf', 1990);
       const result = validateFiles([tooBig, validFile], '.pdf', 1024);
       expect(result).toEqual({ valid: [], error: FILE_UPLOAD_ERROR_FILE_TOO_LARGE });
     });

@@ -38,6 +38,14 @@ describe('useOutputConfigurationPanel', () => {
     expect(result.current.outputFormatProps.formats[1].icon).toBeDefined();
   });
 
+  it('provides a safe no-op default onFormatsChange handler', () => {
+    const { result } = renderHook(() => useOutputConfigurationPanel({}), { wrapper });
+
+    expect(() =>
+      result.current.outputFormatProps.onFormatsChange([OUTPUT_FORMAT_ID_WORD]),
+    ).not.toThrow();
+  });
+
   it('returns outputFormat as outputFormatProps when outputFormat is provided', () => {
     const onFormatsChange = vi.fn();
     const customFormats = [

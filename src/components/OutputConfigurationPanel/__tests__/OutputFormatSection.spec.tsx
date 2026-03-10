@@ -143,4 +143,73 @@ describe('OutputFormatSection', () => {
     );
     expect(screen.getByText('Output Format')).toBeTruthy();
   });
+
+  it('shows helper text without alert role when no error is present', () => {
+    renderWithTheme(
+      <OutputFormatSection
+        formats={defaultFormats}
+        selectedFormats={DEFAULT_SELECTED_FORMATS}
+        onFormatsChange={() => {}}
+        helperText="Choose at least one format"
+      />,
+    );
+
+    const section = screen.getByTestId('output-format-section');
+    const helper = screen.getByText('Choose at least one format');
+
+    expect(section.getAttribute('aria-describedby')).toBe('output-format-helper');
+    expect(helper.getAttribute('role')).toBeNull();
+  });
+
+  it('shows external error with alert role and prefers it over helper text', () => {
+    renderWithTheme(
+      <OutputFormatSection
+        formats={defaultFormats}
+        selectedFormats={DEFAULT_SELECTED_FORMATS}
+        onFormatsChange={() => {}}
+        error="External validation failed"
+        helperText="helper"
+      />,
+    );
+
+    const helper = screen.getByText('External validation failed');
+    expect(helper).toBeTruthy();
+    expect(helper.getAttribute('role')).toBe('alert');
+  });
+
+  it('renders option label without description suffix in aria-label when description is missing', () => {
+    renderWithTheme(
+      <OutputFormatSection
+        formats={[{ id: OUTPUT_FORMAT_ID_PDF, label: 'PDF' }]}
+        selectedFormats={[OUTPUT_FORMAT_ID_PDF]}
+        onFormatsChange={() => {}}
+      />,
+    );
+
+    const checkbox = screen.getByLabelText('PDF');
+    expect(checkbox).toBeTruthy();
+  });
+
+  it('accepts sx as object and array', () => {
+    const { unmount } = renderWithTheme(
+      <OutputFormatSection
+        formats={defaultFormats}
+        selectedFormats={DEFAULT_SELECTED_FORMATS}
+        onFormatsChange={() => {}}
+        sx={{ border: '1px solid red' }}
+      />,
+    );
+    expect(screen.getByTestId('output-format-section')).toBeTruthy();
+    unmount();
+
+    renderWithTheme(
+      <OutputFormatSection
+        formats={defaultFormats}
+        selectedFormats={DEFAULT_SELECTED_FORMATS}
+        onFormatsChange={() => {}}
+        sx={[{ border: '1px solid blue' }]}
+      />,
+    );
+    expect(screen.getByTestId('output-format-section')).toBeTruthy();
+  });
 });

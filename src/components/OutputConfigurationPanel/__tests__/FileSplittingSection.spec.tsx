@@ -79,4 +79,41 @@ describe('FileSplittingSection', () => {
     );
     expect(screen.getByText('File Splitting')).toBeTruthy();
   });
+
+  it('calls onSplitModeChange with consolidated when selecting Consolidated File', () => {
+    const onSplitModeChange = vi.fn();
+    renderWithTheme(
+      <FileSplittingSection
+        splitMode={SPLIT_MODE_SPLIT_PER_INVESTOR}
+        onSplitModeChange={onSplitModeChange}
+      />,
+    );
+
+    const consolidatedRadio = screen.getByTestId(`file-splitting-radio-${SPLIT_MODE_CONSOLIDATED}`);
+    fireEvent.click(consolidatedRadio);
+
+    expect(onSplitModeChange).toHaveBeenCalledTimes(1);
+    expect(onSplitModeChange).toHaveBeenCalledWith(SPLIT_MODE_CONSOLIDATED);
+  });
+
+  it('accepts sx as object and array', () => {
+    const { unmount } = renderWithTheme(
+      <FileSplittingSection
+        splitMode={SPLIT_MODE_CONSOLIDATED}
+        onSplitModeChange={() => {}}
+        sx={{ border: '1px solid red' }}
+      />,
+    );
+    expect(screen.getByTestId('file-splitting-section')).toBeTruthy();
+    unmount();
+
+    renderWithTheme(
+      <FileSplittingSection
+        splitMode={SPLIT_MODE_CONSOLIDATED}
+        onSplitModeChange={() => {}}
+        sx={[{ border: '1px solid blue' }]}
+      />,
+    );
+    expect(screen.getByTestId('file-splitting-section')).toBeTruthy();
+  });
 });

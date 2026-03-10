@@ -1,0 +1,129 @@
+import { ArgTypes, Canvas, Description, Meta, Source, Subtitle, Title } from '@storybook/blocks';
+
+import * as Stories from './DateTextSelect.stories';
+
+<Meta of={Stories} />
+
+<Title>DateTextSelect</Title>
+<Subtitle>Date field + select dropdown in one control row</Subtitle>
+<Description>
+  `DateTextSelect` combines a date picker and a select input so both fields can be managed together.
+  It supports required and range validation, configurable date format, and select-driven date
+  disabling rules (for example, business days only).
+</Description>
+
+## Import
+
+```ts
+import { DateTextSelect } from '@gen2fund/gen2verse-ui-library';
+import type { DateTextSelectOption } from '@gen2fund/gen2verse-ui-library';
+```
+
+## Basic usage
+
+```tsx
+import { useState } from 'react';
+import { DateTextSelect } from '@gen2fund/gen2verse-ui-library';
+import type { DateTextSelectOption } from '@gen2fund/gen2verse-ui-library';
+
+const options: DateTextSelectOption[] = [
+  { value: 'business-days', label: 'Business Days' },
+  { value: 'calendar-days', label: 'Calendar Days' },
+];
+
+export function Example() {
+  const [dateValue, setDateValue] = useState<Date | null>(null);
+  const [selectValue, setSelectValue] = useState('');
+
+  return (
+    <DateTextSelect
+      label="Due Date Type"
+      dateValue={dateValue}
+      onDateChange={setDateValue}
+      selectValue={selectValue}
+      selectOptions={options}
+      onSelectChange={setSelectValue}
+    />
+  );
+}
+```
+
+## Copy/paste example
+
+<Source
+  language="tsx"
+  code={`import { useState } from 'react';
+import { DateTextSelect } from '@gen2fund/gen2verse-ui-library';
+import type { DateTextSelectOption } from '@gen2fund/gen2verse-ui-library';
+
+const options: DateTextSelectOption[] = [
+{ value: 'keep-all', label: 'Keep All' },
+{ value: 'business-days', label: 'Business Days' },
+{ value: 'calendar-days', label: 'Calendar Days' },
+];
+
+export function DueDateTypeField() {
+  const [dateValue, setDateValue] = useState<Date | null>(null);
+  const [selectValue, setSelectValue] = useState('keep-all');
+
+const shouldDisableDate = (date: Date) => {
+if (selectValue !== 'business-days') return false;
+const day = date.getDay();
+return day === 0 || day === 6;
+};
+
+return (
+<DateTextSelect
+label="Due Date Type"
+dateValue={dateValue}
+onDateChange={setDateValue}
+selectValue={selectValue}
+selectOptions={options}
+onSelectChange={setSelectValue}
+datePlaceholder="Select Notice Date"
+selectPlaceholder="Select"
+dateFormat="MM/dd/yyyy"
+shouldDisableDate={shouldDisableDate}
+minDate={new Date('2026-01-01')}
+maxDate={new Date('2026-12-31')}
+/>
+);
+}`}
+/>
+
+## Connected rule example
+
+```tsx
+const shouldDisableDate = (mode: string) => (date: Date) => {
+  if (mode !== 'business-days') return false;
+  const day = date.getDay();
+  return day === 0 || day === 6;
+};
+
+<DateTextSelect
+  // ...
+  selectValue={selectValue}
+  onSelectChange={setSelectValue}
+  shouldDisableDate={shouldDisableDate(selectValue)}
+/>;
+```
+
+## Notes
+
+- **Default date placeholder:** `Select Notice Date`.
+- **Date format:** set `dateFormat` (for example `dd/MM/yyyy`) to change display/validation format.
+- **Validation:** supports `required`, `minDate`, and `maxDate`.
+- **Layout behavior:** helper/error text stays in normal flow to avoid overlap.
+
+## Examples
+
+<Canvas of={Stories.Default} />
+<Canvas of={Stories.ConnectedDateRules} />
+<Canvas of={Stories.ErrorState} />
+<Canvas of={Stories.InvalidDateState} />
+<Canvas of={Stories.CustomFormat} />
+<Canvas of={Stories.DarkMode} />
+
+## Props
+
+<ArgTypes of={Stories.Default} />

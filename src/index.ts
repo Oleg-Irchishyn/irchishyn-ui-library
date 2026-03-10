@@ -118,3 +118,40 @@ export {
   SPLIT_MODE_SPLIT_PER_INVESTOR,
   DEFAULT_FILE_SPLITTING_OPTIONS,
 } from './components/OutputConfigurationPanel';
+
+export { DatePicker, useQuickSelectDatePicker } from './components/DatePicker';
+export type {
+  DatePickerProps,
+  DatePickerVariant,
+  DateRange,
+  QuickSelectOption,
+  SingleDatePickerProps,
+  QuickSelectDatePickerProps,
+  UseQuickSelectDatePickerParams,
+  UseQuickSelectDatePickerResult,
+} from './components/DatePicker';
+export {
+  DATE_PICKER_DEFAULT_PLACEHOLDER,
+  DATE_PICKER_RANGE_INPUT_PLACEHOLDER,
+  DATE_PICKER_INVALID_ERROR,
+  DATE_PICKER_MIN_ERROR_PREFIX,
+  DATE_PICKER_MAX_ERROR_PREFIX,
+  DATE_PICKER_VALUE_FORMAT,
+  DATE_PICKER_VARIANTS,
+  QUICK_SELECT_PRESET_VALUES,
+  QUICK_SELECT_DATE_PICKER_DEFAULT_PLACEHOLDER,
+  QUICK_SELECT_CLEAR_LABEL,
+  QUICK_SELECT_ALL_TIME_START_DATE,
+} from './components/DatePicker';
+
+export { DateTextSelect, useDateTextSelect } from './components/DateTextSelect';
+export type { DateTextSelectProps, DateTextSelectOption } from './components/DateTextSelect';
+export {
+  DATE_TEXT_SELECT_DATE_FORMAT,
+  DATE_TEXT_SELECT_DEFAULT_DATE_PLACEHOLDER,
+  DATE_TEXT_SELECT_DEFAULT_SELECT_PLACEHOLDER,
+  DATE_TEXT_SELECT_DEFAULT_REQUIRED_ERROR,
+  DATE_TEXT_SELECT_DEFAULT_INVALID_ERROR,
+  DATE_TEXT_SELECT_MIN_ERROR_PREFIX,
+  DATE_TEXT_SELECT_MAX_ERROR_PREFIX,
+} from './components/DateTextSelect';

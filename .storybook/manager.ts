@@ -6,4 +6,10 @@ addons.setConfig({
     base: 'light',
     brandTitle: 'Gen2Verse UI component library',
   }),
+  sidebar: {
+    showRoots: true,
+  },
+  options: {
+    storySort: 'alphabetical',
+  },
 });

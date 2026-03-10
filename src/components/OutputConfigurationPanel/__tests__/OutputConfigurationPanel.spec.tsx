@@ -68,4 +68,15 @@ describe('OutputConfigurationPanel', () => {
     );
     expect(screen.getByTestId('output-configuration-panel')).toBeTruthy();
   });
+
+  it('accepts sx as object and array', () => {
+    const { unmount } = renderWithTheme(
+      <OutputConfigurationPanel sx={{ border: '1px solid red' }} />,
+    );
+    expect(screen.getByTestId('output-configuration-panel')).toBeTruthy();
+    unmount();
+
+    renderWithTheme(<OutputConfigurationPanel sx={[{ border: '1px solid blue' }]} />);
+    expect(screen.getByTestId('output-configuration-panel')).toBeTruthy();
+  });
 });

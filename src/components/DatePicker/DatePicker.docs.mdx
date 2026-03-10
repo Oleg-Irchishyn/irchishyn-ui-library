@@ -1,0 +1,137 @@
+import { ArgTypes, Canvas, Description, Meta, Source, Subtitle, Title } from '@storybook/blocks';
+
+import * as Stories from './DatePicker.stories';
+
+<Meta of={Stories} />
+
+<Title>DatePicker</Title>
+<Subtitle>Single date and quick-select date range picker</Subtitle>
+<Description>
+  `DatePicker` supports two variants: a single date field and a quick-select date range panel with
+  presets and optional custom range inputs. It supports required/error states, min/max range
+  validation, disabled-date rules, and configurable date format.
+</Description>
+
+## Import
+
+```ts
+import { DatePicker, DATE_PICKER_VARIANTS } from '@gen2fund/gen2verse-ui-library';
+```
+
+## Basic usage
+
+```tsx
+import { useState } from 'react';
+import { DatePicker, DATE_PICKER_VARIANTS } from '@gen2fund/gen2verse-ui-library';
+
+export function Example() {
+  const [value, setValue] = useState<Date | null>(null);
+
+  return (
+    <DatePicker
+      variant={DATE_PICKER_VARIANTS.SINGLE}
+      label="Notice Date"
+      value={value}
+      onChange={setValue}
+    />
+  );
+}
+```
+
+## Copy/paste examples
+
+### Single date
+
+<Source
+  language="tsx"
+  code={`import { useState } from 'react';
+import { DatePicker, DATE_PICKER_VARIANTS } from '@gen2fund/gen2verse-ui-library';
+
+export function NoticeDateField() {
+  const [value, setValue] = useState<Date | null>(null);
+
+return (
+<DatePicker
+variant={DATE_PICKER_VARIANTS.SINGLE}
+label="Notice Date"
+value={value}
+onChange={setValue}
+placeholder="Select Notice Date"
+minDate={new Date('2026-01-01')}
+maxDate={new Date('2026-12-31')}
+/>
+);
+}`}
+/>
+
+### Quick select range
+
+<Source
+  language="tsx"
+  code={`import { useMemo, useState } from 'react';
+import { DatePicker, DATE_PICKER_VARIANTS } from '@gen2fund/gen2verse-ui-library';
+import type { DateRange, QuickSelectOption } from '@gen2fund/gen2verse-ui-library';
+
+const options: QuickSelectOption[] = [
+{ value: 'last-1-month', label: 'Last 1 Month' },
+{ value: 'last-1-year', label: 'Last 1 Year' },
+];
+
+export function DateRangeField() {
+  const quickSelectOptions = useMemo(() => options, []);
+  const [value, setValue] = useState<DateRange | QuickSelectOption | null>(null);
+
+return (
+<DatePicker
+variant={DATE_PICKER_VARIANTS.QUICK_SELECT}
+label="Date Range"
+value={value}
+quickSelectOptions={quickSelectOptions}
+onChange={(\_resolvedRange, nextValue) => setValue(nextValue)}
+placeholder="Select Date Range"
+/>
+);
+}`}
+/>
+
+## Quick select usage
+
+```tsx
+import { useState } from 'react';
+import { DatePicker, DATE_PICKER_VARIANTS } from '@gen2fund/gen2verse-ui-library';
+import type { DateRange, QuickSelectOption } from '@gen2fund/gen2verse-ui-library';
+
+export function QuickSelectExample({ options }: { options: QuickSelectOption[] }) {
+  const [value, setValue] = useState<DateRange | QuickSelectOption | null>(null);
+
+  return (
+    <DatePicker
+      variant={DATE_PICKER_VARIANTS.QUICK_SELECT}
+      label="Date Range"
+      value={value}
+      quickSelectOptions={options}
+      onChange={(_resolvedRange, nextValue) => setValue(nextValue)}
+    />
+  );
+}
+```
+
+## Notes
+
+- **Default placeholder:** single date uses `Select Notice Date`.
+- **Date format:** set `dateFormat` (for example `dd/MM/yyyy`) to change display/validation format.
+- **Validation:** `minDate`, `maxDate`, and `required` are supported in both variants.
+- **Disable dates:** use `shouldDisableDate={(date) => ...}` for business-day rules.
+
+## Examples
+
+<Canvas of={Stories.SingleDate} />
+<Canvas of={Stories.QuickSelect} />
+<Canvas of={Stories.ErrorState} />
+<Canvas of={Stories.RangeValidation} />
+<Canvas of={Stories.CustomFormat} />
+<Canvas of={Stories.DarkMode} />
+
+## Props
+
+<ArgTypes of={Stories.Props} />
