@@ -22,7 +22,7 @@ export const DatePickerSingleField = ({
   sx,
 }: DatePickerSingleFieldProps) => {
   return (
-    <Box sx={sx}>
+    <Box sx={sx} data-testid="date-picker-single-field">
       <MuiDatePicker
         value={value}
         onChange={onChange}

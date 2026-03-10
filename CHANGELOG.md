@@ -1,9 +1,8 @@
 # [1.4.0](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.3.0...v1.4.0) (2026-03-10)
 
-
 ### Features
 
-* [TASK]: [FE] Add Date Text Box component to Gen2Vesrse.UI.Library ([8275ea3](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/8275ea33edde66147f91ed467a8d9446e350c2c9)), closes [#11933](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/11933) [#11990](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/11990)
+- [TASK]: [FE] Add Date Text Box component to Gen2Vesrse.UI.Library ([8275ea3](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/8275ea33edde66147f91ed467a8d9446e350c2c9)), closes [#11933](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/11933) [#11990](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/11990)
 
 # [1.3.0](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.2.0...v1.3.0) (2026-03-06)
 

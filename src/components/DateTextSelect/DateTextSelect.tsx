@@ -45,7 +45,10 @@ export const DateTextSelect = ({
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <Box sx={[dateTextSelectRootStyles, ...(Array.isArray(sx) ? sx : [sx])]}>
+      <Box
+        sx={[dateTextSelectRootStyles, ...(Array.isArray(sx) ? sx : [sx])]}
+        data-testid="date-text-select"
+      >
         <Typography variant="body2" sx={{ fontWeight: 500 }}>
           {label}
         </Typography>
@@ -68,6 +71,9 @@ export const DateTextSelect = ({
                 size: 'small',
                 fullWidth: true,
                 sx: getDateTextSelectInputStyles(),
+                inputProps: {
+                  'data-testid': 'date-text-select-date-input',
+                },
               },
             }}
           />
@@ -78,7 +84,11 @@ export const DateTextSelect = ({
               displayEmpty
               onChange={handleSelectValueChange}
               sx={getDateTextSelectInputStyles()}
-              inputProps={{ 'aria-label': 'Date text select dropdown', autoComplete: 'off' }}
+              inputProps={{
+                'aria-label': 'Date text select dropdown',
+                autoComplete: 'off',
+                'data-testid': 'date-text-select-select-input',
+              }}
             >
               <MenuItem value="" disabled>
                 {selectPlaceholder}

@@ -24,17 +24,22 @@ export const HistoryAudtitTrailModuleDropdown = ({
     },
     [onValueChange],
   );
+  const hasSelectedOption = options.some((option) => option.value === value);
+  const normalizedValue =
+    value === HISTORY_AUDIT_ALL_MODULES_VALUE || hasSelectedOption
+      ? value
+      : HISTORY_AUDIT_ALL_MODULES_VALUE;
   const selectedLabel =
-    value === HISTORY_AUDIT_ALL_MODULES_VALUE
+    normalizedValue === HISTORY_AUDIT_ALL_MODULES_VALUE
       ? allModulesLabel
-      : (options.find((option) => option.value === value)?.name ?? allModulesLabel);
+      : (options.find((option) => option.value === normalizedValue)?.name ?? allModulesLabel);
   const renderSelectedValue = useCallback(() => selectedLabel, [selectedLabel]);
 
   return (
     <Select
       data-testid="history-audit-trail-module-dropdown"
       size="small"
-      value={value}
+      value={normalizedValue}
       onChange={handleOnValueChange}
       displayEmpty
       renderValue={renderSelectedValue}
@@ -51,7 +56,7 @@ export const HistoryAudtitTrailModuleDropdown = ({
           <Box component="span" sx={historyAuditModuleDropdownMenuItemTextStyles}>
             {allModulesLabel}
           </Box>
-          {value === HISTORY_AUDIT_ALL_MODULES_VALUE ? <CheckIcon /> : null}
+          {normalizedValue === HISTORY_AUDIT_ALL_MODULES_VALUE ? <CheckIcon /> : null}
         </Box>
       </MenuItem>
       {options.map((option) => (
@@ -60,7 +65,7 @@ export const HistoryAudtitTrailModuleDropdown = ({
             <Box component="span" sx={historyAuditModuleDropdownMenuItemTextStyles}>
               {option.name}
             </Box>
-            {value === option.value ? <CheckIcon /> : null}
+            {normalizedValue === option.value ? <CheckIcon /> : null}
           </Box>
         </MenuItem>
       ))}

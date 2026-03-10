@@ -79,7 +79,7 @@ export const DatePicker = (props: DatePickerProps) => {
 
     return (
       <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <Box sx={sx}>
+        <Box sx={sx} data-testid="date-picker">
           <DatePickerQuickSelectPanel
             label={label}
             disabled={disabled}

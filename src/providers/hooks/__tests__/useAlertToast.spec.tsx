@@ -1,19 +1,23 @@
 import React from 'react';
 import { renderHook } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 import { AlertToastProvider } from '../../AlertToastProvider';
 import { useAlertToast } from '../useAlertToast';
 
 describe('useAlertToast', () => {
-  it('throws when used outside AlertToastProvider', () => {
-    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+  it('returns guard error when used outside AlertToastProvider', () => {
+    const { result } = renderHook(() => {
+      try {
+        useAlertToast();
+        return null;
+      } catch (error) {
+        return error as Error;
+      }
+    });
 
-    expect(() => renderHook(() => useAlertToast())).toThrowError(
-      'useAlertToast must be used within AlertToastProvider',
-    );
-
-    consoleErrorSpy.mockRestore();
+    expect(result.current).toBeInstanceOf(Error);
+    expect(result.current?.message).toBe('useAlertToast must be used within AlertToastProvider');
   });
 
   it('returns toast API when used inside AlertToastProvider', () => {

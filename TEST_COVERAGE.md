@@ -8,16 +8,16 @@
 
 | Statements | Branches | Functions | Lines  |
 | ---------- | -------- | --------- | ------ |
-| 96.00%     | 84.50%   | 94.50%    | 96.88% |
+| 96.01%     | 84.47%   | 94.52%    | 96.88% |
 
 ## Summary (covered / total)
 
 | Metric     | Coverage | Covered / Total |
 | ---------- | -------- | --------------- |
-| Statements | 96.00%   | 1321 / 1376     |
-| Branches   | 84.50%   | 971 / 1149      |
-| Functions  | 94.50%   | 413 / 437       |
-| Lines      | 96.88%   | 1181 / 1219     |
+| Statements | 96.01%   | 1324 / 1379     |
+| Branches   | 84.47%   | 974 / 1153      |
+| Functions  | 94.52%   | 414 / 438       |
+| Lines      | 96.88%   | 1183 / 1221     |
 
 ## Coverage by file
 
@@ -60,7 +60,7 @@
 | src/components/HistoryAuditTrail/components/HistoryAuditTrailLoader.tsx             | 100.00%    | 100.00%  | 100.00%   | 100.00% |
 | src/components/HistoryAuditTrail/components/HistoryAuditTrailSearch.tsx             | 100.00%    | 100.00%  | 100.00%   | 100.00% |
 | src/components/HistoryAuditTrail/components/HistoryAuditTrailTable.tsx              | 100.00%    | 75.00%   | 100.00%   | 100.00% |
-| src/components/HistoryAuditTrail/components/HistoryAudtitTrailModuleDropdown.tsx    | 100.00%    | 100.00%  | 100.00%   | 100.00% |
+| src/components/HistoryAuditTrail/components/HistoryAudtitTrailModuleDropdown.tsx    | 100.00%    | 92.30%   | 100.00%   | 100.00% |
 | src/components/HistoryAuditTrail/components/styles.ts                               | 96.15%     | 80.00%   | 88.88%    | 100.00% |
 | src/components/HistoryAuditTrail/HistoryAuditTrail.tsx                              | 100.00%    | 88.88%   | 100.00%   | 100.00% |
 | src/components/HistoryAuditTrail/styles.ts                                          | 100.00%    | 100.00%  | 100.00%   | 100.00% |

@@ -51,6 +51,7 @@ export function NoticeDateField() {
   const [value, setValue] = useState<Date | null>(null);
 
 return (
+
 <DatePicker
 variant={DATE_PICKER_VARIANTS.SINGLE}
 label="Notice Date"
@@ -82,6 +83,7 @@ export function DateRangeField() {
   const [value, setValue] = useState<DateRange | QuickSelectOption | null>(null);
 
 return (
+
 <DatePicker
 variant={DATE_PICKER_VARIANTS.QUICK_SELECT}
 label="Date Range"
