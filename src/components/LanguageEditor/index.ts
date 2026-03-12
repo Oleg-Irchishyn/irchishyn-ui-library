@@ -9,6 +9,7 @@ export type {
   DataType,
   ConditionClause,
   ConditionalLanguageBuilderProps,
+  ConditionalLanguageBuilderElseBlockProps,
   UseConditionalLanguageBuilderParams,
   LanguageEditorProps,
   LanguageEditorToolbarProps,
@@ -22,6 +23,7 @@ export {
   formatConditionalSyntax,
   stripConditionalFormatting,
   validateContent,
+  validateConditionalBuilder,
   formatFieldReference,
   extractFieldReferences,
 } from './utils/languageEditorUtils';

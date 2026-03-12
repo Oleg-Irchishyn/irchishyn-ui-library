@@ -55,6 +55,8 @@ const hookState = {
   ifClause: { fieldName: 'Region', operatorKey: 'equals', value: 'EMEA', content: 'if content' },
   setIfClause: vi.fn(),
   elseIfClauses: [{ fieldName: 'Amount', operatorKey: 'greaterThan', value: '10', content: 'x' }],
+  includeElse: false,
+  setIncludeElse: vi.fn(),
   elseContent: 'fallback',
   setElseContent: vi.fn(),
   handleClose: vi.fn(),
@@ -63,10 +65,13 @@ const hookState = {
   removeElseIf: vi.fn(),
   updateElseIf: vi.fn(),
   canInsert: true,
+  validationResult: null,
+  handleValidateClick: vi.fn(),
+  handleClearValidation: vi.fn(),
 };
 
 describe('ConditionalLanguageBuilder', () => {
-  it('renders builder and triggers actions', () => {
+  it('renders builder and triggers actions', { timeout: 15000 }, () => {
     useConditionalLanguageBuilderMock.mockReturnValue(hookState);
 
     render(

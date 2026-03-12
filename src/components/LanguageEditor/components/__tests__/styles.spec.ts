@@ -54,10 +54,14 @@ describe('LanguageEditor component styles', () => {
   });
 
   it('builds field type chip and shared style constants', () => {
+    const theme = createTheme({ palette: { mode: 'light' } });
     const chipStyles = getLanguageEditorFieldTypeChipStyles({ bg: '#111', text: '#eee' });
     expect(chipStyles).toMatchObject({ backgroundColor: '#111', color: '#eee' });
     expect(languageEditorPaperStyles).toMatchObject({ overflow: 'hidden' });
-    expect(languageEditorToolbarStyles).toMatchObject({ display: 'flex' });
+    expect(resolveSxObject(languageEditorToolbarStyles, theme)).toMatchObject({
+      display: 'flex',
+      backgroundColor: theme.palette.background.paper,
+    });
     expect(languageEditorClauseBooleanValueControlStyles).toMatchObject({ minWidth: 120 });
     expect(languageEditorClauseTextValueInputStyles).toMatchObject({ minWidth: 140 });
     expect(languageEditorIfTagStyles).toMatchObject({ bgcolor: expect.any(String) });

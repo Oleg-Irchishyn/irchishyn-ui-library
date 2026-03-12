@@ -22,9 +22,13 @@ export function ConditionalLanguageBuilderValueInput({
 }: ConditionalLanguageBuilderValueInputProps) {
   if (dataType === 'boolean') {
     return (
-      <FormControl size="small" sx={languageEditorClauseBooleanValueControlStyles}>
-        <InputLabel>Value</InputLabel>
-        <Select value={value} label="Value" onChange={(e) => onChange(e.target.value)}>
+      <FormControl size="small" sx={languageEditorClauseBooleanValueControlStyles} fullWidth>
+        <InputLabel>{LANGUAGE_EDITOR_LABELS.CLB_VALUE_LABEL}</InputLabel>
+        <Select
+          value={value}
+          label={LANGUAGE_EDITOR_LABELS.CLB_VALUE_LABEL}
+          onChange={(e) => onChange(e.target.value)}
+        >
           <MenuItem value="true">true</MenuItem>
           <MenuItem value="false">false</MenuItem>
         </Select>
@@ -32,13 +36,16 @@ export function ConditionalLanguageBuilderValueInput({
     );
   }
   const inputType = dataType === 'number' ? 'number' : dataType === 'date' ? 'date' : 'text';
+  const isDate = dataType === 'date';
   return (
     <TextField
+      fullWidth
       size="small"
       type={inputType}
+      label={isDate ? undefined : LANGUAGE_EDITOR_LABELS.CLB_VALUE_LABEL}
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      placeholder={placeholder}
+      placeholder={isDate ? undefined : placeholder}
       sx={languageEditorClauseTextValueInputStyles}
       inputProps={dataType === 'number' ? { inputMode: 'numeric' } : undefined}
     />

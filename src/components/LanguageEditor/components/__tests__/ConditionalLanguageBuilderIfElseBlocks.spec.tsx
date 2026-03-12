@@ -10,6 +10,23 @@ vi.mock('../ConditionalLanguageBuilderClauseRow', () => ({
   ConditionalLanguageBuilderClauseRow: () => <div data-testid="clause-row-mock">clause-row</div>,
 }));
 
+vi.mock('../LanguageEditor', () => ({
+  LanguageEditor: ({
+    content,
+    onChange,
+  }: {
+    content: string;
+    onChange: (value: string) => void;
+  }) => (
+    <input
+      data-testid="language-editor-mock"
+      value={content}
+      onChange={(e) => onChange(e.target.value)}
+      aria-label="Content"
+    />
+  ),
+}));
+
 const clause = {
   fieldName: 'Region',
   operatorKey: 'equals',
@@ -35,7 +52,7 @@ describe('ConditionalLanguageBuilder blocks', () => {
     expect(screen.getByText('IF')).toBeTruthy();
     expect(screen.getByTestId('clause-row-mock')).toBeTruthy();
 
-    const input = screen.getByDisplayValue('initial content');
+    const input = screen.getByTestId('language-editor-mock');
     fireEvent.change(input, { target: { value: 'updated if content' } });
     expect(onClauseChange).toHaveBeenCalledWith({ ...clause, content: 'updated if content' });
   });
@@ -56,24 +73,43 @@ describe('ConditionalLanguageBuilder blocks', () => {
     fireEvent.click(screen.getByLabelText('Remove else if'));
     expect(onRemove).toHaveBeenCalledTimes(1);
 
-    const input = screen.getByDisplayValue('initial content');
+    const input = screen.getByTestId('language-editor-mock');
     fireEvent.change(input, { target: { value: 'updated else-if content' } });
     expect(onClauseChange).toHaveBeenCalledWith({ ...clause, content: 'updated else-if content' });
   });
 
-  it('renders ELSE block and updates content', () => {
+  it('renders ELSE block with Enabled/Disabled button and updates content when enabled', () => {
     const onContentChange = vi.fn();
-    render(
+    const onIncludeElseChange = vi.fn();
+    const { rerender } = render(
       <ConditionalLanguageBuilderElseBlock
+        includeElse={false}
+        onIncludeElseChange={onIncludeElseChange}
         content="else content"
         onContentChange={onContentChange}
+        fieldConfig={fieldConfig}
       />,
     );
 
     expect(screen.getByText(/Default content/)).toBeTruthy();
-    fireEvent.change(screen.getByDisplayValue('else content'), {
-      target: { value: 'updated else content' },
-    });
+    expect(screen.getByRole('button', { name: 'Disabled' })).toBeTruthy();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Disabled' }));
+    expect(onIncludeElseChange).toHaveBeenCalledWith(true);
+
+    rerender(
+      <ConditionalLanguageBuilderElseBlock
+        includeElse
+        onIncludeElseChange={onIncludeElseChange}
+        content="else content"
+        onContentChange={onContentChange}
+        fieldConfig={fieldConfig}
+      />,
+    );
+
+    expect(screen.getByRole('button', { name: 'Enabled' })).toBeTruthy();
+    const input = screen.getByTestId('language-editor-mock');
+    fireEvent.change(input, { target: { value: 'updated else content' } });
     expect(onContentChange).toHaveBeenCalledWith('updated else content');
   });
 });

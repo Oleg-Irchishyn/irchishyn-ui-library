@@ -16,6 +16,7 @@ export function LanguageEditorToolbar({
   onBold,
   onItalic,
   onUnderline,
+  onInsertFieldMouseDown,
   onInsertFieldClick,
   onConditionalClick,
   onValidateClick,
@@ -26,6 +27,8 @@ export function LanguageEditorToolbar({
   fieldConfig,
   validationResult,
   disabled = false,
+  showConditionalButton = true,
+  showValidateButton = true,
 }: LanguageEditorToolbarProps) {
   const getValidateButtonColor = () => {
     if (!validationResult) return 'inherit';
@@ -64,6 +67,7 @@ export function LanguageEditorToolbar({
         size="small"
         variant="outlined"
         startIcon={<Hash size={16} />}
+        onMouseDown={onInsertFieldMouseDown}
         onClick={onInsertFieldClick}
         disabled={disabled}
         sx={languageEditorToolbarActionButtonStyles}
@@ -79,36 +83,42 @@ export function LanguageEditorToolbar({
         onInsertField={onInsertField}
       />
 
-      <Divider orientation="vertical" flexItem sx={languageEditorToolbarDividerStyles} />
-
-      <Button
-        size="small"
-        variant="outlined"
-        startIcon={<Code size={16} />}
-        onClick={onConditionalClick}
-        disabled={disabled}
-        sx={languageEditorToolbarActionButtonStyles}
-      >
-        {LANGUAGE_EDITOR_LABELS.TOOLBAR_CONDITIONAL}
-      </Button>
-
-      <Box sx={languageEditorToolbarSpacerStyles} />
-
-      <Tooltip title={LANGUAGE_EDITOR_LABELS.TOOLBAR_VALIDATE}>
-        <span>
+      {showConditionalButton && (
+        <>
+          <Divider orientation="vertical" flexItem sx={languageEditorToolbarDividerStyles} />
           <Button
             size="small"
             variant="outlined"
-            color={getValidateButtonColor()}
-            startIcon={<CheckCircle size={16} />}
-            onClick={onValidateClick}
+            startIcon={<Code size={16} />}
+            onClick={onConditionalClick}
             disabled={disabled}
             sx={languageEditorToolbarActionButtonStyles}
           >
-            {LANGUAGE_EDITOR_LABELS.TOOLBAR_VALIDATE}
+            {LANGUAGE_EDITOR_LABELS.TOOLBAR_CONDITIONAL}
           </Button>
-        </span>
-      </Tooltip>
+        </>
+      )}
+
+      {showValidateButton && (
+        <>
+          <Box sx={languageEditorToolbarSpacerStyles} />
+          <Tooltip title={LANGUAGE_EDITOR_LABELS.TOOLBAR_VALIDATE}>
+            <span>
+              <Button
+                size="small"
+                variant="outlined"
+                color={getValidateButtonColor()}
+                startIcon={<CheckCircle size={16} />}
+                onClick={onValidateClick}
+                disabled={disabled}
+                sx={languageEditorToolbarActionButtonStyles}
+              >
+                {LANGUAGE_EDITOR_LABELS.TOOLBAR_VALIDATE}
+              </Button>
+            </span>
+          </Tooltip>
+        </>
+      )}
     </Box>
   );
 }

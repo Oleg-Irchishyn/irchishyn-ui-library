@@ -63,7 +63,9 @@ export const FieldInsertDropdown = ({
     setSearchValue(event.target.value);
   };
 
-  const handleSelectField = (fieldName: string) => {
+  const handleSelectField = (fieldName: string, event: React.MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
     onInsertField(fieldName);
     onClose();
     setSearchValue('');
@@ -117,7 +119,7 @@ export const FieldInsertDropdown = ({
             return (
               <MenuItem
                 key={field.name}
-                onClick={() => handleSelectField(field.name)}
+                onClick={(e) => handleSelectField(field.name, e)}
                 sx={languageEditorFieldMenuItemStyles}
               >
                 <ListItemText

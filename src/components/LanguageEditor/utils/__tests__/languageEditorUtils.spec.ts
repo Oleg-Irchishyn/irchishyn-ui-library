@@ -5,6 +5,7 @@ import {
   formatConditionalSyntax,
   formatFieldReference,
   stripConditionalFormatting,
+  validateConditionalBuilder,
   validateContent,
 } from '../languageEditorUtils';
 import type { FieldDefinition } from '../../types';
@@ -56,5 +57,60 @@ describe('languageEditorUtils', () => {
       ),
     ).toBe(true);
     expect(messages.some((m) => m.includes('Mismatched IF/ENDIF'))).toBe(true);
+  });
+
+  describe('validateConditionalBuilder', () => {
+    it('returns errors when IF has no field selected', () => {
+      const result = validateConditionalBuilder(
+        { fieldName: '', operatorKey: 'equals', value: '', content: 'x' },
+        [],
+        false,
+        '',
+        fieldConfig,
+      );
+      expect(result.valid).toBe(false);
+      expect(result.errors?.some((e) => e.message.includes('No field selected'))).toBe(true);
+    });
+
+    it('returns errors when IF has no operator selected', () => {
+      const result = validateConditionalBuilder(
+        { fieldName: 'Region', operatorKey: '', value: 'x', content: 'c' },
+        [],
+        false,
+        '',
+        fieldConfig,
+      );
+      expect(result.valid).toBe(false);
+      expect(result.errors?.some((e) => e.message.includes('No operator selected'))).toBe(true);
+    });
+
+    it('returns errors when value is required but empty', () => {
+      const result = validateConditionalBuilder(
+        { fieldName: 'Region', operatorKey: 'equals', value: '', content: 'c' },
+        [],
+        false,
+        '',
+        fieldConfig,
+      );
+      expect(result.valid).toBe(false);
+      expect(result.errors?.some((e) => e.message.includes('Value is required'))).toBe(true);
+    });
+
+    it('returns valid when IF clause is complete', () => {
+      const result = validateConditionalBuilder(
+        {
+          fieldName: 'Region',
+          operatorKey: 'equals',
+          value: 'EMEA',
+          content: 'Show «Region»',
+        },
+        [],
+        false,
+        '',
+        fieldConfig,
+      );
+      expect(result.valid).toBe(true);
+      expect(result.errors).toBeUndefined();
+    });
   });
 });

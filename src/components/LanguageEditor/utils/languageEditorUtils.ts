@@ -1,10 +1,18 @@
-import { warning, info } from '@gen2fund/platform.style';
+import { warning } from '@gen2fund/platform.style';
 
-import type { DataType, FieldDefinition, ValidationError, ValidationResult } from '../types';
-import { getOperatorsForDataType } from '../constants';
+import type {
+  ConditionClause,
+  DataType,
+  FieldDefinition,
+  ValidationError,
+  ValidationResult,
+} from '../types';
+import { getOperatorsForDataType, isInRangeOperator, isValueLessOperator } from '../constants';
 
-const CONDITIONAL_TOKEN_STYLE = `color: ${warning.dark}; background-color: ${warning.light}; padding: 1px 4px; border-radius: 3px; font-family: monospace; font-size: 0.85em;`;
-const FIELD_BADGE_STYLE = `color: ${info.dark}; background-color: ${info.light}; padding: 1px 4px; border-radius: 3px; font-style: italic; font-size: 0.9em;`;
+/** Token text color is set via CSS var --language-editor-token-text (theme text.primary) on the editor container */
+const CONDITIONAL_TOKEN_STYLE = `color: var(--language-editor-token-text, ${warning.dark}); background-color: ${warning.light}; padding: 1px 4px; border-radius: 3px; font-family: monospace; font-size: 0.85em;`;
+/** Same gold-ish highlight as conditional tokens (warning) */
+const FIELD_BADGE_STYLE = `color: var(--language-editor-token-text, ${warning.dark}); background-color: ${warning.light}; padding: 1px 4px; border-radius: 3px; font-style: italic; font-size: 0.9em;`;
 
 function htmlEncode(text: string): string {
   return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -170,4 +178,88 @@ export function validateContent(content: string, fieldConfig: FieldDefinition[])
  */
 export function formatFieldReference(fieldName: string): string {
   return `«${fieldName}»`;
+}
+
+/**
+ * Validates the Conditional Language Builder state (like POC validateConditions).
+ * Reports errors for empty/invalid field, operator, value, and invalid field refs in content.
+ */
+export function validateConditionalBuilder(
+  ifClause: ConditionClause,
+  elseIfClauses: ConditionClause[],
+  includeElse: boolean,
+  elseContent: string,
+  fieldConfig: FieldDefinition[],
+): ValidationResult {
+  const errors: ValidationError[] = [];
+  const validFieldNames = fieldConfig.map((f) => f.name);
+
+  const validateClause = (clause: ConditionClause, blockName: string) => {
+    if (!clause.fieldName?.trim()) {
+      errors.push({ message: `${blockName}: No field selected` });
+      return;
+    }
+    if (!validFieldNames.includes(clause.fieldName)) {
+      errors.push({
+        message: `${blockName}: Field "${clause.fieldName}" does not exist in field configuration`,
+      });
+      return;
+    }
+    const dataType = getFieldDataType(clause.fieldName, fieldConfig);
+    if (dataType) {
+      const validOperators = getOperatorsForDataType(dataType);
+      const isValidOperator = validOperators.some((op) => op.key === clause.operatorKey);
+      if (!clause.operatorKey?.trim()) {
+        errors.push({ message: `${blockName}: No operator selected` });
+      } else if (!isValidOperator) {
+        errors.push({
+          message: `${blockName}: Operator "${clause.operatorKey}" is not valid for ${dataType} field "${clause.fieldName}"`,
+        });
+      }
+    }
+
+    if (!isValueLessOperator(clause.operatorKey)) {
+      if (!clause.value?.trim()) {
+        errors.push({
+          message: `${blockName}: Value is required for operator "${clause.operatorKey}"`,
+        });
+      }
+      if (isInRangeOperator(clause.operatorKey) && !(clause.value2 ?? '').trim()) {
+        errors.push({
+          message: `${blockName}: Second value (upper bound) is required for Between operator`,
+        });
+      }
+    }
+
+    const contentFieldRefs = extractFieldReferences(clause.content);
+    contentFieldRefs.forEach((fieldRef) => {
+      if (!validFieldNames.includes(fieldRef)) {
+        errors.push({
+          message: `${blockName} content: Field reference "«${fieldRef}»" does not exist`,
+        });
+      }
+    });
+  };
+
+  validateClause(ifClause, 'IF condition');
+
+  elseIfClauses.forEach((clause, index) => {
+    validateClause(clause, `ELSE IF #${index + 1}`);
+  });
+
+  if (includeElse) {
+    const elseFieldRefs = extractFieldReferences(elseContent);
+    elseFieldRefs.forEach((fieldRef) => {
+      if (!validFieldNames.includes(fieldRef)) {
+        errors.push({
+          message: `ELSE content: Field reference "«${fieldRef}»" does not exist`,
+        });
+      }
+    });
+  }
+
+  return {
+    valid: errors.length === 0,
+    errors: errors.length > 0 ? errors : undefined,
+  };
 }

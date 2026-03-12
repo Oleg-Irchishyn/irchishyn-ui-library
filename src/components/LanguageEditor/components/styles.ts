@@ -43,16 +43,16 @@ export const getLanguageEditorEditableAreaStyles = (
   },
 });
 
-export const languageEditorToolbarStyles: SxProps<Theme> = {
+export const languageEditorToolbarStyles: SxProps<Theme> = (theme) => ({
   display: 'flex',
   alignItems: 'center',
   gap: 0.5,
   p: 1,
   borderBottom: 1,
   borderColor: 'divider',
-  backgroundColor: 'grey.50',
+  backgroundColor: theme.palette.background.paper,
   flexWrap: 'wrap',
-};
+});
 export const languageEditorToolbarButtonsGroupStyles: SxProps<Theme> = {
   display: 'flex',
   alignItems: 'center',
@@ -119,23 +119,73 @@ export const getLanguageEditorFieldTypeChipStyles = (badgeColors: {
   '& .MuiChip-label': { px: 1 },
 });
 
-export const languageEditorDialogPaperStyles: SxProps<Theme> = { maxHeight: '85vh' };
+/** POC: outer dialog max-h-[85vh] overflow-hidden flex flex-col */
+export const languageEditorDialogPaperStyles: SxProps<Theme> = {
+  maxHeight: '85vh',
+  height: '85vh',
+  display: 'flex',
+  flexDirection: 'column',
+  overflow: 'hidden',
+};
 export const languageEditorDialogTitleStyles: SxProps<Theme> = {
   display: 'flex',
   alignItems: 'center',
   gap: 1,
+  flexShrink: 0,
 };
+/** POC DialogHeader: flex-shrink-0 — title + description block */
+export const languageEditorDialogHeaderSectionStyles: SxProps<Theme> = {
+  flexShrink: 0,
+  px: 3,
+  pt: 2,
+  pb: 1,
+};
+/** DialogContent replaced by flex middle — must take remaining height and not scroll itself */
 export const languageEditorDialogContentStyles: SxProps<Theme> = {
   display: 'flex',
   flexDirection: 'column',
-  gap: 2,
+  flex: '1 1 0%',
+  minHeight: 0,
+  maxHeight: '100%',
+  overflow: 'hidden',
+  p: 0,
+  '&.MuiDialogContent-root': {
+    paddingTop: 0,
+  },
 };
+/**
+ * POC scroll div: flex-1 overflow-y-auto pr-4 min-h-0
+ * Only this region scrolls; blocks keep natural height (flexShrink 0 on children).
+ */
+export const languageEditorDialogScrollAreaStyles: SxProps<Theme> = {
+  flex: '1 1 0%',
+  minHeight: 0,
+  overflowY: 'auto',
+  overflowX: 'hidden',
+  WebkitOverflowScrolling: 'touch',
+  px: 3,
+  pr: 2,
+  py: 2,
+  display: 'flex',
+  flexDirection: 'column',
+  gap: 2,
+  // POC space-y-4 between blocks — prevent flex from squishing block heights
+  '& > *': {
+    flexShrink: 0,
+  },
+};
+/** Validation banner between scroll and footer — flex-shrink-0 like POC */
+export const languageEditorDialogValidationSectionStyles: SxProps<Theme> = {
+  flexShrink: 0,
+  px: 3,
+  pb: 1,
+};
+export const languageEditorDialogActionsStyles: SxProps<Theme> = { px: 2, py: 1.5, flexShrink: 0 };
 export const languageEditorDialogDescriptionStyles: SxProps<Theme> = {
   m: 0,
   color: 'text.secondary',
   fontSize: 14,
 };
-export const languageEditorDialogActionsStyles: SxProps<Theme> = { px: 2, py: 1.5 };
 
 export const languageEditorClauseRowStyles: SxProps<Theme> = {
   display: 'flex',
@@ -154,14 +204,16 @@ export const languageEditorClauseRangeAndStyles: SxProps<Theme> = {
   color: 'text.secondary',
 };
 export const languageEditorClauseRemoveButtonStyles: SxProps<Theme> = { minWidth: 36 };
+export const languageEditorClauseValueInputWrapperStyles: SxProps<Theme> = { flex: 1, minWidth: 0 };
 export const languageEditorClauseBooleanValueControlStyles: SxProps<Theme> = { minWidth: 120 };
-export const languageEditorClauseTextValueInputStyles: SxProps<Theme> = { minWidth: 140 };
+export const languageEditorClauseTextValueInputStyles: SxProps<Theme> = { minWidth: 140, flex: 1 };
 
 export const languageEditorIfElseBlockRootStyles: SxProps<Theme> = {
   border: 1,
   borderColor: 'divider',
   borderRadius: 1,
   overflow: 'hidden',
+  flexShrink: 0,
 };
 export const languageEditorIfBlockHeaderStyles: SxProps<Theme> = {
   px: 2,
@@ -194,7 +246,31 @@ export const languageEditorElseBlockHeaderStyles: SxProps<Theme> = {
   bgcolor: neutral[200],
   borderBottom: 1,
   borderColor: 'divider',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
 };
+/** Enabled state: white text, no box shadow, no hover effect */
+export const languageEditorElseBlockEnabledButtonStyles: SxProps<Theme> = {
+  color: '#fff',
+  boxShadow: 'none',
+  '&:hover': {
+    backgroundColor: 'primary.main',
+    color: '#fff',
+    boxShadow: 'none',
+  },
+};
+/** Disabled state: grey text and border, transparent background, no hover effect */
+export const languageEditorElseBlockDisabledButtonStyles: SxProps<Theme> = (theme) => ({
+  color: theme.palette.grey[600],
+  borderColor: theme.palette.grey[500],
+  backgroundColor: 'transparent',
+  '&:hover': {
+    backgroundColor: 'transparent',
+    color: theme.palette.grey[600],
+    borderColor: theme.palette.grey[500],
+  },
+});
 export const languageEditorIfElseTagStyles: SxProps<Theme> = {
   px: 1,
   py: 0.25,

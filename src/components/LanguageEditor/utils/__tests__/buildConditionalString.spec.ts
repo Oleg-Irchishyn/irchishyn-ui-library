@@ -12,9 +12,22 @@ describe('buildConditionalString', () => {
       content: 'Region content',
     };
 
-    const result = buildConditionalString(ifClause, [], 'Fallback content');
+    const result = buildConditionalString(ifClause, [], 'Fallback content', true);
 
     expect(result).toBe('{{IF Region equals EMEA}}Region content{{ELSE}}Fallback content{{ENDIF}}');
+  });
+
+  it('omits ELSE part when includeElse is false', () => {
+    const ifClause: ConditionClause = {
+      fieldName: 'Region',
+      operatorKey: 'equals',
+      value: 'EMEA',
+      content: 'Region content',
+    };
+
+    const result = buildConditionalString(ifClause, [], 'Fallback content', false);
+
+    expect(result).toBe('{{IF Region equals EMEA}}Region content{{ENDIF}}');
   });
 
   it('builds ELSE IF clauses and supports inRange + value-less operators', () => {
@@ -40,7 +53,7 @@ describe('buildConditionalString', () => {
       },
     ];
 
-    const result = buildConditionalString(ifClause, elseIfClauses, 'Everything else');
+    const result = buildConditionalString(ifClause, elseIfClauses, 'Everything else', true);
 
     expect(result).toBe(
       '{{IF Amount blank}}If blank{{ELSE IF Amount inRange 10,20}}Between 10 and 20{{ELSE IF Status equals Open}}Open status{{ELSE}}Everything else{{ENDIF}}',

@@ -36,6 +36,15 @@ export interface ConditionalLanguageBuilderProps {
   onInsertConditional: (conditionalText: string) => void;
 }
 
+/** Props for the ELSE block in Conditional Language Builder */
+export interface ConditionalLanguageBuilderElseBlockProps {
+  includeElse: boolean;
+  onIncludeElseChange: (value: boolean) => void;
+  content: string;
+  onContentChange: (content: string) => void;
+  fieldConfig: FieldDefinition[];
+}
+
 export interface UseConditionalLanguageBuilderParams {
   fieldConfig: FieldDefinition[];
   onClose: () => void;
@@ -71,6 +80,8 @@ export interface LanguageEditorProps {
   placeholder?: string;
   /** Minimum height of the editor area */
   minHeight?: string;
+  /** When true, used inside Conditional Language Builder: no Conditional/Validate in toolbar, no nested builder */
+  embedded?: boolean;
 }
 
 /** Props for the LanguageEditorToolbar component */
@@ -78,6 +89,7 @@ export interface LanguageEditorToolbarProps {
   onBold: () => void;
   onItalic: () => void;
   onUnderline: () => void;
+  onInsertFieldMouseDown: () => void;
   onInsertFieldClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   onConditionalClick: () => void;
   onValidateClick: () => void;
@@ -88,4 +100,8 @@ export interface LanguageEditorToolbarProps {
   fieldConfig: FieldDefinition[];
   validationResult: ValidationResult | null;
   disabled?: boolean;
+  /** When false, hide the Conditional button (e.g. when editor is inside the Conditional Builder) */
+  showConditionalButton?: boolean;
+  /** When false, hide the Validate button (e.g. when editor is inside the Conditional Builder) */
+  showValidateButton?: boolean;
 }

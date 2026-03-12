@@ -102,7 +102,7 @@ describe('ConditionalLanguageBuilderClauseRow', () => {
 
     expect(onChange).toHaveBeenCalledWith({
       fieldName: 'Amount',
-      operatorKey: 'equals',
+      operatorKey: '',
       value: '',
       value2: undefined,
       content: 'text',

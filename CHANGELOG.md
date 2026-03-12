@@ -1,9 +1,8 @@
 ## [1.4.1](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.4.0...v1.4.1) (2026-03-10)
 
-
 ### Bug Fixes
 
-* [NO-TASK]: [FE] Missing data-testid in DatePicker and DataTextSelect ([1b977ba](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/1b977baccbc25f97de2f7d1359b67b77a6644339)), closes [#11933](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/11933)
+- [NO-TASK]: [FE] Missing data-testid in DatePicker and DataTextSelect ([1b977ba](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/1b977baccbc25f97de2f7d1359b67b77a6644339)), closes [#11933](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/11933)
 
 # [1.4.0](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.3.0...v1.4.0) (2026-03-10)
 

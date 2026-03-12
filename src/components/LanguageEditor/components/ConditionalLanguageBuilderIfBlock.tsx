@@ -1,8 +1,9 @@
-import { Box, TextField } from '@mui/material';
+import { Box } from '@mui/material';
 
 import { LANGUAGE_EDITOR_LABELS } from '../constants';
 import type { ConditionClause, FieldDefinition } from '../types';
 import { ConditionalLanguageBuilderClauseRow } from './ConditionalLanguageBuilderClauseRow';
+import { LanguageEditor } from './LanguageEditor';
 import {
   languageEditorContentLabelStyles,
   languageEditorIfBlockHeaderStyles,
@@ -43,14 +44,13 @@ export function ConditionalLanguageBuilderIfBlock({
           <Box component="label" sx={languageEditorContentLabelStyles}>
             {LANGUAGE_EDITOR_LABELS.CLB_CONTENT_LABEL}
           </Box>
-          <TextField
-            fullWidth
-            multiline
-            minRows={2}
-            value={clause.content}
-            onChange={(e) => onClauseChange({ ...clause, content: e.target.value })}
+          <LanguageEditor
+            fieldConfig={fieldConfig}
+            content={clause.content}
+            onChange={(content) => onClauseChange({ ...clause, content })}
             placeholder={LANGUAGE_EDITOR_LABELS.CLB_CONTENT_PLACEHOLDER}
-            size="small"
+            minHeight="120px"
+            embedded
           />
         </Box>
       </Box>

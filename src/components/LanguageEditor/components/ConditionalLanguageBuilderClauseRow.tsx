@@ -1,4 +1,5 @@
 import { Box, Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import type { SxProps, Theme } from '@mui/material/styles';
 import { X } from 'lucide-react';
 
 import {
@@ -15,6 +16,7 @@ import {
   languageEditorClauseRangeWrapStyles,
   languageEditorClauseRemoveButtonStyles,
   languageEditorClauseRowStyles,
+  languageEditorClauseValueInputWrapperStyles,
 } from './styles';
 
 function getFieldByName(fieldConfig: FieldDefinition[], name: string): FieldDefinition | undefined {
@@ -43,13 +45,10 @@ export function ConditionalLanguageBuilderClauseRow({
   const inRange = isInRangeOperator(clause.operatorKey);
 
   const handleFieldChange = (fieldName: string) => {
-    const nextField = getFieldByName(fieldConfig, fieldName);
-    const nextOps = nextField ? getOperatorsForDataType(nextField.dataType) : [];
-    const firstOp = nextOps[0]?.key ?? 'equals';
     onChange({
       ...clause,
       fieldName,
-      operatorKey: firstOp,
+      operatorKey: '',
       value: '',
       value2: undefined,
     });
@@ -69,16 +68,19 @@ export function ConditionalLanguageBuilderClauseRow({
         >
           {fieldConfig.map((f) => (
             <MenuItem key={f.name} value={f.name}>
-              {f.displayName}
+              {f.name}
             </MenuItem>
           ))}
         </Select>
       </FormControl>
       <FormControl size="small" sx={languageEditorClauseFormControlStyles}>
-        <InputLabel>Operator</InputLabel>
+        <InputLabel id={`operator-${clause.fieldName}`}>
+          {LANGUAGE_EDITOR_LABELS.CLB_SELECT_OPERATOR}
+        </InputLabel>
         <Select
+          labelId={`operator-${clause.fieldName}`}
           value={clause.operatorKey}
-          label="Operator"
+          label={LANGUAGE_EDITOR_LABELS.CLB_SELECT_OPERATOR}
           onChange={(e) => onChange({ ...clause, operatorKey: e.target.value })}
         >
           {operators.map((op) => (
@@ -89,14 +91,23 @@ export function ConditionalLanguageBuilderClauseRow({
         </Select>
       </FormControl>
       {!valueLess && !inRange && (
-        <ConditionalLanguageBuilderValueInput
-          dataType={dataType}
-          value={clause.value}
-          onChange={(v) => onChange({ ...clause, value: v })}
-        />
+        <Box sx={languageEditorClauseValueInputWrapperStyles}>
+          <ConditionalLanguageBuilderValueInput
+            dataType={dataType}
+            value={clause.value}
+            onChange={(v) => onChange({ ...clause, value: v })}
+          />
+        </Box>
       )}
       {inRange && (
-        <Box sx={languageEditorClauseRangeWrapStyles}>
+        <Box
+          sx={
+            [
+              languageEditorClauseRangeWrapStyles,
+              languageEditorClauseValueInputWrapperStyles,
+            ] as SxProps<Theme>
+          }
+        >
           <ConditionalLanguageBuilderValueInput
             dataType={dataType}
             value={clause.value}

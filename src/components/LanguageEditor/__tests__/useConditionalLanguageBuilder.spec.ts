@@ -53,6 +53,7 @@ describe('useConditionalLanguageBuilder', () => {
         value: 'EMEA',
         content: 'Region text',
       });
+      result.current.setIncludeElse(true);
       result.current.setElseContent('Fallback');
     });
 

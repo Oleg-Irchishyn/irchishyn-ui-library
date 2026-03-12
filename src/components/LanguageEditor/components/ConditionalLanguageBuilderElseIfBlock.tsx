@@ -1,9 +1,10 @@
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { X } from 'lucide-react';
 
 import { LANGUAGE_EDITOR_LABELS } from '../constants';
 import type { ConditionClause, FieldDefinition } from '../types';
 import { ConditionalLanguageBuilderClauseRow } from './ConditionalLanguageBuilderClauseRow';
+import { LanguageEditor } from './LanguageEditor';
 import {
   languageEditorContentLabelStyles,
   languageEditorElseIfBlockHeaderStyles,
@@ -47,21 +48,18 @@ export function ConditionalLanguageBuilderElseIfBlock({
           clause={clause}
           onChange={onClauseChange}
           fieldConfig={fieldConfig}
-          onRemove={onRemove}
-          showRemove
         />
         <Box>
           <Box component="label" sx={languageEditorContentLabelStyles}>
             {LANGUAGE_EDITOR_LABELS.CLB_CONTENT_LABEL}
           </Box>
-          <TextField
-            fullWidth
-            multiline
-            minRows={2}
-            value={clause.content}
-            onChange={(e) => onClauseChange({ ...clause, content: e.target.value })}
+          <LanguageEditor
+            fieldConfig={fieldConfig}
+            content={clause.content}
+            onChange={(content) => onClauseChange({ ...clause, content })}
             placeholder={LANGUAGE_EDITOR_LABELS.CLB_CONTENT_PLACEHOLDER}
-            size="small"
+            minHeight="120px"
+            embedded
           />
         </Box>
       </Box>

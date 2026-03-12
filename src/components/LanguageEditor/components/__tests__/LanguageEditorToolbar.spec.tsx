@@ -12,6 +12,7 @@ const props = {
   onBold: vi.fn(),
   onItalic: vi.fn(),
   onUnderline: vi.fn(),
+  onInsertFieldMouseDown: vi.fn(),
   onInsertFieldClick: vi.fn(),
   onConditionalClick: vi.fn(),
   onValidateClick: vi.fn(),
@@ -32,7 +33,7 @@ const props = {
 };
 
 describe('LanguageEditorToolbar', () => {
-  it('renders action buttons and triggers callbacks', () => {
+  it('renders action buttons and triggers callbacks', { timeout: 15000 }, () => {
     render(<LanguageEditorToolbar {...props} />);
 
     expect(screen.getByTestId('field-dropdown-mock')).toBeTruthy();

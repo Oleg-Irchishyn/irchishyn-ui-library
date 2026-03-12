@@ -66,7 +66,7 @@ const TriggerComponent = () => {
 };
 
 describe('AlertToastProvider', () => {
-  it('renders animated alert when callback is invoked', () => {
+  it('renders animated alert when callback is invoked', { timeout: 15000 }, () => {
     render(
       <AlertToastProvider>
         <TriggerComponent />

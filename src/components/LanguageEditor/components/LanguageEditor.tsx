@@ -24,6 +24,7 @@ export function LanguageEditor({
   readOnly = false,
   placeholder = LANGUAGE_EDITOR_LABELS.EDITOR_PLACEHOLDER,
   minHeight = '200px',
+  embedded = false,
 }: LanguageEditorProps) {
   const {
     editorRef,
@@ -36,6 +37,7 @@ export function LanguageEditor({
     handleBold,
     handleItalic,
     handleUnderline,
+    handleInsertFieldMouseDown,
     handleInsertFieldClick,
     handleFieldDropdownClose,
     handleInsertField,
@@ -64,6 +66,7 @@ export function LanguageEditor({
           onBold={handleBold}
           onItalic={handleItalic}
           onUnderline={handleUnderline}
+          onInsertFieldMouseDown={handleInsertFieldMouseDown}
           onInsertFieldClick={handleInsertFieldClick}
           onConditionalClick={handleConditionalClick}
           onValidateClick={handleValidateClick}
@@ -74,6 +77,8 @@ export function LanguageEditor({
           fieldConfig={fieldConfig}
           validationResult={validationResult}
           disabled={readOnly}
+          showConditionalButton={!embedded}
+          showValidateButton={!embedded}
         />
       )}
 
@@ -119,10 +124,13 @@ export function LanguageEditor({
         onInput={readOnly ? undefined : handleInput}
         onBlur={readOnly ? undefined : handleBlur}
         data-placeholder={placeholder}
-        sx={getLanguageEditorEditableAreaStyles(minHeight, readOnly)}
+        sx={(muiTheme) => ({
+          ...(getLanguageEditorEditableAreaStyles(minHeight, readOnly) as Record<string, unknown>),
+          '--language-editor-token-text': muiTheme.palette.text.primary,
+        })}
       />
 
-      {!readOnly && (
+      {!readOnly && !embedded && (
         <ConditionalLanguageBuilder
           open={showConditionBuilder}
           onClose={handleConditionalClose}
