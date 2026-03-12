@@ -23,6 +23,12 @@ vi.mock('../ConditionalLanguageBuilderValueInput', () => ({
 const fieldConfig = [
   { name: 'Region', displayName: 'Region', type: 'Dimension' as const, dataType: 'text' as const },
   { name: 'Amount', displayName: 'Amount', type: 'Measure' as const, dataType: 'number' as const },
+  {
+    name: 'IS_CAPITAL_CALL',
+    displayName: 'Is Capital Call',
+    type: 'Boolean' as const,
+    dataType: 'boolean' as const,
+  },
 ];
 
 describe('ConditionalLanguageBuilderClauseRow', () => {
@@ -78,6 +84,19 @@ describe('ConditionalLanguageBuilderClauseRow', () => {
     render(
       <ConditionalLanguageBuilderClauseRow
         clause={{ fieldName: 'Region', operatorKey: 'blank', value: '', content: '' }}
+        onChange={onChange}
+        fieldConfig={fieldConfig}
+      />,
+    );
+
+    expect(screen.queryByTestId('value-input-mock')).toBeNull();
+  });
+
+  it('hides value input for boolean field (e.g. IS_CAPITAL_CALL) even when operator not yet selected', () => {
+    const onChange = vi.fn();
+    render(
+      <ConditionalLanguageBuilderClauseRow
+        clause={{ fieldName: 'IS_CAPITAL_CALL', operatorKey: '', value: '', content: '' }}
         onChange={onChange}
         fieldConfig={fieldConfig}
       />,

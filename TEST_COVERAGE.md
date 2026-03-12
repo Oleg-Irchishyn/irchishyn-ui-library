@@ -4,20 +4,20 @@
 
 ## Overall coverage
 
-**93.52%** (average of statements, branches, functions, lines)
+**93.54%** (average of statements, branches, functions, lines)
 
 | Statements | Branches | Functions | Lines  |
 | ---------- | -------- | --------- | ------ |
-| 95.12%     | 86.08%   | 97.20%    | 95.69% |
+| 95.13%     | 86.13%   | 97.20%    | 95.71% |
 
 ## Summary (covered / total)
 
 | Metric     | Coverage | Covered / Total |
 | ---------- | -------- | --------------- |
-| Statements | 95.12%   | 1502 / 1579     |
-| Branches   | 86.08%   | 1107 / 1286     |
+| Statements | 95.13%   | 1506 / 1583     |
+| Branches   | 86.13%   | 1112 / 1291     |
 | Functions  | 97.20%   | 452 / 465       |
-| Lines      | 95.69%   | 1335 / 1395     |
+| Lines      | 95.71%   | 1339 / 1399     |
 
 ## Coverage by file
 
@@ -68,7 +68,7 @@
 | src/components/HistoryAuditTrail/useHistoryAuditTrail.ts                            | 95.55%     | 81.69%   | 91.93%    | 95.59%  |
 | src/components/HistoryAuditTrail/utils.ts                                           | 100.00%    | 68.88%   | 100.00%   | 100.00% |
 | src/components/LanguageEditor/components/ConditionalLanguageBuilder.tsx             | 100.00%    | 75.00%   | 100.00%   | 100.00% |
-| src/components/LanguageEditor/components/ConditionalLanguageBuilderClauseRow.tsx    | 94.11%     | 83.33%   | 90.90%    | 93.75%  |
+| src/components/LanguageEditor/components/ConditionalLanguageBuilderClauseRow.tsx    | 94.11%     | 84.61%   | 90.90%    | 93.75%  |
 | src/components/LanguageEditor/components/ConditionalLanguageBuilderElseBlock.tsx    | 100.00%    | 100.00%  | 100.00%   | 100.00% |
 | src/components/LanguageEditor/components/ConditionalLanguageBuilderElseIfBlock.tsx  | 100.00%    | 100.00%  | 100.00%   | 100.00% |
 | src/components/LanguageEditor/components/ConditionalLanguageBuilderIfBlock.tsx      | 100.00%    | 100.00%  | 100.00%   | 100.00% |

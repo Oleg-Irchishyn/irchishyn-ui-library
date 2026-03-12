@@ -90,7 +90,7 @@ export function ConditionalLanguageBuilderClauseRow({
           ))}
         </Select>
       </FormControl>
-      {!valueLess && !inRange && (
+      {!valueLess && !inRange && dataType !== 'boolean' && (
         <Box sx={languageEditorClauseValueInputWrapperStyles}>
           <ConditionalLanguageBuilderValueInput
             dataType={dataType}

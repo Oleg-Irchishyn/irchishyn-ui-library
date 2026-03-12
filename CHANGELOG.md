@@ -1,9 +1,8 @@
 ## [1.4.2](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.4.1...v1.4.2) (2026-03-12)
 
-
 ### Bug Fixes
 
-* [Issue-12223]: [FE]: fix duplication of details field on export ([e769e9b](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/e769e9b64aa0b2a8d3de14deff4cf4d63eccb714)), closes [#12223](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/12223)
+- [Issue-12223]: [FE]: fix duplication of details field on export ([e769e9b](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/e769e9b64aa0b2a8d3de14deff4cf4d63eccb714)), closes [#12223](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/12223)
 
 ## [1.4.1](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.4.0...v1.4.1) (2026-03-10)
 

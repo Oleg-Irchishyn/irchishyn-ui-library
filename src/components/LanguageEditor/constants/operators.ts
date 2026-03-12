@@ -5,8 +5,8 @@ export interface OperatorOption {
   label: string;
 }
 
-/** Operators that do not require a value input (Blank, Not Blank, and for boolean only Equals with true/false) */
-export const VALUE_LESS_OPERATOR_KEYS = ['blank', 'notBlank'] as const;
+/** Operators that do not require a value input (Blank, Not Blank; for boolean: is true / is false) */
+export const VALUE_LESS_OPERATOR_KEYS = ['blank', 'notBlank', 'isTrue', 'isFalse'] as const;
 
 /** Operator key for "Between" — requires two value inputs */
 export const IN_RANGE_OPERATOR_KEY = 'inRange';
@@ -44,7 +44,10 @@ const DATE_OPERATORS: OperatorOption[] = [
   { key: 'notBlank', label: 'Not blank' },
 ];
 
-const BOOLEAN_OPERATORS: OperatorOption[] = [{ key: 'equals', label: 'Equals' }];
+const BOOLEAN_OPERATORS: OperatorOption[] = [
+  { key: 'isTrue', label: 'is true' },
+  { key: 'isFalse', label: 'is false' },
+];
 
 export function getOperatorsForDataType(dataType: DataType): OperatorOption[] {
   switch (dataType) {

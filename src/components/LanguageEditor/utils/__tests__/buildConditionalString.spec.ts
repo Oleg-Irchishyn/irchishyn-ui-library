@@ -59,4 +59,26 @@ describe('buildConditionalString', () => {
       '{{IF Amount blank}}If blank{{ELSE IF Amount inRange 10,20}}Between 10 and 20{{ELSE IF Status equals Open}}Open status{{ELSE}}Everything else{{ENDIF}}',
     );
   });
+
+  it('outputs equals true/false for boolean isTrue and isFalse operators', () => {
+    const ifClause: ConditionClause = {
+      fieldName: 'IS_CAPITAL_CALL',
+      operatorKey: 'isTrue',
+      value: '',
+      content: 'Capital call content',
+    };
+    const result = buildConditionalString(ifClause, [], 'Else content', true);
+    expect(result).toBe(
+      '{{IF IS_CAPITAL_CALL equals true}}Capital call content{{ELSE}}Else content{{ENDIF}}',
+    );
+
+    const ifClauseFalse: ConditionClause = {
+      fieldName: 'IS_CAPITAL_CALL',
+      operatorKey: 'isFalse',
+      value: '',
+      content: 'Distribution content',
+    };
+    const resultFalse = buildConditionalString(ifClauseFalse, [], '', false);
+    expect(resultFalse).toBe('{{IF IS_CAPITAL_CALL equals false}}Distribution content{{ENDIF}}');
+  });
 });

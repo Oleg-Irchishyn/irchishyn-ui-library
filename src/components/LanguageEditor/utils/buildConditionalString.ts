@@ -22,11 +22,18 @@ export function buildConditionalString(
 function formatCondition(prefix: 'IF' | 'ELSE IF', clause: ConditionClause): string {
   const { fieldName, operatorKey, value, value2, content } = clause;
   const valueLess = isValueLessOperator(operatorKey);
-  const valuePart = valueLess
-    ? ''
-    : operatorKey === 'inRange' && value2 !== undefined && value2 !== ''
-      ? ` ${value},${value2}`
-      : ` ${value}`;
-  const condition = `{{${prefix} ${fieldName} ${operatorKey}${valuePart}}}`;
+  let condition: string;
+  if (operatorKey === 'isTrue') {
+    condition = `{{${prefix} ${fieldName} equals true}}`;
+  } else if (operatorKey === 'isFalse') {
+    condition = `{{${prefix} ${fieldName} equals false}}`;
+  } else {
+    const valuePart = valueLess
+      ? ''
+      : operatorKey === 'inRange' && value2 !== undefined && value2 !== ''
+        ? ` ${value},${value2}`
+        : ` ${value}`;
+    condition = `{{${prefix} ${fieldName} ${operatorKey}${valuePart}}}`;
+  }
   return `${condition}${content}`;
 }
