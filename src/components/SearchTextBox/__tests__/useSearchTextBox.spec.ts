@@ -94,4 +94,45 @@ describe('useSearchTextBox', () => {
 
     expect(result.current.showClearButton).toBe(true);
   });
+
+  it('clears pending debounce timer on unmount', () => {
+    const onChange = vi.fn();
+    const clearTimeoutSpy = vi.spyOn(globalThis, 'clearTimeout');
+    const { result, unmount } = renderHook(() =>
+      useSearchTextBox({ value: '', onChange, debounceMs: 300 }),
+    );
+
+    act(() => {
+      result.current.handleChange({
+        target: { value: 'pending' },
+      } as React.ChangeEvent<HTMLInputElement>);
+    });
+
+    unmount();
+    expect(clearTimeoutSpy).toHaveBeenCalled();
+  });
+
+  it('clears pending debounce timer when handleClear is called', () => {
+    const onChange = vi.fn();
+    const clearTimeoutSpy = vi.spyOn(globalThis, 'clearTimeout');
+    const { result } = renderHook(() => useSearchTextBox({ value: '', onChange, debounceMs: 300 }));
+
+    act(() => {
+      result.current.handleChange({
+        target: { value: 'queued-value' },
+      } as React.ChangeEvent<HTMLInputElement>);
+    });
+    expect(onChange).not.toHaveBeenCalled();
+
+    act(() => {
+      result.current.handleClear();
+    });
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+
+    expect(clearTimeoutSpy).toHaveBeenCalled();
+    expect(onChange).toHaveBeenCalledWith('');
+    expect(onChange).toHaveBeenCalledTimes(1);
+  });
 });

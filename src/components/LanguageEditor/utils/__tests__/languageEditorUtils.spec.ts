@@ -27,6 +27,13 @@ describe('languageEditorUtils', () => {
     expect(stripped).toBe(content);
   });
 
+  it('strips div/br html and decodes html entities', () => {
+    const html =
+      '<div>&lt;b&gt;Hello&lt;/b&gt;</div><div><span data-field="true">«Region»</span><br/>X &amp; Y</div>';
+    const stripped = stripConditionalFormatting(html);
+    expect(stripped).toBe('<b>Hello</b>\n«Region»\nX & Y');
+  });
+
   it('extracts field references and formats a field token', () => {
     expect(extractFieldReferences('A «Region» and «Amount» token')).toEqual(['Region', 'Amount']);
     expect(formatFieldReference('Status')).toBe('«Status»');
@@ -111,6 +118,39 @@ describe('languageEditorUtils', () => {
       );
       expect(result.valid).toBe(true);
       expect(result.errors).toBeUndefined();
+    });
+
+    it('returns errors for invalid ELSE IF, between without second value, and invalid ELSE references', () => {
+      const result = validateConditionalBuilder(
+        {
+          fieldName: 'Region',
+          operatorKey: 'contains',
+          value: 'EMEA',
+          content: 'IF «Region»',
+        },
+        [
+          {
+            fieldName: 'Amount',
+            operatorKey: 'inRange',
+            value: '10',
+            value2: '',
+            content: 'ELSE IF «MissingField»',
+          },
+        ],
+        true,
+        'ELSE «UnknownElseField»',
+        fieldConfig,
+      );
+
+      const messages = result.errors?.map((e) => e.message) ?? [];
+      expect(result.valid).toBe(false);
+      expect(messages.some((m) => m.includes('Second value (upper bound) is required'))).toBe(true);
+      expect(
+        messages.some((m) => m.includes('ELSE IF #1 content: Field reference "«MissingField»"')),
+      ).toBe(true);
+      expect(
+        messages.some((m) => m.includes('ELSE content: Field reference "«UnknownElseField»"')),
+      ).toBe(true);
     });
   });
 });

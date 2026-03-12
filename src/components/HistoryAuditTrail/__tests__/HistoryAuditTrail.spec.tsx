@@ -20,6 +20,14 @@ vi.mock('../components/HistoryAuditTrailLoader', () => ({
   HistoryAuditTrailLoader: () => <div data-testid="history-audit-loader-mock">loader</div>,
 }));
 
+vi.mock('../components/HistoryAuditTrailError', () => ({
+  HistoryAuditTrailError: ({ message }: { message?: string }) => (
+    <div data-testid="history-audit-error-mock">
+      {message ?? 'Error: Failed to load activity history.'}
+    </div>
+  ),
+}));
+
 vi.mock('../components/HistoryAuditTrailEmpty', () => ({
   HistoryAuditTrailEmpty: ({ message }: { message?: string }) => (
     <div data-testid="history-audit-empty-mock">{message ?? 'No activity yet.'}</div>
@@ -53,6 +61,19 @@ const baseHookValue = {
 };
 
 describe('HistoryAuditTrail', () => {
+  it('renders error state when error message is provided', () => {
+    useHistoryAuditTrailMock.mockReturnValue({
+      ...baseHookValue,
+      rowData: [],
+    });
+
+    render(<HistoryAuditTrail events={[]} error="Error: Audit Trail request failed (401)" />);
+    expect(screen.getByTestId('history-audit-error-mock').textContent).toBe(
+      'Error: Audit Trail request failed (401)',
+    );
+    expect(screen.queryByTestId('history-audit-header-mock')).toBeNull();
+  });
+
   it('renders loader when loading and no rows', () => {
     useHistoryAuditTrailMock.mockReturnValue({
       ...baseHookValue,

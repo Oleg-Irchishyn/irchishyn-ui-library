@@ -1,9 +1,17 @@
 import { act, renderHook } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { HISTORY_AUDIT_ALL_MODULES_VALUE, HISTORY_AUDIT_COLUMN_IDS } from '../constants';
+import {
+  HISTORY_AUDIT_ALL_MODULES_VALUE,
+  HISTORY_AUDIT_COLUMN_IDS,
+  HISTORY_AUDIT_LABELS,
+} from '../constants';
 import type { HistoryAuditTrailEvent } from '../types';
 import { useHistoryAuditTrail } from '../useHistoryAuditTrail';
+
+const EVENT_1_DETAILS_TEXT = 'Package updated';
+const REGEX_SPECIAL_CHARS_PATTERN = /[.*+?^${}()|[\]\\]/g;
+const REGEX_ESCAPE_REPLACEMENT = '\\$&';
 
 const events: HistoryAuditTrailEvent[] = [
   {
@@ -12,7 +20,7 @@ const events: HistoryAuditTrailEvent[] = [
     username: 'SYSTEM',
     auditEventType: 'UPDATED',
     subject: 'Updated package',
-    details: 'Package updated',
+    details: EVENT_1_DETAILS_TEXT,
     oldValue: 'A',
     newValue: 'B',
     timestamp: '2026-01-03T00:00:00.000Z',
@@ -27,6 +35,9 @@ const events: HistoryAuditTrailEvent[] = [
     timestamp: '2026-01-02T00:00:00.000Z',
   },
 ];
+
+const escapeRegExp = (value: string) =>
+  value.replace(REGEX_SPECIAL_CHARS_PATTERN, REGEX_ESCAPE_REPLACEMENT);
 
 describe('useHistoryAuditTrail', () => {
   it('builds row data and basic labels from events', () => {
@@ -305,5 +316,151 @@ describe('useHistoryAuditTrail', () => {
         data: { event: events[0] },
       } as never),
     ).not.toThrow();
+  });
+
+  it('exports details once in activity export text', () => {
+    const { result } = renderHook(() =>
+      useHistoryAuditTrail({
+        events,
+      }),
+    );
+
+    const activityColumn = result.current.columnDefs.find(
+      (col) => col.colId === HISTORY_AUDIT_COLUMN_IDS.ACTIVITY,
+    );
+    const row = result.current.rowData[0];
+    expect(typeof activityColumn?.valueGetter).toBe('function');
+    const exportText =
+      typeof activityColumn?.valueGetter === 'function'
+        ? String(activityColumn.valueGetter({ data: row } as never))
+        : '';
+
+    expect(exportText).toContain(EVENT_1_DETAILS_TEXT);
+
+    const detailMatches = exportText.match(new RegExp(escapeRegExp(EVENT_1_DETAILS_TEXT), 'g'));
+    expect(detailMatches ?? []).toHaveLength(1);
+  });
+
+  it('uses fallback labels and timestamp handling for invalid timestamp events', () => {
+    const invalidTimestampEvents: HistoryAuditTrailEvent[] = [
+      {
+        id: 'invalid-a',
+        source: '/source/invalid-a',
+        username: 'alice',
+        auditEventType: 'UPDATED',
+        subject: null,
+        details: null,
+        fieldChanges: [
+          { fieldName: 'Status', oldValue: 'Draft', newValue: 'Ready' },
+          { fieldName: 'Due Date', oldValue: '01/01/2026', newValue: '01/02/2026' },
+        ],
+        timestamp: 'not-a-date',
+      },
+      {
+        id: 'valid-b',
+        source: '/source/valid-b',
+        username: 'bob',
+        auditEventType: 'UPDATED',
+        subject: 'Valid Event',
+        timestamp: '2026-01-03T00:00:00.000Z',
+      },
+      {
+        id: 'invalid-c',
+        source: '/source/invalid-c',
+        username: 'cathy',
+        auditEventType: 'UPDATED',
+        subject: 'Also invalid',
+        timestamp: 'still-not-a-date',
+      },
+    ];
+
+    const { result } = renderHook(() =>
+      useHistoryAuditTrail({
+        events: invalidTimestampEvents,
+      }),
+    );
+
+    expect(result.current.rowData[0].id).toBe('valid-b');
+
+    const invalidRow = result.current.rowData.find((row) => row.id === 'invalid-a');
+    expect(invalidRow?.action).toBe(HISTORY_AUDIT_LABELS.DEFAULT_ACTION);
+    expect(invalidRow?.details).toBe('2 fields changed');
+    expect(invalidRow?.timeAgo).toBe(HISTORY_AUDIT_LABELS.UNKNOWN_TIME);
+    expect(invalidRow?.timestamp).toBe('not-a-date');
+  });
+
+  it('falls back to event sources when configured moduleSources do not match any event', () => {
+    const sourceEvents: HistoryAuditTrailEvent[] = [
+      {
+        id: 'evt-source-a',
+        source: '/capevent/allocations/10001',
+        username: 'alice',
+        auditEventType: 'UPDATED',
+        subject: 'A',
+        timestamp: '2026-01-03T00:00:00.000Z',
+      },
+      {
+        id: 'evt-source-b',
+        source: '/capevent/package/10001',
+        username: 'bob',
+        auditEventType: 'UPDATED',
+        subject: 'B',
+        timestamp: '2026-01-02T00:00:00.000Z',
+      },
+    ];
+
+    const { result } = renderHook(() =>
+      useHistoryAuditTrail({
+        events: sourceEvents,
+        moduleSources: ['/capevent/non-existent/99999'],
+      }),
+    );
+
+    const optionValues = result.current.moduleDropdown?.options.map((option) => option.value) ?? [];
+    expect(optionValues).toEqual(['/capevent/allocations/10001', '/capevent/package/10001']);
+  });
+
+  it('returns empty strings from valueGetter and quickFilter text getters when row data is missing', () => {
+    const { result } = renderHook(() =>
+      useHistoryAuditTrail({
+        events,
+      }),
+    );
+
+    const activityColumn = result.current.columnDefs.find(
+      (col) => col.colId === HISTORY_AUDIT_COLUMN_IDS.ACTIVITY,
+    );
+    const timeColumn = result.current.columnDefs.find(
+      (col) => col.colId === HISTORY_AUDIT_COLUMN_IDS.TIME,
+    );
+
+    expect(
+      typeof activityColumn?.valueGetter === 'function'
+        ? activityColumn.valueGetter({ data: undefined } as never)
+        : '',
+    ).toBe('');
+    expect(activityColumn?.getQuickFilterText?.({ data: undefined } as never)).toBe('');
+    expect(
+      typeof timeColumn?.valueGetter === 'function'
+        ? timeColumn.valueGetter({ data: undefined } as never)
+        : '',
+    ).toBe('');
+    expect(timeColumn?.getQuickFilterText?.({ data: undefined } as never)).toBe('');
+  });
+
+  it('calls onClear callback when handleClear is invoked', () => {
+    const onClear = vi.fn();
+    const { result } = renderHook(() =>
+      useHistoryAuditTrail({
+        events,
+        onClear,
+      }),
+    );
+
+    act(() => {
+      result.current.handleClear();
+    });
+
+    expect(onClear).toHaveBeenCalledTimes(1);
   });
 });

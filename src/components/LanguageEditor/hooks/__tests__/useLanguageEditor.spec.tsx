@@ -275,4 +275,103 @@ describe('useLanguageEditor', () => {
 
     expect(result.current.getFormattedContent()).toBe('<b>raw</b>');
   });
+
+  it('respects readOnly mode by ignoring write actions', () => {
+    const onChange = vi.fn();
+    const execCommandMock = vi.fn();
+    const originalExecCommand = document.execCommand;
+    Object.defineProperty(document, 'execCommand', {
+      configurable: true,
+      value: execCommandMock,
+    });
+
+    const { result } = renderHook(() =>
+      useLanguageEditor({
+        content: 'readonly',
+        fieldConfig: [],
+        onChange,
+        readOnly: true,
+      }),
+    );
+
+    const button = document.createElement('button');
+    act(() => {
+      result.current.handleInsertFieldMouseDown();
+      result.current.handleInsertFieldClick({ currentTarget: button } as never);
+      result.current.handleConditionalClick();
+      result.current.handleBold();
+      result.current.handleItalic();
+      result.current.handleUnderline();
+      result.current.handleInsertField('Region');
+      result.current.handleInsertConditional('IF BLOCK');
+    });
+
+    expect(result.current.fieldDropdownOpen).toBe(false);
+    expect(result.current.showConditionBuilder).toBe(false);
+    expect(execCommandMock).not.toHaveBeenCalled();
+    expect(onChange).not.toHaveBeenCalled();
+
+    Object.defineProperty(document, 'execCommand', {
+      configurable: true,
+      value: originalExecCommand,
+    });
+  });
+
+  it('closes dropdown when insert-field is requested without editor or selection', () => {
+    const { result } = renderHook(() =>
+      useLanguageEditor({
+        content: 'hello',
+        fieldConfig: [],
+      }),
+    );
+
+    const button = document.createElement('button');
+    act(() => {
+      result.current.handleInsertFieldClick({ currentTarget: button } as never);
+    });
+    expect(result.current.fieldDropdownOpen).toBe(true);
+
+    act(() => {
+      result.current.handleInsertField('Region');
+    });
+    expect(result.current.fieldDropdownOpen).toBe(false);
+
+    const editor = document.createElement('div');
+    (result.current.editorRef as unknown as { current: HTMLDivElement | null }).current = editor;
+    const originalGetSelection = window.getSelection;
+    Object.defineProperty(window, 'getSelection', {
+      configurable: true,
+      value: () => null,
+    });
+
+    act(() => {
+      result.current.handleInsertFieldClick({ currentTarget: button } as never);
+      result.current.handleInsertField('Amount');
+    });
+    expect(result.current.fieldDropdownOpen).toBe(false);
+
+    Object.defineProperty(window, 'getSelection', {
+      configurable: true,
+      value: originalGetSelection,
+    });
+  });
+
+  it('syncEditorContent keeps innerHTML unchanged when stripped content already matches', () => {
+    const { result } = renderHook(() =>
+      useLanguageEditor({
+        content: 'same-content',
+        fieldConfig: [],
+      }),
+    );
+
+    const editor = document.createElement('div');
+    editor.innerHTML = '<i>same-content</i>';
+    (result.current.editorRef as unknown as { current: HTMLDivElement | null }).current = editor;
+
+    act(() => {
+      result.current.syncEditorContent();
+    });
+
+    expect(editor.innerHTML).toBe('<i>same-content</i>');
+  });
 });

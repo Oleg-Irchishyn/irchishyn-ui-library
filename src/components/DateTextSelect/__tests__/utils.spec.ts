@@ -22,4 +22,10 @@ describe('DateTextSelect utils', () => {
   it('returns undefined when no error state', () => {
     expect(getDateValidationMessage(null, false)).toBeUndefined();
   });
+
+  it('returns custom format hint for invalid date with non-default format', () => {
+    expect(getDateValidationMessage('invalidDate', false, undefined, undefined, 'dd/MM/yyyy')).toBe(
+      'Enter a valid date (DD/MM/YYYY)',
+    );
+  });
 });

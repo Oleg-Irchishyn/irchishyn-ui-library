@@ -68,4 +68,84 @@ describe('useConditionalLanguageBuilder', () => {
     );
     expect(onClose).toHaveBeenCalledTimes(1);
   });
+
+  it('does not insert when IF field is empty and supports update/validation handlers', () => {
+    const onClose = vi.fn();
+    const onInsertConditional = vi.fn();
+    const fieldConfig = [
+      { name: 'Region', displayName: 'Region', type: 'Dimension', dataType: 'text' },
+    ] as never;
+
+    const { result } = renderHook(() =>
+      useConditionalLanguageBuilder({
+        fieldConfig,
+        onClose,
+        onInsertConditional,
+      }),
+    );
+
+    act(() => {
+      result.current.addElseIf();
+    });
+    act(() => {
+      result.current.updateElseIf(0, {
+        fieldName: 'Region',
+        operatorKey: 'equals',
+        value: 'APAC',
+        content: 'else if content',
+      });
+    });
+    expect(result.current.elseIfClauses[0].value).toBe('APAC');
+
+    act(() => {
+      result.current.handleInsert();
+    });
+    expect(onInsertConditional).not.toHaveBeenCalled();
+
+    act(() => {
+      result.current.handleValidateClick();
+    });
+    expect(result.current.validationResult).toBeTruthy();
+
+    act(() => {
+      result.current.handleClearValidation();
+    });
+    expect(result.current.validationResult).toBeNull();
+  });
+
+  it('computes canInsert false for invalid else-if clauses and resets state', () => {
+    const { result } = renderHook(() =>
+      useConditionalLanguageBuilder({
+        fieldConfig: [],
+        onClose: vi.fn(),
+        onInsertConditional: vi.fn(),
+      }),
+    );
+
+    act(() => {
+      result.current.setIfClause({
+        fieldName: 'Region',
+        operatorKey: 'isEmpty',
+        value: '',
+        content: 'if content',
+      });
+      result.current.addElseIf();
+      result.current.updateElseIf(0, {
+        fieldName: 'Region',
+        operatorKey: 'equals',
+        value: '',
+        content: 'missing value',
+      });
+    });
+
+    expect(result.current.canInsert).toBe(false);
+
+    act(() => {
+      result.current.resetState();
+    });
+    expect(result.current.ifClause.fieldName).toBe('');
+    expect(result.current.elseIfClauses).toEqual([]);
+    expect(result.current.includeElse).toBe(false);
+    expect(result.current.elseContent).toBe('');
+  });
 });

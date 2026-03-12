@@ -2,6 +2,7 @@ import { Box } from '@mui/material';
 
 import { HistoryAuditTrailLoader } from './components/HistoryAuditTrailLoader';
 import { HistoryAuditTrailEmpty } from './components/HistoryAuditTrailEmpty';
+import { HistoryAuditTrailError } from './components/HistoryAuditTrailError';
 import { HistoryAuditTrailHeader } from './components/HistoryAuditTrailHeader';
 import { HistoryAuditTrailTable } from './components/HistoryAuditTrailTable';
 import { useHistoryAuditTrail } from './useHistoryAuditTrail';
@@ -25,6 +26,7 @@ export const HistoryAuditTrail = ({
   onModuleSourceChange,
   allModulesLabel,
   loading = false,
+  error,
   onItemClick,
   onClear,
   height,
@@ -66,31 +68,35 @@ export const HistoryAuditTrail = ({
 
   return (
     <Box data-testid="history-audit-trail" sx={getHistoryAuditTrailRootStyles(sx)}>
-      <HistoryAuditTrailHeader
-        renderMode={renderMode}
-        title={title}
-        countLabel={
-          renderMode === HISTORY_AUDIT_RENDER_MODES.PANEL ? displayedCountLabel : undefined
-        }
-        onClear={handleClear}
-        moduleDropdown={moduleDropdown}
-        search={{
-          searchValue: quickFilterText,
-          onSearchValueChange: setQuickFilterText,
-        }}
-        export={
-          enableExport
-            ? {
-                onExportExcel: handleDownloadExcel,
-                onExportCsv: handleDownloadCsv,
-                enableExport,
-              }
-            : undefined
-        }
-      />
+      {!error && (
+        <HistoryAuditTrailHeader
+          renderMode={renderMode}
+          title={title}
+          countLabel={
+            renderMode === HISTORY_AUDIT_RENDER_MODES.PANEL ? displayedCountLabel : undefined
+          }
+          onClear={handleClear}
+          moduleDropdown={moduleDropdown}
+          search={{
+            searchValue: quickFilterText,
+            onSearchValueChange: setQuickFilterText,
+          }}
+          export={
+            enableExport
+              ? {
+                  onExportExcel: handleDownloadExcel,
+                  onExportCsv: handleDownloadCsv,
+                  enableExport,
+                }
+              : undefined
+          }
+        />
+      )}
 
       <Box sx={historyAuditTrailContentStyles}>
-        {loading && rowData.length === 0 ? (
+        {error ? (
+          <HistoryAuditTrailError message={error} />
+        ) : loading && rowData.length === 0 ? (
           <HistoryAuditTrailLoader />
         ) : rowData.length === 0 ? (
           <HistoryAuditTrailEmpty />

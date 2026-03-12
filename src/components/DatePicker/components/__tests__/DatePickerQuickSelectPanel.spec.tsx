@@ -7,15 +7,24 @@ vi.mock('@mui/x-date-pickers/DatePicker', () => ({
     value,
     onChange,
     shouldDisableDate,
+    slotProps,
   }: {
     label?: string;
     value: Date | null;
     onChange: (value: Date | null) => void;
     shouldDisableDate?: (date: Date) => boolean;
+    slotProps?: {
+      textField?: {
+        placeholder?: string;
+        error?: boolean;
+      };
+    };
   }) => (
     <input
       aria-label={label}
       data-has-disable-date={shouldDisableDate ? 'true' : 'false'}
+      data-placeholder={slotProps?.textField?.placeholder ?? ''}
+      data-error={slotProps?.textField?.error ? 'true' : 'false'}
       value={value ? 'selected' : ''}
       onChange={() => onChange(new Date('2026-04-06T00:00:00.000Z'))}
     />
@@ -100,5 +109,41 @@ describe('DatePickerQuickSelectPanel', () => {
 
     expect(screen.getByLabelText('From').getAttribute('data-has-disable-date')).toBe('true');
     expect(screen.getByLabelText('To').getAttribute('data-has-disable-date')).toBe('true');
+  });
+
+  it('uses custom date format as placeholder and non-error state for custom pickers', () => {
+    render(
+      <DatePickerQuickSelectPanel
+        label="Date Range"
+        disabled={false}
+        required={false}
+        error={false}
+        clearLabel="Clear selection"
+        quickSelectPlaceholder="Select date range"
+        triggerLabel="Custom"
+        isOpen={true}
+        anchorEl={document.createElement('div')}
+        selectedQuickOptionValue=""
+        customRange={{ from: null, to: null }}
+        quickSelectOptions={[{ value: 'custom', label: 'Custom' }]}
+        allowCustomRange={true}
+        customFromError={null}
+        customToError={null}
+        dateFormat="dd/MM/yyyy"
+        onOpen={vi.fn()}
+        onClose={vi.fn()}
+        onQuickOptionChange={vi.fn()}
+        onCustomFromChange={vi.fn()}
+        onCustomToChange={vi.fn()}
+        onCustomFromError={vi.fn()}
+        onCustomToError={vi.fn()}
+        onClearSelection={vi.fn()}
+      />,
+    );
+
+    expect(screen.getByLabelText('From').getAttribute('data-placeholder')).toBe('dd/MM/yyyy');
+    expect(screen.getByLabelText('To').getAttribute('data-placeholder')).toBe('dd/MM/yyyy');
+    expect(screen.getByLabelText('From').getAttribute('data-error')).toBe('false');
+    expect(screen.getByLabelText('To').getAttribute('data-error')).toBe('false');
   });
 });

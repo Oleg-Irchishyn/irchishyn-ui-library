@@ -3,10 +3,12 @@ import { describe, expect, it } from 'vitest';
 import { QUICK_SELECT_PRESET_VALUES } from '../constants';
 import {
   getDefaultQuickSelectOptions,
+  getDatePickerValidationMessage,
   getQuickSelectTriggerLabel,
   isDateRange,
   isQuickSelectOption,
   isValidDateRange,
+  toDateLabel,
   resolveQuickSelectOptionRange,
 } from '../utils';
 
@@ -20,6 +22,11 @@ describe('DatePicker utils', () => {
     expect(isDateRange({ from: new Date(), to: new Date() })).toBe(true);
     expect(isDateRange({ from: new Date() })).toBe(false);
     expect(isDateRange(null)).toBe(false);
+  });
+
+  it('formats date labels for date and null values', () => {
+    expect(toDateLabel(new Date('2026-03-09T00:00:00.000Z'))).toBe('03/09/2026');
+    expect(toDateLabel(null)).toBe('');
   });
 
   it('validates complete date ranges', () => {
@@ -88,6 +95,19 @@ describe('DatePicker utils', () => {
     expect(range.to).toBeTruthy();
   });
 
+  it('resolves explicit option.range before fallback', () => {
+    const explicitRange = {
+      from: new Date('2026-01-01T00:00:00.000Z'),
+      to: new Date('2026-01-05T00:00:00.000Z'),
+    };
+    const resolved = resolveQuickSelectOptionRange(
+      { value: 'explicit', label: 'Explicit', range: explicitRange },
+      new Date('2026-03-09T00:00:00.000Z'),
+    );
+
+    expect(resolved).toEqual(explicitRange);
+  });
+
   it('returns placeholder for invalid range value', () => {
     const label = getQuickSelectTriggerLabel(
       {
@@ -98,5 +118,25 @@ describe('DatePicker utils', () => {
     );
 
     expect(label).toBe('Select date range');
+  });
+
+  it('returns placeholder when value is null', () => {
+    expect(getQuickSelectTriggerLabel(null, 'Pick one')).toBe('Pick one');
+  });
+
+  it('builds validation messages for custom format and min/max paths', () => {
+    const minDate = new Date('2026-01-01T00:00:00.000Z');
+    const maxDate = new Date('2026-12-31T00:00:00.000Z');
+
+    expect(getDatePickerValidationMessage('invalidDate', minDate, maxDate, 'dd/MM/yyyy')).toBe(
+      'Enter a valid date (DD/MM/YYYY)',
+    );
+    expect(getDatePickerValidationMessage('minDate', minDate, maxDate, 'dd/MM/yyyy')).toContain(
+      '01/01/2026',
+    );
+    expect(getDatePickerValidationMessage('maxDate', minDate, maxDate, 'dd/MM/yyyy')).toContain(
+      '31/12/2026',
+    );
+    expect(getDatePickerValidationMessage(null, minDate, maxDate, 'dd/MM/yyyy')).toBeUndefined();
   });
 });

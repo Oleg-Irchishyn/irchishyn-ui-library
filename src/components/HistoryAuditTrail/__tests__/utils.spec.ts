@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  createHistoryAuditAgGridTheme,
   detailLabelForKey,
   extractTriggeredBy,
   formatHistoryAuditRelativeTime,
@@ -49,6 +50,21 @@ describe('HistoryAudit utils', () => {
     expect(isTriggeredByKey('CONFIGURATION')).toBe(false);
   });
 
+  it('supports triggered-by fallback keys and returns null when values are blank', () => {
+    const fallbackResult = extractTriggeredBy([
+      { key: 'TRIGGEREDBYUSER', value: 'Workflow Service' },
+      { key: 'TRIGGEREDBYACTION', value: 'batch_process' },
+    ]);
+    expect(fallbackResult?.userName).toBe('Workflow Service');
+    expect(fallbackResult?.action).toBe('batch_process');
+
+    const blankResult = extractTriggeredBy([
+      { key: 'TRIGGERED_BY_USER', value: '   ' },
+      { key: 'TRIGGERED_BY_ACTION', value: '' },
+    ]);
+    expect(blankResult).toBeNull();
+  });
+
   it('checks non-empty strings', () => {
     expect(isNonEmptyString(' hello ')).toBe(true);
     expect(isNonEmptyString('  ')).toBe(false);
@@ -77,6 +93,38 @@ describe('HistoryAudit utils', () => {
     expect(updatedStyle(theme as never).color).toBe('#6');
     expect(deletedStyle(theme as never).borderColor).toBe('#755');
     expect(otherStyle(theme as never).borderColor).toBe('#e');
+  });
+
+  it('creates AG Grid theme for both light and dark modes', () => {
+    const lightTheme = {
+      palette: {
+        mode: 'light',
+        primary: { main: '#00A9E0' },
+        background: { default: '#fafafa', paper: '#ffffff' },
+        text: { primary: '#111111', secondary: '#666666' },
+        divider: '#dddddd',
+      },
+      typography: { fontFamily: 'Inter' },
+    };
+
+    const darkTheme = {
+      palette: {
+        mode: 'dark',
+        primary: { main: '#53D5FF' },
+        background: { default: '#121212', paper: '#1e1e1e' },
+        text: { primary: '#ffffff', secondary: '#bdbdbd' },
+        divider: '#2d2d2d',
+      },
+      typography: { fontFamily: 'Inter' },
+    };
+
+    const lightAgGridTheme = createHistoryAuditAgGridTheme(lightTheme as never);
+    const darkAgGridTheme = createHistoryAuditAgGridTheme(darkTheme as never);
+
+    expect(lightAgGridTheme).toBeTruthy();
+    expect(darkAgGridTheme).toBeTruthy();
+    expect(typeof lightAgGridTheme).toBe('object');
+    expect(typeof darkAgGridTheme).toBe('object');
   });
 
   it('calculates row heights based on content complexity', () => {

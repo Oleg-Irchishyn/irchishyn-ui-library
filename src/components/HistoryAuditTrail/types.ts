@@ -78,6 +78,10 @@ export interface HistoryAuditTrailEmptyProps {
   message?: string;
 }
 
+export interface HistoryAuditTrailErrorProps {
+  message?: string;
+}
+
 export interface HistoryAuditTrailExportProps {
   onExportExcel?: () => void;
   onExportCsv?: () => void;
@@ -144,6 +148,7 @@ export interface HistoryAuditTrailProps {
   onModuleSourceChange?: (selectedSource: string) => void;
   allModulesLabel?: string;
   loading?: boolean;
+  error?: string | null;
   onItemClick?: (event: HistoryAuditTrailEvent) => void;
   onClear?: () => void;
   height?: number | string;

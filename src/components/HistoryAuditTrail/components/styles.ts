@@ -64,6 +64,11 @@ export const historyAuditLoaderStyles: SxProps<Theme> = {
 
 export const historyAuditLoaderLabelStyles: SxProps<Theme> = { mt: 1 };
 
+export const historyAuditErrorMessageStyles: SxProps<Theme> = (theme) => ({
+  color: theme.palette.error.main,
+  fontWeight: 500,
+});
+
 export const historyAuditSearchInputStyles: SxProps<Theme> = (theme) => ({
   maxWidth: 225,
   height: HISTORY_AUDIT_LAYOUT.TOOLBAR_INPUT_HEIGHT,

@@ -122,4 +122,32 @@ describe('ConditionalLanguageBuilder', () => {
       screen.getByRole('button', { name: 'Insert Language' }).getAttribute('disabled'),
     ).not.toBeNull();
   });
+
+  it('renders validation error banner and allows clearing it', () => {
+    useConditionalLanguageBuilderMock.mockReturnValue({
+      ...hookState,
+      validationResult: {
+        valid: false,
+        errors: [{ message: 'Mock validation error' }],
+      },
+    });
+
+    render(
+      <ConditionalLanguageBuilder
+        open={true}
+        onClose={vi.fn()}
+        fieldConfig={[]}
+        onInsertConditional={vi.fn()}
+      />,
+    );
+
+    expect(screen.getByText('Errors:')).toBeTruthy();
+    expect(screen.getByText('• Mock validation error')).toBeTruthy();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Validate' }));
+    expect(hookState.handleValidateClick).toHaveBeenCalledTimes(1);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Clear validation' }));
+    expect(hookState.handleClearValidation).toHaveBeenCalledTimes(1);
+  });
 });

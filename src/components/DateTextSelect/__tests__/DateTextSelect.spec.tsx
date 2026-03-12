@@ -176,4 +176,20 @@ describe('DateTextSelect', () => {
     expect(screen.getByText('Due Date Type')).toBeTruthy();
     expect(screen.getByLabelText('Date text input')).toBeTruthy();
   });
+
+  it('accepts sx as an array and still renders component', () => {
+    render(
+      <DateTextSelect
+        label="Due Date Type"
+        dateValue={null}
+        onDateChange={() => {}}
+        selectValue=""
+        selectOptions={options}
+        onSelectChange={() => {}}
+        sx={[{ mt: 1 }, { mb: 1 }]}
+      />,
+    );
+
+    expect(screen.getByTestId('date-text-select')).toBeTruthy();
+  });
 });

@@ -98,7 +98,6 @@ const getActivityExportText = (data: HistoryAuditTrailTableRow) => {
     data.action,
     data.details,
     changeText,
-    data.event.details,
     fieldChangesText,
     additionalDetailsText,
   );

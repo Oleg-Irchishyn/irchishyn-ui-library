@@ -246,6 +246,14 @@ export const Loading: Story = {
   args: { events: [], countLabel: '0 events', loading: true },
 };
 
+export const Error: Story = {
+  args: {
+    events: [],
+    countLabel: '0 events',
+    error: 'Error: Audit Trail request failed (401)',
+  },
+};
+
 export const ExportEnabled: Story = {
   args: {
     events: sample,
