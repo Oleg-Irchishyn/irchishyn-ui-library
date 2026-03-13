@@ -49,7 +49,7 @@ describe('useConditionalLanguageBuilder', () => {
     act(() => {
       result.current.setIfClause({
         fieldName: 'Region',
-        operatorKey: 'equals',
+        operatorKey: 'EQUALS',
         value: 'EMEA',
         content: 'Region text',
       });
@@ -64,7 +64,7 @@ describe('useConditionalLanguageBuilder', () => {
     });
 
     expect(onInsertConditional).toHaveBeenCalledWith(
-      '{{IF Region equals EMEA}}Region text{{ELSE}}Fallback{{ENDIF}}',
+      '{{IF Region = EMEA}}Region text{{ELSE}}Fallback{{ENDIF}}',
     );
     expect(onClose).toHaveBeenCalledTimes(1);
   });
@@ -90,7 +90,7 @@ describe('useConditionalLanguageBuilder', () => {
     act(() => {
       result.current.updateElseIf(0, {
         fieldName: 'Region',
-        operatorKey: 'equals',
+        operatorKey: 'EQUALS',
         value: 'APAC',
         content: 'else if content',
       });
@@ -125,14 +125,14 @@ describe('useConditionalLanguageBuilder', () => {
     act(() => {
       result.current.setIfClause({
         fieldName: 'Region',
-        operatorKey: 'isEmpty',
+        operatorKey: 'IS_EMPTY',
         value: '',
         content: 'if content',
       });
       result.current.addElseIf();
       result.current.updateElseIf(0, {
         fieldName: 'Region',
-        operatorKey: 'equals',
+        operatorKey: 'EQUALS',
         value: '',
         content: 'missing value',
       });

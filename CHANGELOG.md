@@ -1,9 +1,8 @@
 ## [1.4.3](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.4.2...v1.4.3) (2026-03-12)
 
-
 ### Bug Fixes
 
-* [Issue-12286]: [FE]: fixdropdown behavior for boolean values ([2b1c9ba](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/2b1c9ba34b5c6609cc58071d659ffa8b6c5c7856))
+- [Issue-12286]: [FE]: fixdropdown behavior for boolean values ([2b1c9ba](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/2b1c9ba34b5c6609cc58071d659ffa8b6c5c7856))
 
 ## [1.4.2](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.4.1...v1.4.2) (2026-03-12)
 

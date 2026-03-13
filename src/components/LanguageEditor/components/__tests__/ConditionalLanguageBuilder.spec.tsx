@@ -31,7 +31,7 @@ vi.mock('../ConditionalLanguageBuilderElseIfBlock', () => ({
         onClick={() =>
           onClauseChange({
             fieldName: 'Region',
-            operatorKey: 'equals',
+            operatorKey: 'EQUALS',
             value: 'EU',
             content: 'changed',
           })
@@ -52,9 +52,11 @@ vi.mock('../ConditionalLanguageBuilderElseBlock', () => ({
 import { ConditionalLanguageBuilder } from '../ConditionalLanguageBuilder';
 
 const hookState = {
-  ifClause: { fieldName: 'Region', operatorKey: 'equals', value: 'EMEA', content: 'if content' },
+  ifClause: { fieldName: 'Region', operatorKey: 'EQUALS', value: 'EMEA', content: 'if content' },
   setIfClause: vi.fn(),
-  elseIfClauses: [{ fieldName: 'Amount', operatorKey: 'greaterThan', value: '10', content: 'x' }],
+  elseIfClauses: [
+    { fieldName: 'Amount', operatorKey: 'IS_GREATER_THAN', value: '10', content: 'x' },
+  ],
   includeElse: false,
   setIncludeElse: vi.fn(),
   elseContent: 'fallback',
@@ -97,7 +99,7 @@ describe('ConditionalLanguageBuilder', () => {
     expect(hookState.addElseIf).toHaveBeenCalledTimes(1);
     expect(hookState.updateElseIf).toHaveBeenCalledWith(0, {
       fieldName: 'Region',
-      operatorKey: 'equals',
+      operatorKey: 'EQUALS',
       value: 'EU',
       content: 'changed',
     });

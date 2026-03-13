@@ -2,6 +2,8 @@ import type { SxProps, Theme } from '@mui/material/styles';
 import { createTheme } from '@mui/material/styles';
 import { describe, expect, it } from 'vitest';
 
+import { info } from '@gen2fund/platform.style';
+
 import {
   getLanguageEditorEditableAreaStyles,
   getLanguageEditorFieldTypeChipStyles,
@@ -55,8 +57,8 @@ describe('LanguageEditor component styles', () => {
 
   it('builds field type chip and shared style constants', () => {
     const theme = createTheme({ palette: { mode: 'light' } });
-    const chipStyles = getLanguageEditorFieldTypeChipStyles({ bg: '#111', text: '#eee' });
-    expect(chipStyles).toMatchObject({ backgroundColor: '#111', color: '#eee' });
+    const chipStyles = getLanguageEditorFieldTypeChipStyles({ bg: info.light, text: info.dark });
+    expect(chipStyles).toMatchObject({ backgroundColor: info.light, color: info.dark });
     expect(languageEditorPaperStyles).toMatchObject({ overflow: 'hidden' });
     expect(resolveSxObject(languageEditorToolbarStyles, theme)).toMatchObject({
       display: 'flex',

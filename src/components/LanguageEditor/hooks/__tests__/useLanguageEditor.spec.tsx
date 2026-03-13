@@ -232,7 +232,7 @@ describe('useLanguageEditor', () => {
 
     act(() => {
       result.current.handleConditionalClick();
-      result.current.handleInsertConditional('{{IF X equals Y}}ok{{ELSE}}no{{ENDIF}}');
+      result.current.handleInsertConditional('{{IF X EQUALS Y}}ok{{ELSE}}no{{ENDIF}}');
     });
 
     expect(onChange).toHaveBeenCalled();

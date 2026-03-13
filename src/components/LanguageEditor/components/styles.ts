@@ -250,13 +250,13 @@ export const languageEditorElseBlockHeaderStyles: SxProps<Theme> = {
   alignItems: 'center',
   justifyContent: 'space-between',
 };
-/** Enabled state: white text, no box shadow, no hover effect */
+/** Enabled state: contrast text (from theme/Platform.Style), no box shadow, no hover effect */
 export const languageEditorElseBlockEnabledButtonStyles: SxProps<Theme> = {
-  color: '#fff',
+  color: 'primary.contrastText',
   boxShadow: 'none',
   '&:hover': {
     backgroundColor: 'primary.main',
-    color: '#fff',
+    color: 'primary.contrastText',
     boxShadow: 'none',
   },
 };
@@ -277,7 +277,7 @@ export const languageEditorIfElseTagStyles: SxProps<Theme> = {
   borderRadius: 0.5,
   fontSize: 12,
   fontWeight: 600,
-  color: 'white',
+  color: 'primary.contrastText',
 };
 export const languageEditorIfTagStyles: SxProps<Theme> = {
   ...languageEditorIfElseTagStyles,

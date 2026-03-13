@@ -53,7 +53,7 @@ const sampleContentWithTokens = `Dear «INVESTOR_NAME»,
 
 This letter is to inform you about your investment in «FUND_NAME».
 
-{{IF IS_CAPITAL_CALL equals true}}Your capital call amount is «NET_CALL_AMOUNT», due by «DUE_DATE».{{ELSE}}This is a distribution notice.{{ENDIF}}
+{{IF IS_CAPITAL_CALL IS_TRUE}}Your capital call amount is «NET_CALL_AMOUNT», due by «DUE_DATE».{{ELSE}}This is a distribution notice.{{ENDIF}}
 
 Best regards,
 «ENTITY_NAME»`;
@@ -207,7 +207,7 @@ export const ValidationErrors: Story = {
 
 {{IF INVALID_FIELD badOperator value}}Content here{{ENDIF}}
 
-Missing endif: {{IF IS_CAPITAL_CALL equals true}}Some content`}
+Missing endif: {{IF IS_CAPITAL_CALL IS_TRUE}}Some content`}
       onValidate={args.onValidate}
     />
   ),

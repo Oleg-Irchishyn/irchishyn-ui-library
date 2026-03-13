@@ -29,7 +29,7 @@ vi.mock('../LanguageEditor', () => ({
 
 const clause = {
   fieldName: 'Region',
-  operatorKey: 'equals',
+  operatorKey: 'EQUALS',
   value: 'EMEA',
   content: 'initial content',
 };

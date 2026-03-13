@@ -36,7 +36,7 @@ describe('ConditionalLanguageBuilderClauseRow', () => {
     const onChange = vi.fn();
     render(
       <ConditionalLanguageBuilderClauseRow
-        clause={{ fieldName: 'Region', operatorKey: 'equals', value: 'EMEA', content: 'text' }}
+        clause={{ fieldName: 'Region', operatorKey: 'EQUALS', value: 'EMEA', content: 'text' }}
         onChange={onChange}
         fieldConfig={fieldConfig}
       />,
@@ -46,20 +46,20 @@ describe('ConditionalLanguageBuilderClauseRow', () => {
     fireEvent.click(screen.getAllByTestId('value-input-mock')[0]);
     expect(onChange).toHaveBeenCalledWith({
       fieldName: 'Region',
-      operatorKey: 'equals',
+      operatorKey: 'EQUALS',
       value: 'changed',
       content: 'text',
     });
   });
 
-  it('renders two value inputs for inRange and remove button when enabled', () => {
+  it('renders two value inputs for IS_BETWEEN and remove button when enabled', () => {
     const onRemove = vi.fn();
     const onChange = vi.fn();
     render(
       <ConditionalLanguageBuilderClauseRow
         clause={{
           fieldName: 'Amount',
-          operatorKey: 'inRange',
+          operatorKey: 'IS_BETWEEN',
           value: '10',
           value2: '20',
           content: 'text',
@@ -83,7 +83,7 @@ describe('ConditionalLanguageBuilderClauseRow', () => {
     const onChange = vi.fn();
     render(
       <ConditionalLanguageBuilderClauseRow
-        clause={{ fieldName: 'Region', operatorKey: 'blank', value: '', content: '' }}
+        clause={{ fieldName: 'Region', operatorKey: 'IS_EMPTY', value: '', content: '' }}
         onChange={onChange}
         fieldConfig={fieldConfig}
       />,
@@ -109,7 +109,7 @@ describe('ConditionalLanguageBuilderClauseRow', () => {
     const onChange = vi.fn();
     render(
       <ConditionalLanguageBuilderClauseRow
-        clause={{ fieldName: 'Region', operatorKey: 'equals', value: 'abc', content: 'text' }}
+        clause={{ fieldName: 'Region', operatorKey: 'EQUALS', value: 'abc', content: 'text' }}
         onChange={onChange}
         fieldConfig={fieldConfig}
       />,

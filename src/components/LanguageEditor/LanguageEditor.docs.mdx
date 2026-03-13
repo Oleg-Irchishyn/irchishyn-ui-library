@@ -151,52 +151,54 @@ Pattern: `{{IF fieldName OPERATOR value}}content{{ELSE IF ...}}{{ELSE}}content{{
 
 ## Operators per dataType
 
-Operators are determined by the field's **dataType**. Display label and value (key) per dataType:
+Operators are determined by the field's **dataType**. Operators are shown in the dropdown with **lowercase labels** (e.g. "starts with", "greater than"). In the editor output, operators appear in **UPPERCASE** (e.g. `STARTS_WITH`, `IS_GREATER_THAN`).
 
-### text
+### text (Dimension)
 
-| Label            | Key          |
-| ---------------- | ------------ |
-| Contains         | `contains`   |
-| Does not contain | `notContain` |
-| Equals           | `equals`     |
-| Does not equal   | `notEqual`   |
-| Begins with      | `startsWith` |
-| Ends with        | `endsWith`   |
-| Blank            | `blank`      |
-| Not Blank        | `notBlank`   |
+| Label (dropdown) | Key (in editor)    |
+| ---------------- | ------------------ |
+| equals           | `EQUALS`           |
+| does not equal   | `DOES_NOT_EQUAL`   |
+| contains         | `CONTAINS`         |
+| does not contain | `DOES_NOT_CONTAIN` |
+| starts with      | `STARTS_WITH`      |
+| is empty         | `IS_EMPTY`         |
+| is not empty     | `IS_NOT_EMPTY`     |
 
-### number
+### number (Measure)
 
-| Label                    | Key                  |
-| ------------------------ | -------------------- |
-| Equals                   | `equals`             |
-| Does not equal           | `notEqual`           |
-| Greater than             | `greaterThan`        |
-| Greater than or equal to | `greaterThanOrEqual` |
-| Less than                | `lessThan`           |
-| Less than or equal       | `lessThanOrEqual`    |
-| Between                  | `inRange`            |
-| Blank                    | `blank`              |
-| Not Blank                | `notBlank`           |
+| Label (dropdown)      | Key (in editor)            |
+| --------------------- | -------------------------- |
+| equals                | `EQUALS`                   |
+| does not equal        | `DOES_NOT_EQUAL`           |
+| greater than          | `IS_GREATER_THAN`          |
+| less than             | `IS_LESS_THAN`             |
+| greater than or equal | `IS_GREATER_THAN_OR_EQUAL` |
+| less than or equal    | `IS_LESS_THAN_OR_EQUAL`    |
+| is between            | `IS_BETWEEN`               |
+| is empty              | `IS_EMPTY`                 |
+| is not empty          | `IS_NOT_EMPTY`             |
 
 ### date
 
-| Label          | Key           |
-| -------------- | ------------- |
-| Equals         | `equals`      |
-| Does not equal | `notEqual`    |
-| before         | `lessThan`    |
-| after          | `greaterThan` |
-| Between        | `inRange`     |
-| Blank          | `blank`       |
-| Not blank      | `notBlank`    |
+| Label (dropdown) | Key (in editor)            |
+| ---------------- | -------------------------- |
+| equals           | `EQUALS`                   |
+| does not equal   | `DOES_NOT_EQUAL`           |
+| before           | `IS_LESS_THAN`             |
+| after            | `IS_GREATER_THAN`          |
+| on or before     | `IS_LESS_THAN_OR_EQUAL`    |
+| on or after      | `IS_GREATER_THAN_OR_EQUAL` |
+| is between       | `IS_BETWEEN`               |
+| is empty         | `IS_EMPTY`                 |
+| is not empty     | `IS_NOT_EMPTY`             |
 
 ### boolean
 
-| Label  | Key      |
-| ------ | -------- |
-| Equals | `equals` |
+| Label (dropdown) | Key (in editor) |
+| ---------------- | --------------- |
+| is true          | `IS_TRUE`       |
+| is false         | `IS_FALSE`      |
 
 ## Validation rules
 

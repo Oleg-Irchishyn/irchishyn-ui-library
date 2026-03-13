@@ -7,7 +7,12 @@ import type {
   ValidationError,
   ValidationResult,
 } from '../types';
-import { getOperatorsForDataType, isInRangeOperator, isValueLessOperator } from '../constants';
+import {
+  getOperatorsForDataType,
+  isInRangeOperator,
+  isValueLessOperator,
+  normalizeOperatorFromEditor,
+} from '../constants';
 
 /** Token text color is set via CSS var --language-editor-token-text (theme text.primary) on the editor container */
 const CONDITIONAL_TOKEN_STYLE = `color: var(--language-editor-token-text, ${warning.dark}); background-color: ${warning.light}; padding: 1px 4px; border-radius: 3px; font-family: monospace; font-size: 0.85em;`;
@@ -149,7 +154,8 @@ export function validateContent(content: string, fieldConfig: FieldDefinition[])
       const dataType = getFieldDataType(fieldName, fieldConfig);
       if (dataType) {
         const validOperators = getOperatorsForDataType(dataType);
-        const isValidOperator = validOperators.some((op) => op.key === operator);
+        const operatorKey = normalizeOperatorFromEditor(operator);
+        const isValidOperator = validOperators.some((op) => op.key === operatorKey);
         if (!isValidOperator) {
           errors.push({
             message: `${prefix} condition: Operator "${operator}" is not valid for ${dataType} field "${fieldName}"`,

@@ -17,7 +17,7 @@ const fieldConfig: FieldDefinition[] = [
 
 describe('languageEditorUtils', () => {
   it('formats and strips conditional content without losing tokens', () => {
-    const content = '{{IF Region equals EMEA}}Hello «Region»{{ELSE}}Fallback{{ENDIF}}';
+    const content = '{{IF Region EQUALS EMEA}}Hello «Region»{{ELSE}}Fallback{{ENDIF}}';
 
     const formatted = formatConditionalSyntax(content);
     const stripped = stripConditionalFormatting(formatted);
@@ -41,7 +41,7 @@ describe('languageEditorUtils', () => {
 
   it('validates correct content successfully', () => {
     const validContent =
-      '{{IF Region contains EMEA}}Current: «Region»{{ELSE IF Amount greaterThan 100}}High{{ELSE}}Other{{ENDIF}}';
+      '{{IF Region CONTAINS EMEA}}Current: «Region»{{ELSE IF Amount IS_GREATER_THAN 100}}High{{ELSE}}Other{{ENDIF}}';
 
     const result = validateContent(validContent, fieldConfig);
 
@@ -49,9 +49,17 @@ describe('languageEditorUtils', () => {
     expect(result.errors).toBeUndefined();
   });
 
+  it('validates content with math symbols for measure operators (>, <, =, >=, <=, !=)', () => {
+    const contentWithSymbols =
+      '{{IF Amount > 100}}High{{ELSE IF Amount <= 50}}Low{{ELSE IF Region = EMEA}}EMEA{{ENDIF}}';
+    const result = validateContent(contentWithSymbols, fieldConfig);
+    expect(result.valid).toBe(true);
+    expect(result.errors).toBeUndefined();
+  });
+
   it('returns validation errors for invalid fields/operators and mismatched IF/ENDIF', () => {
     const invalidContent =
-      '{{IF UnknownField equals yes}}X{{ELSE IF Amount contains 5}}Y{{ENDIF}}{{ENDIF}}';
+      '{{IF UnknownField EQUALS yes}}X{{ELSE IF Amount CONTAINS 5}}Y{{ENDIF}}{{ENDIF}}';
 
     const result = validateContent(invalidContent, fieldConfig);
     const messages = result.errors?.map((e) => e.message) ?? [];
@@ -60,7 +68,7 @@ describe('languageEditorUtils', () => {
     expect(messages.some((m) => m.includes('Field "UnknownField" does not exist'))).toBe(true);
     expect(
       messages.some((m) =>
-        m.includes('Operator "contains" is not valid for number field "Amount"'),
+        m.includes('Operator "CONTAINS" is not valid for number field "Amount"'),
       ),
     ).toBe(true);
     expect(messages.some((m) => m.includes('Mismatched IF/ENDIF'))).toBe(true);
@@ -69,7 +77,7 @@ describe('languageEditorUtils', () => {
   describe('validateConditionalBuilder', () => {
     it('returns errors when IF has no field selected', () => {
       const result = validateConditionalBuilder(
-        { fieldName: '', operatorKey: 'equals', value: '', content: 'x' },
+        { fieldName: '', operatorKey: 'EQUALS', value: '', content: 'x' },
         [],
         false,
         '',
@@ -93,7 +101,7 @@ describe('languageEditorUtils', () => {
 
     it('returns errors when value is required but empty', () => {
       const result = validateConditionalBuilder(
-        { fieldName: 'Region', operatorKey: 'equals', value: '', content: 'c' },
+        { fieldName: 'Region', operatorKey: 'EQUALS', value: '', content: 'c' },
         [],
         false,
         '',
@@ -107,7 +115,7 @@ describe('languageEditorUtils', () => {
       const result = validateConditionalBuilder(
         {
           fieldName: 'Region',
-          operatorKey: 'equals',
+          operatorKey: 'EQUALS',
           value: 'EMEA',
           content: 'Show «Region»',
         },
@@ -124,14 +132,14 @@ describe('languageEditorUtils', () => {
       const result = validateConditionalBuilder(
         {
           fieldName: 'Region',
-          operatorKey: 'contains',
+          operatorKey: 'CONTAINS',
           value: 'EMEA',
           content: 'IF «Region»',
         },
         [
           {
             fieldName: 'Amount',
-            operatorKey: 'inRange',
+            operatorKey: 'IS_BETWEEN',
             value: '10',
             value2: '',
             content: 'ELSE IF «MissingField»',

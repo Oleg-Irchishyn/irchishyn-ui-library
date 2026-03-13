@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 
 import { ConditionalLanguageBuilder } from './components/ConditionalLanguageBuilder';
 import type { FieldDefinition } from './types';
@@ -39,19 +39,20 @@ function ConditionalLanguageBuilderWithTrigger(props: {
         Open Conditional Language Builder
       </Button>
       {lastInserted !== null && (
-        <pre
-          style={{
-            marginTop: 16,
-            padding: 12,
-            background: '#f5f5f5',
-            borderRadius: 4,
+        <Box
+          component="pre"
+          sx={{
+            mt: 2,
+            p: 1.5,
+            bgcolor: 'grey.100',
+            borderRadius: 1,
             fontSize: 12,
             overflow: 'auto',
             maxHeight: 200,
           }}
         >
           {lastInserted}
-        </pre>
+        </Box>
       )}
       <ConditionalLanguageBuilder
         open={open}
