@@ -5,6 +5,7 @@ import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 
 import { Gen2ThemeProvider } from '../../../providers';
 import { SearchTextBox } from '../SearchTextBox';
+import { getSearchTextBoxBaseStyles } from '../styles';
 
 const renderWithTheme = (ui: React.ReactElement) =>
   render(<Gen2ThemeProvider mode="light">{ui}</Gen2ThemeProvider>);
@@ -146,5 +147,43 @@ describe('SearchTextBox', () => {
     const input = screen.getByLabelText('Search...');
     fireEvent.change(input, { target: { value: 'instant' } });
     expect(onChange).toHaveBeenCalledWith('instant');
+  });
+
+  it('returns mode-specific base styles for light and dark themes', () => {
+    const styleFn = getSearchTextBoxBaseStyles() as (theme: {
+      palette: {
+        mode: 'light' | 'dark';
+        background: { paper: string };
+        common: { white: string };
+        text: { primary: string; secondary: string };
+        divider: string;
+        primary: { main: string };
+      };
+    }) => Record<string, unknown>;
+
+    const lightStyles = styleFn({
+      palette: {
+        mode: 'light',
+        background: { paper: '#111' },
+        common: { white: '#fff' },
+        text: { primary: '#222', secondary: '#333' },
+        divider: '#444',
+        primary: { main: '#555' },
+      },
+    });
+
+    const darkStyles = styleFn({
+      palette: {
+        mode: 'dark',
+        background: { paper: '#111' },
+        common: { white: '#fff' },
+        text: { primary: '#222', secondary: '#333' },
+        divider: '#444',
+        primary: { main: '#555' },
+      },
+    });
+
+    expect(lightStyles.backgroundColor).toBe('#fff');
+    expect(darkStyles.backgroundColor).toBe('#111');
   });
 });

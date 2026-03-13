@@ -74,7 +74,10 @@ describe('HistoryAuditTrail column styles', () => {
     expect(toWithFrom.border).toBe('none');
     expect(String(toWithoutFrom.border)).toContain(light.palette.divider);
     expect(historyAuditTimestampDotStyles).toMatchObject({ width: 6, height: 6 });
-    expect(historyAuditTimestampClockStyles).toMatchObject({ display: 'flex', alignItems: 'center' });
+    expect(historyAuditTimestampClockStyles).toMatchObject({
+      display: 'flex',
+      alignItems: 'center',
+    });
   });
 
   it('activity root, timeline column, and body styles do not fix height to 100%', () => {

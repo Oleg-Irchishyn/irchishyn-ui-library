@@ -163,4 +163,73 @@ describe('HistoryAuditActivityColumns', () => {
     expect(configIdx).toBeGreaterThan(iterationIdx);
     expect(configVersionIdx).toBeGreaterThan(configIdx);
   });
+
+  it('renders triggered-by user without action and omits arrow when only new value exists', () => {
+    const data: HistoryAuditTrailTableRow = {
+      id: 'row-4',
+      actor: 'Amy',
+      badge: null,
+      moduleBadge: null,
+      moduleBadgeColor: null,
+      action: 'Updated',
+      details: '',
+      timeAgo: 'now',
+      timestamp: 'Mar 02',
+      event: {
+        id: 'evt-4',
+        username: 'amy',
+        auditEventType: 'UPDATED',
+        fieldChanges: [{ fieldName: '', oldValue: null, newValue: 'OnlyNew' }],
+        additionalDetails: [{ key: 'TRIGGERED_BY_USER', value: 'Scheduler' }],
+        timestamp: '2026-03-02T00:00:00.000Z',
+      },
+    };
+
+    const params = {
+      data,
+      node: { rowIndex: 0 } as unknown as IRowNode<HistoryAuditTrailTableRow>,
+      api: { getDisplayedRowCount: () => 1 } as unknown as GridApi<HistoryAuditTrailTableRow>,
+    } as unknown as ICellRendererParams<HistoryAuditTrailTableRow>;
+
+    render(<HistoryAuditActivityColumns {...params} />);
+
+    expect(screen.getByText('Triggered by:')).toBeTruthy();
+    expect(screen.getByText('Scheduler')).toBeTruthy();
+    expect(screen.queryByText('(Auto Approve)')).toBeNull();
+    expect(screen.getByText('OnlyNew')).toBeTruthy();
+    expect(screen.queryByText('→')).toBeNull();
+  });
+
+  it('filters out completely empty field changes so no field row is rendered', () => {
+    const data: HistoryAuditTrailTableRow = {
+      id: 'row-5',
+      actor: 'Kate',
+      badge: null,
+      moduleBadge: null,
+      moduleBadgeColor: null,
+      action: 'Updated',
+      details: null,
+      timeAgo: 'now',
+      timestamp: 'Mar 03',
+      event: {
+        id: 'evt-5',
+        username: 'kate',
+        auditEventType: 'UPDATED',
+        fieldChanges: [{ fieldName: '   ', oldValue: '   ', newValue: null }],
+        additionalDetails: [],
+        timestamp: '2026-03-03T00:00:00.000Z',
+      },
+    };
+
+    const params = {
+      data,
+      node: { rowIndex: 0 } as unknown as IRowNode<HistoryAuditTrailTableRow>,
+      api: { getDisplayedRowCount: () => 1 } as unknown as GridApi<HistoryAuditTrailTableRow>,
+    } as unknown as ICellRendererParams<HistoryAuditTrailTableRow>;
+
+    render(<HistoryAuditActivityColumns {...params} />);
+
+    expect(screen.queryByText(/Field:/)).toBeNull();
+    expect(screen.queryByText('→')).toBeNull();
+  });
 });

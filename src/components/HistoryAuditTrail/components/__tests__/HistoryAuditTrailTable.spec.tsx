@@ -3,15 +3,12 @@ import { describe, expect, it, vi } from 'vitest';
 
 import type { HistoryAuditTrailTableRow } from '../../types';
 
-const {
-  registerModulesMock,
-  createHistoryAuditAgGridThemeMock,
-  agGridReactPropsCalls,
-} = vi.hoisted(() => ({
-  registerModulesMock: vi.fn(),
-  createHistoryAuditAgGridThemeMock: vi.fn(() => ({ themeName: 'mock-theme' })),
-  agGridReactPropsCalls: [] as Array<Record<string, unknown>>,
-}));
+const { registerModulesMock, createHistoryAuditAgGridThemeMock, agGridReactPropsCalls } =
+  vi.hoisted(() => ({
+    registerModulesMock: vi.fn(),
+    createHistoryAuditAgGridThemeMock: vi.fn(() => ({ themeName: 'mock-theme' })),
+    agGridReactPropsCalls: [] as Array<Record<string, unknown>>,
+  }));
 
 vi.mock('ag-grid-community', () => ({
   AllCommunityModule: { id: 'community' },
@@ -78,6 +75,7 @@ describe('HistoryAuditTrailTable', () => {
     expect(lastProps).toBeTruthy();
     expect(lastProps.quickFilterText).toBe('abc');
     expect(lastProps.loading).toBe(true);
+    expect(lastProps.popupParent).toBe(document.body);
     expect(lastProps.getRowHeight).toBeUndefined();
   });
 });

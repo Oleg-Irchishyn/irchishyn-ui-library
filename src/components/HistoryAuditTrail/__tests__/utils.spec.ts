@@ -96,6 +96,32 @@ describe('HistoryAudit utils', () => {
     expect(otherStyle(theme as never).borderColor).toBe('#e');
   });
 
+  it('returns dark-mode avatar styles for added and removed event families', () => {
+    const darkTheme = {
+      palette: {
+        mode: 'dark',
+        info: { main: '#11', light: '#12', dark: '#13' },
+        warning: { main: '#21', light: '#22', dark: '#23' },
+        error: { main: '#31', light: '#32', dark: '#33' },
+        grey: { 100: '#41', 800: '#42' },
+        text: { primary: '#51', secondary: '#52' },
+        divider: '#61',
+      },
+    };
+
+    const addedStyle = getHistoryAuditAvatarStyle(HISTORY_AUDIT_EVENT_TYPES.ADDED)(
+      darkTheme as never,
+    );
+    const removedStyle = getHistoryAuditAvatarStyle(HISTORY_AUDIT_EVENT_TYPES.REMOVED)(
+      darkTheme as never,
+    );
+
+    expect(addedStyle.bgcolor).toBe('#1126');
+    expect(addedStyle.borderColor).toBe('#1180');
+    expect(removedStyle.color).toBe('#32');
+    expect(removedStyle.borderColor).toBe('#3180');
+  });
+
   it('creates AG Grid theme for both light and dark modes', () => {
     const lightTheme = {
       palette: {
@@ -161,6 +187,37 @@ describe('HistoryAudit utils', () => {
     expect(base).toBe(84);
     expect(detailed).toBeGreaterThan(base);
     expect(detailedWithCreatedBy).toBeGreaterThan(detailed);
+  });
+
+  it('uses legacy old/new values when fieldChanges is empty and counts triggered/context lines', () => {
+    const withLegacyChanges = getHistoryAuditRowHeight({
+      id: 'legacy',
+      username: 'SYSTEM',
+      auditEventType: 'UPDATED',
+      timestamp: '2026-01-01T00:00:00.000Z',
+      oldValue: 'old',
+      newValue: 'new',
+      additionalDetails: [
+        { key: 'TRIGGERED_BY_USER', value: 'workflow' },
+        {
+          key: 'CONFIGURATION',
+          value:
+            'This is a very long contextual value that should wrap to multiple lines and be capped.',
+        },
+      ],
+    });
+
+    const withoutExtras = getHistoryAuditRowHeight({
+      id: 'legacy-2',
+      username: 'SYSTEM',
+      auditEventType: 'UPDATED',
+      timestamp: '2026-01-01T00:00:00.000Z',
+      oldValue: 'old',
+      newValue: 'new',
+      additionalDetails: [{ key: 'CONFIGURATION', value: 'x' }],
+    });
+
+    expect(withLegacyChanges).toBeGreaterThan(withoutExtras);
   });
 
   it('sortContextualDetails orders by canonical key priority and preserves unknown keys at end', () => {

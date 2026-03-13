@@ -356,6 +356,136 @@ describe('useLanguageEditor', () => {
     });
   });
 
+  it('falls back to appending field at end when current range is outside editor', () => {
+    const onChange = vi.fn();
+    const { result } = renderHook(() =>
+      useLanguageEditor({
+        content: 'hello',
+        fieldConfig: [],
+        onChange,
+      }),
+    );
+
+    const editor = document.createElement('div');
+    editor.appendChild(document.createTextNode('inside'));
+    (result.current.editorRef as unknown as { current: HTMLDivElement | null }).current = editor;
+    document.body.appendChild(editor);
+
+    const outside = document.createElement('div');
+    const outsideText = document.createTextNode('outside');
+    outside.appendChild(outsideText);
+    document.body.appendChild(outside);
+
+    const range = document.createRange();
+    range.setStart(outsideText, 0);
+    range.setEnd(outsideText, 0);
+    const selection = createMockSelection(range);
+
+    const originalGetSelection = window.getSelection;
+    Object.defineProperty(window, 'getSelection', {
+      configurable: true,
+      value: () => selection,
+    });
+
+    act(() => {
+      result.current.handleInsertField('Region');
+    });
+
+    expect(editor.textContent).toBe('inside<<Region>>');
+    expect(onChange).toHaveBeenCalled();
+
+    Object.defineProperty(window, 'getSelection', {
+      configurable: true,
+      value: originalGetSelection,
+    });
+  });
+
+  it('inserts field when selection exists but has no ranges', () => {
+    const onChange = vi.fn();
+    const { result } = renderHook(() =>
+      useLanguageEditor({
+        content: 'hello',
+        fieldConfig: [],
+        onChange,
+      }),
+    );
+
+    const editor = document.createElement('div');
+    editor.appendChild(document.createTextNode('base'));
+    (result.current.editorRef as unknown as { current: HTMLDivElement | null }).current = editor;
+    document.body.appendChild(editor);
+
+    const noRangeSelection: SelectionLike = {
+      rangeCount: 0,
+      getRangeAt: () => document.createRange(),
+      removeAllRanges: vi.fn(),
+      addRange: vi.fn(),
+    };
+
+    const originalGetSelection = window.getSelection;
+    Object.defineProperty(window, 'getSelection', {
+      configurable: true,
+      value: () => noRangeSelection,
+    });
+
+    act(() => {
+      result.current.handleInsertField('Amount');
+    });
+
+    expect(editor.textContent).toBe('base<<Amount>>');
+    expect(onChange).toHaveBeenCalled();
+
+    Object.defineProperty(window, 'getSelection', {
+      configurable: true,
+      value: originalGetSelection,
+    });
+  });
+
+  it('moves insertion point outside non-editable field token before inserting', () => {
+    const onChange = vi.fn();
+    const { result } = renderHook(() =>
+      useLanguageEditor({
+        content: 'hello',
+        fieldConfig: [],
+        onChange,
+      }),
+    );
+
+    const editor = document.createElement('div');
+    const token = document.createElement('span');
+    token.setAttribute('data-field', 'true');
+    token.textContent = '<<Existing>>';
+    const tail = document.createTextNode(' tail');
+    editor.appendChild(token);
+    editor.appendChild(tail);
+    (result.current.editorRef as unknown as { current: HTMLDivElement | null }).current = editor;
+    document.body.appendChild(editor);
+
+    const tokenText = token.firstChild as Text;
+    const range = document.createRange();
+    range.setStart(tokenText, 2);
+    range.setEnd(tokenText, 2);
+    const selection = createMockSelection(range);
+
+    const originalGetSelection = window.getSelection;
+    Object.defineProperty(window, 'getSelection', {
+      configurable: true,
+      value: () => selection,
+    });
+
+    act(() => {
+      result.current.handleInsertField('Region');
+    });
+
+    expect(editor.textContent).toBe('<<Existing>><<Region>> tail');
+    expect(onChange).toHaveBeenCalled();
+
+    Object.defineProperty(window, 'getSelection', {
+      configurable: true,
+      value: originalGetSelection,
+    });
+  });
+
   it('syncEditorContent keeps innerHTML unchanged when stripped content already matches', () => {
     const { result } = renderHook(() =>
       useLanguageEditor({

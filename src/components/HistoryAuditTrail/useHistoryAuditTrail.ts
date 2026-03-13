@@ -70,8 +70,11 @@ const getRowQuickFilterText = (data: HistoryAuditTrailTableRow) =>
   toQuickFilterText(getActivityQuickFilterText(data), getTimestampQuickFilterText(data));
 
 const getActivityExportText = (data: HistoryAuditTrailTableRow) => {
+  const hasDirectChangeValues = data.event.oldValue != null || data.event.newValue != null;
   const changeText =
-    data.changeFrom && data.changeTo ? `${data.changeFrom} -> ${data.changeTo}` : undefined;
+    hasDirectChangeValues && data.changeFrom && data.changeTo
+      ? `${data.changeFrom} -> ${data.changeTo}`
+      : undefined;
 
   const fieldChangesText = (data.event.fieldChanges ?? [])
     .map((c) =>

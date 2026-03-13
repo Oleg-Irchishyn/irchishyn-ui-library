@@ -74,6 +74,19 @@ describe('languageEditorUtils', () => {
     expect(messages.some((m) => m.includes('Mismatched IF/ENDIF'))).toBe(true);
   });
 
+  it('returns validation errors for missing field references in content body', () => {
+    const invalidContent = '{{IF Region EQUALS EMEA}}Unknown «MissingField»{{ENDIF}}';
+    const result = validateContent(invalidContent, fieldConfig);
+    const messages = result.errors?.map((e) => e.message) ?? [];
+
+    expect(result.valid).toBe(false);
+    expect(
+      messages.some((m) =>
+        m.includes('Field reference "«MissingField»" does not exist in field configuration'),
+      ),
+    ).toBe(true);
+  });
+
   describe('validateConditionalBuilder', () => {
     it('returns errors when IF has no field selected', () => {
       const result = validateConditionalBuilder(
@@ -109,6 +122,38 @@ describe('languageEditorUtils', () => {
       );
       expect(result.valid).toBe(false);
       expect(result.errors?.some((e) => e.message.includes('Value is required'))).toBe(true);
+    });
+
+    it('returns errors when selected field does not exist', () => {
+      const result = validateConditionalBuilder(
+        { fieldName: 'Unknown', operatorKey: 'EQUALS', value: 'x', content: 'c' },
+        [],
+        false,
+        '',
+        fieldConfig,
+      );
+      expect(result.valid).toBe(false);
+      expect(
+        result.errors?.some((e) =>
+          e.message.includes('Field "Unknown" does not exist in field configuration'),
+        ),
+      ).toBe(true);
+    });
+
+    it('returns errors when operator is invalid for selected field data type', () => {
+      const result = validateConditionalBuilder(
+        { fieldName: 'Amount', operatorKey: 'CONTAINS', value: '100', content: 'c' },
+        [],
+        false,
+        '',
+        fieldConfig,
+      );
+      expect(result.valid).toBe(false);
+      expect(
+        result.errors?.some((e) =>
+          e.message.includes('Operator "CONTAINS" is not valid for number field "Amount"'),
+        ),
+      ).toBe(true);
     });
 
     it('returns valid when IF clause is complete', () => {

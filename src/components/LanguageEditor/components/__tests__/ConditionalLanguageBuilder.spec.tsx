@@ -152,4 +152,26 @@ describe('ConditionalLanguageBuilder', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Clear validation' }));
     expect(hookState.handleClearValidation).toHaveBeenCalledTimes(1);
   });
+
+  it('renders validation success banner when validation passes', () => {
+    useConditionalLanguageBuilderMock.mockReturnValue({
+      ...hookState,
+      validationResult: {
+        valid: true,
+        errors: [],
+      },
+    });
+
+    render(
+      <ConditionalLanguageBuilder
+        open={true}
+        onClose={vi.fn()}
+        fieldConfig={[]}
+        onInsertConditional={vi.fn()}
+      />,
+    );
+
+    expect(screen.getByText(/Validation passed!/)).toBeTruthy();
+    expect(screen.queryByText('Errors:')).toBeNull();
+  });
 });

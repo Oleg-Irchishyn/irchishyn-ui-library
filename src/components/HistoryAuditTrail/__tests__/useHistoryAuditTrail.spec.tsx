@@ -356,6 +356,90 @@ describe('useHistoryAuditTrail', () => {
     expect(detailMatches ?? []).toHaveLength(1);
   });
 
+  it('does not duplicate old/new values in export text when derived from fieldChanges', () => {
+    const fieldChangeEvents: HistoryAuditTrailEvent[] = [
+      {
+        id: 'evt-fc-1',
+        source: '/capevent/package/10001',
+        username: 'alice',
+        auditEventType: 'UPDATED',
+        subject: 'Updated status',
+        fieldChanges: [{ fieldName: 'Status', oldValue: 'Draft', newValue: 'Ready' }],
+        timestamp: '2026-01-03T00:00:00.000Z',
+      },
+      {
+        id: 'evt-fc-2',
+        source: '/capevent/package/10001',
+        username: 'bob',
+        auditEventType: 'UPDATED',
+        subject: 'Updated multiple fields',
+        fieldChanges: [
+          { fieldName: 'Status', oldValue: 'Draft', newValue: 'Ready' },
+          { fieldName: 'Due Date', oldValue: '01/01/2026', newValue: '01/02/2026' },
+        ],
+        timestamp: '2026-01-02T00:00:00.000Z',
+      },
+    ];
+
+    const { result } = renderHook(() => useHistoryAuditTrail({ events: fieldChangeEvents }));
+
+    const activityColumn = result.current.columnDefs.find(
+      (col) => col.colId === HISTORY_AUDIT_COLUMN_IDS.ACTIVITY,
+    );
+    expect(typeof activityColumn?.valueGetter).toBe('function');
+
+    // Single fieldChange: "Draft -> Ready" must appear exactly once
+    const row1 = result.current.rowData.find((r) => r.id === 'evt-fc-1')!;
+    const exportText1 =
+      typeof activityColumn?.valueGetter === 'function'
+        ? String(activityColumn.valueGetter({ data: row1 } as never))
+        : '';
+    const draftReadyMatches = exportText1.match(/Draft.*?Ready/g);
+    expect(draftReadyMatches ?? []).toHaveLength(1);
+
+    // Multiple fieldChanges: each pair must appear exactly once
+    const row2 = result.current.rowData.find((r) => r.id === 'evt-fc-2')!;
+    const exportText2 =
+      typeof activityColumn?.valueGetter === 'function'
+        ? String(activityColumn.valueGetter({ data: row2 } as never))
+        : '';
+    const statusMatches = exportText2.match(/Draft.*?Ready/g);
+    const dateMatches = exportText2.match(new RegExp(escapeRegExp('01/01/2026'), 'g'));
+    expect(statusMatches ?? []).toHaveLength(1);
+    expect(dateMatches ?? []).toHaveLength(1);
+  });
+
+  it('includes direct oldValue/newValue in export text when event has no fieldChanges', () => {
+    const directChangeEvents: HistoryAuditTrailEvent[] = [
+      {
+        id: 'evt-direct-1',
+        source: '/capevent/package/10001',
+        username: 'alice',
+        auditEventType: 'UPDATED',
+        subject: 'Updated value',
+        oldValue: 'OldVal',
+        newValue: 'NewVal',
+        timestamp: '2026-01-03T00:00:00.000Z',
+      },
+    ];
+
+    const { result } = renderHook(() => useHistoryAuditTrail({ events: directChangeEvents }));
+
+    const activityColumn = result.current.columnDefs.find(
+      (col) => col.colId === HISTORY_AUDIT_COLUMN_IDS.ACTIVITY,
+    );
+    const row = result.current.rowData[0];
+    const exportText =
+      typeof activityColumn?.valueGetter === 'function'
+        ? String(activityColumn.valueGetter({ data: row } as never))
+        : '';
+
+    expect(exportText).toContain('OldVal');
+    expect(exportText).toContain('NewVal');
+    const matches = exportText.match(/OldVal.*?NewVal/g);
+    expect(matches ?? []).toHaveLength(1);
+  });
+
   it('uses fallback labels and timestamp handling for invalid timestamp events', () => {
     const invalidTimestampEvents: HistoryAuditTrailEvent[] = [
       {
