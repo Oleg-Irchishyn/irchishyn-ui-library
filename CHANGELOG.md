@@ -1,3 +1,10 @@
+## [1.4.6](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.4.5...v1.4.6) (2026-03-13)
+
+
+### Bug Fixes
+
+* [Issue-12338]: [FE]: fix empty spacing between rows in HistoryAuditTrail ([be01bb8](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/be01bb890a633e00066af4963ddeb212fc636b2d)), closes [#12338](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/12338) [#12415](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/12415) [#12416](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/12416)
+
 ## [1.4.5](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.4.4...v1.4.5) (2026-03-13)
 
 
