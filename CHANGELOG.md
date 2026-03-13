@@ -1,3 +1,10 @@
+## [1.4.4](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.4.3...v1.4.4) (2026-03-13)
+
+
+### Bug Fixes
+
+* [Issue-11844]: [FE]: Dropdowns values fix ([2b3bc8b](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/2b3bc8be0b9c2adbb40230439e8f59a4570afac5)), closes [#11844](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/11844)
+
 ## [1.4.3](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.4.2...v1.4.3) (2026-03-12)
 
 ### Bug Fixes
