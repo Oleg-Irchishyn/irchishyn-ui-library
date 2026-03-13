@@ -1,3 +1,10 @@
+## [1.4.5](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.4.4...v1.4.5) (2026-03-13)
+
+
+### Bug Fixes
+
+* [Issue-12032]: [FE]: Fix for editor readonly mode ([0f6d10b](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/0f6d10b62f0d311097d1e053f0a77ce6b8cc1750)), closes [#12032](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/12032)
+
 ## [1.4.4](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.4.3...v1.4.4) (2026-03-13)
 
 ### Bug Fixes
