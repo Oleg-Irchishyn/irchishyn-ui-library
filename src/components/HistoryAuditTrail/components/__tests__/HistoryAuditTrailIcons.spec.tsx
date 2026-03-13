@@ -1,4 +1,3 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
@@ -7,6 +6,7 @@ import {
   BotIcon,
   CheckIcon,
   ChevronDownIcon,
+  ClockIcon,
   CloseIcon,
   DownloadIcon,
   EditIcon,
@@ -35,6 +35,7 @@ describe('HistoryAuditTrailIcons', () => {
         <FileSpreadsheetIcon />
         <BotIcon />
         <CheckIcon />
+        <ClockIcon />
       </div>,
     );
 

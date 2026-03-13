@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -6,12 +5,10 @@ import type { HistoryAuditTrailTableRow } from '../../types';
 
 const {
   registerModulesMock,
-  getHistoryAuditRowHeightMock,
   createHistoryAuditAgGridThemeMock,
   agGridReactPropsCalls,
 } = vi.hoisted(() => ({
   registerModulesMock: vi.fn(),
-  getHistoryAuditRowHeightMock: vi.fn(() => 180),
   createHistoryAuditAgGridThemeMock: vi.fn(() => ({ themeName: 'mock-theme' })),
   agGridReactPropsCalls: [] as Array<Record<string, unknown>>,
 }));
@@ -36,7 +33,6 @@ vi.mock('ag-grid-react', () => ({
 
 vi.mock('../../utils', () => ({
   createHistoryAuditAgGridTheme: createHistoryAuditAgGridThemeMock,
-  getHistoryAuditRowHeight: getHistoryAuditRowHeightMock,
 }));
 
 import { HistoryAuditTrailTable } from '../HistoryAuditTrailTable';
@@ -46,7 +42,7 @@ describe('HistoryAuditTrailTable', () => {
     expect(registerModulesMock).toHaveBeenCalledTimes(1);
   });
 
-  it('renders ag-grid with expected props and row-height callback', () => {
+  it('renders ag-grid with expected props and no manual row-height callback', () => {
     const rowData: HistoryAuditTrailTableRow[] = [
       {
         id: '1',
@@ -82,12 +78,6 @@ describe('HistoryAuditTrailTable', () => {
     expect(lastProps).toBeTruthy();
     expect(lastProps.quickFilterText).toBe('abc');
     expect(lastProps.loading).toBe(true);
-
-    const getRowHeight = lastProps.getRowHeight as (params: {
-      data?: HistoryAuditTrailTableRow;
-    }) => number;
-    const computedHeight = getRowHeight({ data: rowData[0] });
-    expect(computedHeight).toBe(180);
-    expect(getHistoryAuditRowHeightMock).toHaveBeenCalledWith(rowData[0].event);
+    expect(lastProps.getRowHeight).toBeUndefined();
   });
 });

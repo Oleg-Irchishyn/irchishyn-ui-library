@@ -2,6 +2,7 @@ import {
   Bot as BotIconLucide,
   Check as CheckIconLucide,
   ChevronDown as ChevronDownIconLucide,
+  Clock as ClockIconLucide,
   Download as DownloadIconLucide,
   FileSpreadsheet as FileSpreadsheetIconLucide,
   History as HistoryIconLucide,
@@ -27,6 +28,7 @@ export const ChevronDownIcon = () => <ChevronDownIconLucide size={16} />;
 export const FileSpreadsheetIcon = () => <FileSpreadsheetIconLucide size={16} />;
 export const BotIcon = () => <BotIconLucide size={16} />;
 export const CheckIcon = () => <CheckIconLucide size={14} />;
+export const ClockIcon = () => <ClockIconLucide size={12} />;
 
 export const HistoryAuditTrailIconForType = ({ type }: { type: string }) => {
   switch (type) {

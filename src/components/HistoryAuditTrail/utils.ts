@@ -145,8 +145,27 @@ export const extractTriggeredBy = (items: Array<{ key: string; value: string }>)
 export const isTriggeredByKey = (key: string) =>
   normalizeDetailKey(key).startsWith(HISTORY_AUDIT_TRIGGERED_BY_PREFIX);
 
+const CONTEXT_DETAIL_KEY_PRIORITY: Record<string, number> = {
+  ITERATION: 0,
+  CONFIGURATION: 1,
+  CONFIG_NAME: 1,
+  CONFIGURATION_NAME: 1,
+  CONFIG_VERSION: 2,
+  CONFIGURATION_VERSION: 2,
+};
+
+export const sortContextualDetails = (
+  items: Array<{ key: string; value: string }>,
+): Array<{ key: string; value: string }> => {
+  return [...items].sort((a, b) => {
+    const ap = CONTEXT_DETAIL_KEY_PRIORITY[normalizeDetailKey(a.key)] ?? Infinity;
+    const bp = CONTEXT_DETAIL_KEY_PRIORITY[normalizeDetailKey(b.key)] ?? Infinity;
+    return ap - bp;
+  });
+};
+
 export const getHistoryAuditRowHeight = (event?: HistoryAuditTrailEvent | null) => {
-  const baseHeight = 112;
+  const baseHeight = 84;
   if (!event) return baseHeight;
   const hasCreatedBy = isNonEmptyString(event.createdBy);
 
@@ -181,7 +200,7 @@ export const getHistoryAuditRowHeight = (event?: HistoryAuditTrailEvent | null) 
   }, 0);
 
   const lineHeight = 26;
-  const extraPadding = 18;
+  const extraPadding = 8;
   return (
     baseHeight +
     (Number(hasCreatedBy) +

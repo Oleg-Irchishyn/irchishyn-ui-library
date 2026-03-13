@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import type { ICellRendererParams } from 'ag-grid-community';
@@ -30,9 +29,10 @@ describe('HistoryAuditTimestampColumn', () => {
       },
     } as unknown as ICellRendererParams<HistoryAuditTrailTableRow>;
 
-    render(<HistoryAuditTimestampColumn {...params} />);
+    const { container } = render(<HistoryAuditTimestampColumn {...params} />);
 
     expect(screen.getByText('2 hours ago')).toBeTruthy();
     expect(screen.getByText('Jan 01, 10:00 AM')).toBeTruthy();
+    expect(container.querySelector('svg')).toBeTruthy();
   });
 });

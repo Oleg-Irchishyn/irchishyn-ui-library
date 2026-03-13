@@ -4,20 +4,20 @@
 
 ## Overall coverage
 
-**93.52%** (average of statements, branches, functions, lines)
+**93.65%** (average of statements, branches, functions, lines)
 
 | Statements | Branches | Functions | Lines |
 |------------|----------|-----------|-------|
-| 95.13% | 86.07% | 97.20% | 95.70% |
+| 95.15% | 86.50% | 97.21% | 95.72% |
 
 ## Summary (covered / total)
 
 | Metric      | Coverage | Covered / Total |
 |------------|----------|-----------------|
-| Statements | 95.13%    | 1505 / 1582        |
-| Branches   | 86.07%    | 1106 / 1285        |
-| Functions  | 97.20%   | 452 / 465         |
-| Lines      | 95.70%   | 1338 / 1398        |
+| Statements | 95.15%    | 1512 / 1589        |
+| Branches   | 86.50%    | 1115 / 1289        |
+| Functions  | 97.21%   | 454 / 467         |
+| Lines      | 95.72%   | 1345 / 1405        |
 
 ## Coverage by file
 
@@ -50,7 +50,7 @@
 | src/components/FileUpload/styles.ts | 100.00% | 92.85% | 100.00% | 100.00% |
 | src/components/FileUpload/useFileUpload.ts | 97.36% | 87.50% | 100.00% | 100.00% |
 | src/components/FileUpload/utils.ts | 100.00% | 100.00% | 100.00% | 100.00% |
-| src/components/HistoryAuditTrail/components/columns/HistoryAuditActivityColumns.tsx | 96.96% | 68.88% | 100.00% | 100.00% |
+| src/components/HistoryAuditTrail/components/columns/HistoryAuditActivityColumns.tsx | 96.96% | 74.44% | 100.00% | 100.00% |
 | src/components/HistoryAuditTrail/components/columns/HistoryAuditTimestampColumn.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
 | src/components/HistoryAuditTrail/components/columns/styles.ts | 100.00% | 100.00% | 100.00% | 100.00% |
 | src/components/HistoryAuditTrail/components/HistoryAuditExport.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
@@ -66,7 +66,7 @@
 | src/components/HistoryAuditTrail/HistoryAuditTrail.tsx | 100.00% | 90.90% | 100.00% | 100.00% |
 | src/components/HistoryAuditTrail/styles.ts | 100.00% | 100.00% | 100.00% | 100.00% |
 | src/components/HistoryAuditTrail/useHistoryAuditTrail.ts | 95.55% | 81.69% | 91.93% | 95.59% |
-| src/components/HistoryAuditTrail/utils.ts | 100.00% | 68.88% | 100.00% | 100.00% |
+| src/components/HistoryAuditTrail/utils.ts | 100.00% | 70.21% | 100.00% | 100.00% |
 | src/components/LanguageEditor/components/ConditionalLanguageBuilder.tsx | 100.00% | 75.00% | 100.00% | 100.00% |
 | src/components/LanguageEditor/components/ConditionalLanguageBuilderClauseRow.tsx | 94.11% | 84.61% | 90.90% | 93.75% |
 | src/components/LanguageEditor/components/ConditionalLanguageBuilderElseBlock.tsx | 100.00% | 100.00% | 100.00% | 100.00% |

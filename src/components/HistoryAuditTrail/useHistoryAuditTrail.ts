@@ -416,6 +416,8 @@ export const useHistoryAuditTrail = ({
         minWidth: 400,
         sortable: false,
         resizable: false,
+        autoHeight: true,
+        wrapText: true,
       },
       {
         colId: HISTORY_AUDIT_COLUMN_IDS.TIME,

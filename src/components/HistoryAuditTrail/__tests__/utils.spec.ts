@@ -11,6 +11,7 @@ import {
   isNonEmptyString,
   isTriggeredByKey,
   normalizeDetailKey,
+  sortContextualDetails,
   titleCaseFromKey,
 } from '../utils';
 import { HISTORY_AUDIT_EVENT_TYPES } from '../constants';
@@ -157,8 +158,48 @@ describe('HistoryAudit utils', () => {
       ],
     });
 
-    expect(base).toBe(112);
+    expect(base).toBe(84);
     expect(detailed).toBeGreaterThan(base);
     expect(detailedWithCreatedBy).toBeGreaterThan(detailed);
+  });
+
+  it('sortContextualDetails orders by canonical key priority and preserves unknown keys at end', () => {
+    const input = [
+      { key: 'CONFIG_VERSION', value: '7' },
+      { key: 'CUSTOM_FIELD', value: 'foo' },
+      { key: 'CONFIGURATION', value: 'Acme Corp' },
+      { key: 'ITERATION', value: '3' },
+    ];
+
+    const sorted = sortContextualDetails(input);
+
+    expect(sorted[0].key).toBe('ITERATION');
+    expect(sorted[1].key).toBe('CONFIGURATION');
+    expect(sorted[2].key).toBe('CONFIG_VERSION');
+    expect(sorted[3].key).toBe('CUSTOM_FIELD');
+  });
+
+  it('sortContextualDetails treats CONFIG_NAME and CONFIGURATION_NAME as Configuration-priority', () => {
+    const input = [
+      { key: 'CONFIG_VERSION', value: '2' },
+      { key: 'CONFIG_NAME', value: 'Plan A' },
+      { key: 'ITERATION', value: '1' },
+    ];
+
+    const sorted = sortContextualDetails(input);
+
+    expect(sorted[0].key).toBe('ITERATION');
+    expect(sorted[1].key).toBe('CONFIG_NAME');
+    expect(sorted[2].key).toBe('CONFIG_VERSION');
+  });
+
+  it('sortContextualDetails does not mutate the original array', () => {
+    const input = [
+      { key: 'CONFIG_VERSION', value: '1' },
+      { key: 'ITERATION', value: '2' },
+    ];
+    const original = [...input];
+    sortContextualDetails(input);
+    expect(input).toEqual(original);
   });
 });

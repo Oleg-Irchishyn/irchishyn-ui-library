@@ -318,6 +318,21 @@ describe('useHistoryAuditTrail', () => {
     ).not.toThrow();
   });
 
+  it('activity column has autoHeight and wrapText enabled', () => {
+    const { result } = renderHook(() =>
+      useHistoryAuditTrail({
+        events,
+      }),
+    );
+
+    const activityColumn = result.current.columnDefs.find(
+      (col) => col.colId === HISTORY_AUDIT_COLUMN_IDS.ACTIVITY,
+    );
+
+    expect(activityColumn?.autoHeight).toBe(true);
+    expect(activityColumn?.wrapText).toBe(true);
+  });
+
   it('exports details once in activity export text', () => {
     const { result } = renderHook(() =>
       useHistoryAuditTrail({

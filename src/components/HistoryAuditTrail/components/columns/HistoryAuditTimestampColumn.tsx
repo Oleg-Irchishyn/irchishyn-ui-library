@@ -2,9 +2,10 @@ import { Box, Typography } from '@mui/material';
 import type { ICellRendererParams } from 'ag-grid-community';
 
 import type { HistoryAuditTrailTableRow } from '../../types';
+import { ClockIcon } from '../HistoryAuditTrailIcons';
 import {
   historyAuditTimestampAgoStyles,
-  historyAuditTimestampDotStyles,
+  historyAuditTimestampClockStyles,
   historyAuditTimestampRootStyles,
   historyAuditTimestampTopRowStyles,
   historyAuditTimestampValueStyles,
@@ -18,7 +19,9 @@ export const HistoryAuditTimestampColumn = ({
   return (
     <Box sx={historyAuditTimestampRootStyles}>
       <Box sx={historyAuditTimestampTopRowStyles}>
-        <Box sx={historyAuditTimestampDotStyles} />
+        <Box sx={historyAuditTimestampClockStyles}>
+          <ClockIcon />
+        </Box>
         <Typography variant="caption" sx={historyAuditTimestampAgoStyles}>
           {data.timeAgo}
         </Typography>

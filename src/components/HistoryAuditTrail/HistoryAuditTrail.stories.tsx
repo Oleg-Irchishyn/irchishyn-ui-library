@@ -167,6 +167,50 @@ const sample: HistoryAuditTrailEvent[] = [
     details: '18 notice letters removed after addendum removed',
     timestamp: '2024-11-07T10:12:09.5275039+02:00',
   },
+  {
+    id: 'f1a2b3c4-d5e6-7890-abcd-ef1234567890',
+    source: '/capevent/package/10001',
+    username: 'SYSTEM',
+    createdBy: 'workflow.engine@gen2fund.com',
+    auditEventType: HISTORY_AUDIT_EVENT_TYPES.UPDATED,
+    subject: 'All fields rendered — full content stress test',
+    details:
+      'This row exercises every section of the activity column: createdBy, details text, multiple field changes with labels, triggered-by, and contextual details. No content should be clipped or overlap adjacent rows.',
+    fieldChanges: [
+      { fieldName: 'Status', oldValue: 'Pending Review', newValue: 'Approved' },
+      { fieldName: 'Net Amount', oldValue: '1,250,000.00', newValue: '1,375,000.00' },
+      { fieldName: 'Due Date', oldValue: '03/15/2026', newValue: '03/29/2026' },
+    ],
+    additionalDetails: [
+      { key: 'TRIGGERED_BY_USER', value: 'Workflow Engine' },
+      { key: 'TRIGGERED_BY_ACTION', value: 'auto_approve' },
+      { key: 'ITERATION', value: '7' },
+      { key: 'CONFIGURATION', value: 'CapEvent - Sponsor - SP001-Acme Corp' },
+      { key: 'CONFIG_VERSION', value: '14' },
+    ],
+    timestamp: '2024-10-01T08:00:00.000Z',
+  },
+  {
+    id: 'a1b2c3d4-e5f6-7890-abcd-111122223333',
+    source: '/capevent/configuration/1003',
+    username: 'Carol Davis',
+    auditEventType: HISTORY_AUDIT_EVENT_TYPES.UPDATED,
+    subject: 'Old/new value without fieldChanges array',
+    oldValue: 'Draft Template v1',
+    newValue: 'Approved Template v2',
+    details: null,
+    timestamp: '2024-09-15T14:30:00.000Z',
+  },
+  {
+    id: 'b2c3d4e5-f6a7-8901-bcde-222233334444',
+    source: '/capevent/driver-report/3521',
+    username: 'Dave Kim',
+    auditEventType: HISTORY_AUDIT_EVENT_TYPES.ADDED,
+    subject: 'Long details text wraps across multiple lines',
+    details:
+      'This is a deliberately long details message to verify that multi-line details text is fully visible and the row height expands correctly to accommodate all the text without any overflow or clipping issues. The row below should not overlap this one.',
+    timestamp: '2024-08-20T10:00:00.000Z',
+  },
 ];
 
 const moduleSources = [

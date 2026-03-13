@@ -7,8 +7,11 @@ import {
   getHistoryAuditTimelineColumnStyles,
   getHistoryAuditTimelineLineStyles,
   getHistoryAuditToValueStyles,
+  historyAuditActivityBodyStyles,
+  historyAuditActivityRootStyles,
   historyAuditDetailsBoxStyles,
   historyAuditFromValueStyles,
+  historyAuditTimestampClockStyles,
   historyAuditTimestampDotStyles,
 } from '../styles';
 
@@ -71,5 +74,12 @@ describe('HistoryAuditTrail column styles', () => {
     expect(toWithFrom.border).toBe('none');
     expect(String(toWithoutFrom.border)).toContain(light.palette.divider);
     expect(historyAuditTimestampDotStyles).toMatchObject({ width: 6, height: 6 });
+    expect(historyAuditTimestampClockStyles).toMatchObject({ display: 'flex', alignItems: 'center' });
+  });
+
+  it('activity root, timeline column, and body styles do not fix height to 100%', () => {
+    expect((historyAuditActivityRootStyles as Record<string, unknown>).height).toBeUndefined();
+    expect(getHistoryAuditTimelineColumnStyles(40)).not.toMatchObject({ height: '100%' });
+    expect((historyAuditActivityBodyStyles as Record<string, unknown>).height).toBeUndefined();
   });
 });

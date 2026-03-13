@@ -7,7 +7,6 @@ export const historyAuditActivityRootStyles: SxProps<Theme> = {
   alignItems: 'stretch',
   gap: 2,
   pr: 2,
-  height: '100%',
 };
 
 export const getHistoryAuditTimelineColumnStyles = (avatarSize: number): SxProps<Theme> => ({
@@ -17,7 +16,6 @@ export const getHistoryAuditTimelineColumnStyles = (avatarSize: number): SxProps
   justifyContent: 'center',
   py: 2,
   flexShrink: 0,
-  height: '100%',
 });
 
 export const getHistoryAuditTimelineLineStyles =
@@ -63,7 +61,6 @@ export const historyAuditActivityBodyStyles: SxProps<Theme> = {
   flex: 1,
   minWidth: 0,
   py: 2,
-  height: '100%',
 };
 
 export const historyAuditActivityMetaRowStyles: SxProps<Theme> = {
@@ -230,6 +227,12 @@ export const historyAuditTimestampDotStyles: SxProps<Theme> = {
   height: 6,
   borderRadius: 999,
   bgcolor: 'text.disabled',
+};
+
+export const historyAuditTimestampClockStyles: SxProps<Theme> = {
+  display: 'flex',
+  alignItems: 'center',
+  color: 'text.disabled',
 };
 
 export const historyAuditTimestampAgoStyles: SxProps<Theme> = { color: 'text.secondary' };

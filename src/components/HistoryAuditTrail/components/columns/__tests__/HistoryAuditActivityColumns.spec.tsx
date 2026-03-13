@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import type { GridApi, ICellRendererParams, IRowNode } from 'ag-grid-community';
@@ -117,5 +116,51 @@ describe('HistoryAuditActivityColumns', () => {
     expect(screen.queryByText('Triggered by:')).toBeNull();
     expect(screen.getByText('Config Version:')).toBeTruthy();
     expect(screen.getByText('v2')).toBeTruthy();
+  });
+
+  it('renders contextual details in canonical order: Iteration → Configuration → Config Version', () => {
+    const data: HistoryAuditTrailTableRow = {
+      id: 'row-3',
+      actor: 'Bob',
+      badge: null,
+      moduleBadge: null,
+      moduleBadgeColor: null,
+      action: 'Updated record',
+      details: null,
+      timeAgo: 'now',
+      timestamp: 'Mar 01',
+      event: {
+        id: 'evt-3',
+        username: 'bob',
+        auditEventType: 'UPDATED',
+        additionalDetails: [
+          { key: 'CONFIG_VERSION', value: '9' },
+          { key: 'CUSTOM_KEY', value: 'extra' },
+          { key: 'CONFIGURATION', value: 'Plan B' },
+          { key: 'ITERATION', value: '5' },
+        ],
+        timestamp: '2026-03-01T00:00:00.000Z',
+      },
+    };
+
+    const params = {
+      data,
+      node: { rowIndex: 0 } as unknown as IRowNode<HistoryAuditTrailTableRow>,
+      api: { getDisplayedRowCount: () => 1 } as unknown as GridApi<HistoryAuditTrailTableRow>,
+    } as unknown as ICellRendererParams<HistoryAuditTrailTableRow>;
+
+    const { container } = render(<HistoryAuditActivityColumns {...params} />);
+
+    const labels = Array.from(container.querySelectorAll('span, p')).map((el) =>
+      el.textContent?.trim(),
+    );
+
+    const iterationIdx = labels.findIndex((t) => t === 'Iteration:');
+    const configIdx = labels.findIndex((t) => t === 'Configuration:');
+    const configVersionIdx = labels.findIndex((t) => t === 'Config Version:');
+
+    expect(iterationIdx).toBeGreaterThanOrEqual(0);
+    expect(configIdx).toBeGreaterThan(iterationIdx);
+    expect(configVersionIdx).toBeGreaterThan(configIdx);
   });
 });

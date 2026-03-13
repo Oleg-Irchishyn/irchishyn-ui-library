@@ -9,6 +9,7 @@ import {
   getHistoryAuditAvatarStyle,
   isNonEmptyString,
   isTriggeredByKey,
+  sortContextualDetails,
 } from '../../utils';
 import { HISTORY_AUDIT_DETAIL_TEXT, HISTORY_AUDIT_LAYOUT } from '../../constants';
 import {
@@ -57,14 +58,16 @@ export const HistoryAuditActivityColumns = ({
   const isLast = rowIndex === rowCount - 1;
   const avatarSize = HISTORY_AUDIT_LAYOUT.AVATAR_SIZE;
   const center = avatarSize / 2;
-  const overlap = 0;
+  const overlap = HISTORY_AUDIT_LAYOUT.TIMELINE_OVERLAP;
 
   const normalizedAdditionalDetails = (data.event.additionalDetails ?? [])
     .filter((i) => isNonEmptyString(i?.key) && isNonEmptyString(i?.value))
     .map((i) => ({ key: i.key.trim(), value: i.value.trim() }));
 
   const triggeredBy = extractTriggeredBy(normalizedAdditionalDetails);
-  const contextualDetails = normalizedAdditionalDetails.filter((i) => !isTriggeredByKey(i.key));
+  const contextualDetails = sortContextualDetails(
+    normalizedAdditionalDetails.filter((i) => !isTriggeredByKey(i.key)),
+  );
 
   const detailsText = isNonEmptyString(data.event.details) ? data.event.details : null;
   const createdByText = isNonEmptyString(data.event.createdBy) ? data.event.createdBy.trim() : null;
