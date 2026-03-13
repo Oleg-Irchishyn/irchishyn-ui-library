@@ -170,7 +170,7 @@ export const ReadOnly: Story = {
     docs: {
       description: {
         story:
-          'In read-only mode, the toolbar is hidden and the content is not editable, but token rendering is preserved.',
+          'In read-only mode, all toolbar buttons are disabled and the editing area is non-editable, but token rendering is preserved.',
       },
     },
   },

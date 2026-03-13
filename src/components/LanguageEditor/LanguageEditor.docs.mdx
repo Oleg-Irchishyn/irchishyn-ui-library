@@ -49,7 +49,7 @@ export function Example() {
 
 ## States
 
-- **Read-only:** set `readOnly={true}` to disable editing (toolbar and insertion disabled).
+- **Read-only:** set `readOnly={true}` so all toolbar buttons are disabled and the editing area is non-editable; token rendering is preserved.
 - **Empty content:** pass `content=""` for a blank editor.
 
 ## Conditional Language Builder
@@ -83,13 +83,13 @@ See the **ConditionalLanguageBuilder** stories for examples.
 
 ## Props
 
-| Prop          | Type                                 | Required | Description                                                         |
-| ------------- | ------------------------------------ | -------- | ------------------------------------------------------------------- |
-| `fieldConfig` | `FieldDefinition[]`                  | Yes      | List of field definitions. See Field configuration schema below.    |
-| `content`     | `string`                             | Yes      | Rich text with embedded tokens (conditionals and field references). |
-| `readOnly`    | `boolean`                            | No       | When `true`, editor is non-editable. Default: `false`.              |
-| `onChange`    | `(content: string) => void`          | No       | Called when content changes.                                        |
-| `onValidate`  | `(result: ValidationResult) => void` | No       | Called when validation runs. See Validation rules below.            |
+| Prop          | Type                                 | Required | Description                                                                                                                     |
+| ------------- | ------------------------------------ | -------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `fieldConfig` | `FieldDefinition[]`                  | Yes      | List of field definitions. See Field configuration schema below.                                                                |
+| `content`     | `string`                             | Yes      | Rich text with embedded tokens (conditionals and field references).                                                             |
+| `readOnly`    | `boolean`                            | No       | When `true`, toolbar buttons are disabled and the editing area is non-editable; token rendering is preserved. Default: `false`. |
+| `onChange`    | `(content: string) => void`          | No       | Called when content changes.                                                                                                    |
+| `onValidate`  | `(result: ValidationResult) => void` | No       | Called when validation runs. See Validation rules below.                                                                        |
 
 ### Events
 

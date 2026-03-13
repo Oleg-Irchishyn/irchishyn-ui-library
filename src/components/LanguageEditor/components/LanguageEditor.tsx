@@ -61,26 +61,24 @@ export function LanguageEditor({
 
   return (
     <Paper variant="outlined" sx={languageEditorPaperStyles}>
-      {!readOnly && (
-        <LanguageEditorToolbar
-          onBold={handleBold}
-          onItalic={handleItalic}
-          onUnderline={handleUnderline}
-          onInsertFieldMouseDown={handleInsertFieldMouseDown}
-          onInsertFieldClick={handleInsertFieldClick}
-          onConditionalClick={handleConditionalClick}
-          onValidateClick={handleValidateClick}
-          fieldDropdownAnchor={fieldDropdownAnchor}
-          fieldDropdownOpen={fieldDropdownOpen}
-          onFieldDropdownClose={handleFieldDropdownClose}
-          onInsertField={handleInsertField}
-          fieldConfig={fieldConfig}
-          validationResult={validationResult}
-          disabled={readOnly}
-          showConditionalButton={!embedded}
-          showValidateButton={!embedded}
-        />
-      )}
+      <LanguageEditorToolbar
+        onBold={handleBold}
+        onItalic={handleItalic}
+        onUnderline={handleUnderline}
+        onInsertFieldMouseDown={handleInsertFieldMouseDown}
+        onInsertFieldClick={handleInsertFieldClick}
+        onConditionalClick={handleConditionalClick}
+        onValidateClick={handleValidateClick}
+        fieldDropdownAnchor={fieldDropdownAnchor}
+        fieldDropdownOpen={fieldDropdownOpen}
+        onFieldDropdownClose={handleFieldDropdownClose}
+        onInsertField={handleInsertField}
+        fieldConfig={fieldConfig}
+        validationResult={validationResult}
+        disabled={readOnly}
+        showConditionalButton={!embedded}
+        showValidateButton={!embedded}
+      />
 
       {validationResult && (
         <Box sx={getLanguageEditorValidationBannerStyles(validationResult.valid)}>

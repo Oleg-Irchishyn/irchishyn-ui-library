@@ -4,18 +4,18 @@
 
 ## Overall coverage
 
-**93.53%** (average of statements, branches, functions, lines)
+**93.52%** (average of statements, branches, functions, lines)
 
 | Statements | Branches | Functions | Lines |
 |------------|----------|-----------|-------|
-| 95.13% | 86.09% | 97.20% | 95.70% |
+| 95.13% | 86.07% | 97.20% | 95.70% |
 
 ## Summary (covered / total)
 
 | Metric      | Coverage | Covered / Total |
 |------------|----------|-----------------|
 | Statements | 95.13%    | 1505 / 1582        |
-| Branches   | 86.09%    | 1108 / 1287        |
+| Branches   | 86.07%    | 1106 / 1285        |
 | Functions  | 97.20%   | 452 / 465         |
 | Lines      | 95.70%   | 1338 / 1398        |
 
@@ -74,7 +74,7 @@
 | src/components/LanguageEditor/components/ConditionalLanguageBuilderIfBlock.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
 | src/components/LanguageEditor/components/ConditionalLanguageBuilderValueInput.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
 | src/components/LanguageEditor/components/FieldInsertDropdown.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
-| src/components/LanguageEditor/components/LanguageEditor.tsx | 100.00% | 94.11% | 100.00% | 100.00% |
+| src/components/LanguageEditor/components/LanguageEditor.tsx | 100.00% | 93.33% | 100.00% | 100.00% |
 | src/components/LanguageEditor/components/LanguageEditorToolbar.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
 | src/components/LanguageEditor/components/styles.ts | 100.00% | 100.00% | 100.00% | 100.00% |
 | src/components/LanguageEditor/hooks/useLanguageEditor.ts | 78.26% | 62.40% | 93.75% | 80.35% |

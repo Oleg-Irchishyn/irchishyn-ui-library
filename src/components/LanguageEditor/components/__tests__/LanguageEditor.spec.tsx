@@ -78,12 +78,12 @@ describe('LanguageEditor', () => {
     expect(hookState.handleClearValidation).toHaveBeenCalledTimes(1);
   });
 
-  it('hides toolbar and builder in read-only mode', () => {
+  it('shows toolbar with buttons disabled and hides builder in read-only mode', () => {
     useLanguageEditorMock.mockReturnValue(createHookState());
 
     render(<LanguageEditor fieldConfig={fieldConfig} content="readonly" readOnly={true} />);
 
-    expect(screen.queryByTestId('language-editor-toolbar-mock')).toBeNull();
+    expect(screen.getByTestId('language-editor-toolbar-mock')).toBeInTheDocument();
     expect(screen.queryByTestId('language-editor-conditional-mock')).toBeNull();
   });
 });
