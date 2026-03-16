@@ -34,6 +34,19 @@ describe('languageEditorUtils', () => {
     expect(stripped).toBe('<b>Hello</b>\n«Region»\nX & Y');
   });
 
+  it('preserves b, strong, i, em, u tags so multiple text formats can coexist', () => {
+    const html = 'Plain <b>bold</b> <i>italic</i> <u>underline</u> <b><i><u>all three</u></i></b>';
+    const stripped = stripConditionalFormatting(html);
+    expect(stripped).toBe(html);
+  });
+
+  it('formatConditionalSyntax restores formatting tags after encoding', () => {
+    const content = 'Hello <b>world</b> and <i>emphasis</i>';
+    const formatted = formatConditionalSyntax(content);
+    expect(formatted).toContain('<b>world</b>');
+    expect(formatted).toContain('<i>emphasis</i>');
+  });
+
   it('extracts field references and formats a field token', () => {
     expect(extractFieldReferences('A «Region» and «Amount» token')).toEqual(['Region', 'Amount']);
     expect(formatFieldReference('Status')).toBe('«Status»');

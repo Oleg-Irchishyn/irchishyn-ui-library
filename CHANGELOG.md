@@ -1,9 +1,8 @@
 # [1.5.0](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.4.7...v1.5.0) (2026-03-16)
 
-
 ### Features
 
-* [Issue-11946]: [FE]: Added FIle Naming Convention to the Config Panel ([8eeada2](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/8eeada23e7da70cdf17083f4b62802f0d9f08e8b)), closes [#11946](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/11946)
+- [Issue-11946]: [FE]: Added FIle Naming Convention to the Config Panel ([8eeada2](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/8eeada23e7da70cdf17083f4b62802f0d9f08e8b)), closes [#11946](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/11946)
 
 ## [1.4.7](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.4.6...v1.4.7) (2026-03-13)
 

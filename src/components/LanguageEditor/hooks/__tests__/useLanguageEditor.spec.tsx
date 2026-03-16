@@ -504,4 +504,70 @@ describe('useLanguageEditor', () => {
 
     expect(editor.innerHTML).toBe('<i>same-content</i>');
   });
+
+  it('syncEditorContent does not truncate editor when content prop is shorter (e.g. parent not yet updated after insert)', () => {
+    const { result } = renderHook(() =>
+      useLanguageEditor({
+        content: 'a',
+        fieldConfig: [],
+      }),
+    );
+
+    const editor = document.createElement('div');
+    editor.innerHTML = '<b>ab</b>';
+    (result.current.editorRef as unknown as { current: HTMLDivElement | null }).current = editor;
+
+    act(() => {
+      result.current.syncEditorContent();
+    });
+
+    expect(editor.innerHTML).toBe('<b>ab</b>');
+    expect(utilsMock.formatConditionalSyntax).not.toHaveBeenCalledWith('a');
+  });
+
+  it('inserts field at end when user has not moved cursor (userMovedCursorAfterInsertRef false)', () => {
+    const onChange = vi.fn();
+    const { result } = renderHook(() =>
+      useLanguageEditor({
+        content: 'x',
+        fieldConfig: [],
+        onChange,
+      }),
+    );
+
+    const editor = document.createElement('div');
+    const textNode = document.createTextNode('x');
+    editor.appendChild(textNode);
+    (result.current.editorRef as unknown as { current: HTMLDivElement | null }).current = editor;
+    document.body.appendChild(editor);
+
+    let lastRange: Range = document.createRange();
+    lastRange.setStart(textNode, 0);
+    lastRange.setEnd(textNode, 0);
+    const selection: SelectionLike = {
+      rangeCount: 1,
+      getRangeAt: () => lastRange,
+      removeAllRanges: vi.fn(),
+      addRange: vi.fn((r: Range) => {
+        lastRange = r;
+      }),
+    };
+    const originalGetSelection = window.getSelection;
+    Object.defineProperty(window, 'getSelection', {
+      configurable: true,
+      value: () => selection,
+    });
+
+    act(() => {
+      result.current.handleInsertField('Region');
+    });
+
+    expect(editor.textContent).toBe('x<<Region>>');
+    expect(onChange).toHaveBeenCalled();
+
+    Object.defineProperty(window, 'getSelection', {
+      configurable: true,
+      value: originalGetSelection,
+    });
+  });
 });

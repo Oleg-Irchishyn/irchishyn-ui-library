@@ -40,9 +40,7 @@ describe('getTokenDisplayLabel', () => {
 
   it('returns the variable label for Event Type when present in list', () => {
     const token: FileNamingToken = { type: 'variable', value: 'eventType' };
-    const variables: FileNamingVariable[] = [
-      { label: 'Event Type', value: 'eventType' },
-    ];
+    const variables: FileNamingVariable[] = [{ label: 'Event Type', value: 'eventType' }];
     expect(getTokenDisplayLabel(token, variables)).toBe('Event Type');
   });
 });

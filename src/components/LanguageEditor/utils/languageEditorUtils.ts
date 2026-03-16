@@ -31,13 +31,24 @@ function htmlDecode(text: string): string {
     .replace(/&amp;/g, '&');
 }
 
+/** Matches HTML-encoded formatting tags (&lt;b&gt;, &lt;/i&gt;, etc.) so they can be restored to real tags after htmlEncode */
+const ENCODED_FORMATTING_TAG = /&lt;(\/?)(b|strong|i|em|u)(\s*\/?)&gt;/gi;
+
+/** Restore allowed formatting tags after htmlEncode so b/i/u render as HTML */
+function restoreFormattingTags(encoded: string): string {
+  ENCODED_FORMATTING_TAG.lastIndex = 0;
+  return encoded.replace(ENCODED_FORMATTING_TAG, '<$1$2$3>');
+}
+
 /**
  * Formats plain text content with styled tokens for conditional syntax and field references.
  * Conditional tokens ({{IF...}}, {{ELSE IF...}}, {{ELSE}}, {{ENDIF}}) are styled with orange background.
  * Field references («fieldName») are styled with gold background.
+ * Preserves inline formatting tags (b, strong, i, em, u) so multiple formats can coexist.
  */
 export function formatConditionalSyntax(content: string): string {
   let formatted = htmlEncode(content);
+  formatted = restoreFormattingTags(formatted);
 
   formatted = formatted.replace(/\n/g, '<br>');
 
@@ -69,9 +80,12 @@ export function formatConditionalSyntax(content: string): string {
   return formatted;
 }
 
+/** Allowed inline formatting tags preserved so multiple formats (bold + italic + underline) can coexist */
+const ALLOWED_FORMATTING_TAG = /^\s*\/?\s*(b|strong|i|em|u)\s*\/?\s*$/i;
+
 /**
  * Strips HTML formatting from editor content to get plain text with tokens.
- * Removes styled spans but preserves the token text itself.
+ * Removes styled spans but preserves the token text itself and formatting tags (b, strong, i, em, u).
  */
 export function stripConditionalFormatting(html: string): string {
   let plain = html;
@@ -82,7 +96,13 @@ export function stripConditionalFormatting(html: string): string {
   plain = plain.replace(/<br\s*\/?>/gi, '\n');
   plain = plain.replace(/<\/div>\s*<div[^>]*>/gi, '\n');
   plain = plain.replace(/<\/?div[^>]*>/gi, '');
-  plain = plain.replace(/<[^>]+>/g, '');
+  // Remove all tags except b, strong, i, em, u so multiple text formats are preserved
+  plain = plain.replace(/<([^>]+)>/g, (_, tagContent) => {
+    if (ALLOWED_FORMATTING_TAG.test(tagContent.trim())) {
+      return '<' + tagContent + '>';
+    }
+    return '';
+  });
   plain = htmlDecode(plain);
 
   return plain;

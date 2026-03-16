@@ -30,12 +30,15 @@ const resolveSxObject = (sx: SxProps<Theme>, theme: Theme): Record<string, unkno
 };
 
 describe('LanguageEditor component styles', () => {
-  it('builds validation styles for both valid and invalid states', () => {
-    const valid = getLanguageEditorValidationBannerStyles(true);
-    const invalid = getLanguageEditorValidationBannerStyles(false);
+  it('builds validation styles for both valid and invalid states (less saturated, theme-based)', () => {
+    const theme = createTheme({ palette: { mode: 'light' } });
+    const valid = resolveSxObject(getLanguageEditorValidationBannerStyles(true), theme);
+    const invalid = resolveSxObject(getLanguageEditorValidationBannerStyles(false), theme);
 
-    expect(valid).toMatchObject({ backgroundColor: 'success.light' });
-    expect(invalid).toMatchObject({ backgroundColor: 'error.light' });
+    expect(valid.display).toBe('flex');
+    expect(String(valid.backgroundColor)).toMatch(/^rgba\(/);
+    expect(String(invalid.backgroundColor)).toMatch(/^rgba\(/);
+    expect(valid.backgroundColor).not.toBe(invalid.backgroundColor);
   });
 
   it('builds editable area styles for readOnly and editable modes', () => {
@@ -48,11 +51,14 @@ describe('LanguageEditor component styles', () => {
 
   it('resolves theme-based menu and search styles', () => {
     const light = createTheme({ palette: { mode: 'light' } });
+    const dark = createTheme({ palette: { mode: 'dark' } });
     const menu = resolveSxObject(languageEditorFieldMenuPaperStyles, light);
-    const search = resolveSxObject(languageEditorFieldSearchInputStyles, light);
+    const searchLight = resolveSxObject(languageEditorFieldSearchInputStyles, light);
+    const searchDark = resolveSxObject(languageEditorFieldSearchInputStyles, dark);
 
     expect(menu.minWidth).toBe(280);
-    expect(search.backgroundColor).toBe(light.palette.grey[100]);
+    expect(searchLight.backgroundColor).toBe(light.palette.grey[100]);
+    expect(searchDark.backgroundColor).toBe(dark.palette.grey[800]);
   });
 
   it('builds field type chip and shared style constants', () => {

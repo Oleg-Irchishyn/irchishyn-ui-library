@@ -1,3 +1,4 @@
+import { alpha } from '@mui/material/styles';
 import { info, neutral, primary } from '@gen2fund/platform.style';
 import type { SxProps, Theme } from '@mui/material/styles';
 
@@ -8,16 +9,23 @@ export const languageEditorValidationContentStyles: SxProps<Theme> = { flex: 1 }
 export const languageEditorValidationErrorItemStyles: SxProps<Theme> = { ml: 1 };
 export const languageEditorValidationCloseButtonStyles: SxProps<Theme> = { mt: -0.5 };
 
-export const getLanguageEditorValidationBannerStyles = (isValid: boolean): SxProps<Theme> => ({
-  px: 2,
-  py: 1,
-  borderBottom: 1,
-  borderColor: 'divider',
-  backgroundColor: isValid ? 'success.light' : 'error.light',
-  display: 'flex',
-  alignItems: 'flex-start',
-  gap: 1,
-});
+/** Less saturated validation banner (like POC green-50 / red-50). */
+export const getLanguageEditorValidationBannerStyles =
+  (isValid: boolean): SxProps<Theme> =>
+  (theme: Theme) => ({
+    px: 2,
+    py: 1,
+    borderBottom: 1,
+    borderColor: isValid
+      ? alpha(theme.palette.success.main, theme.palette.mode === 'dark' ? 0.3 : 0.4)
+      : alpha(theme.palette.error.main, theme.palette.mode === 'dark' ? 0.3 : 0.4),
+    backgroundColor: isValid
+      ? alpha(theme.palette.success.main, theme.palette.mode === 'dark' ? 0.12 : 0.08)
+      : alpha(theme.palette.error.main, theme.palette.mode === 'dark' ? 0.12 : 0.08),
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: 1,
+  });
 
 export const getLanguageEditorEditableAreaStyles = (
   minHeight: string,
@@ -77,7 +85,9 @@ export const languageEditorFieldSearchWrapStyles: SxProps<Theme> = { px: 1.5, pt
 export const languageEditorFieldSearchInputStyles: SxProps<Theme> = (theme) => ({
   height: LANGUAGE_EDITOR_LAYOUT.SEARCH_INPUT_HEIGHT,
   borderRadius: LANGUAGE_EDITOR_LAYOUT.TOOLBAR_BORDER_RADIUS,
-  backgroundColor: theme.palette.grey[100],
+  backgroundColor:
+    theme.palette.mode === 'dark' ? theme.palette.grey[800] : theme.palette.grey[100],
+  color: theme.palette.text.primary,
   '& .MuiOutlinedInput-notchedOutline': {
     borderColor: theme.palette.divider,
   },
@@ -87,6 +97,13 @@ export const languageEditorFieldSearchInputStyles: SxProps<Theme> = (theme) => (
   '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
     borderColor: theme.palette.primary.main,
     borderWidth: 1,
+  },
+  '& input': {
+    color: theme.palette.text.primary,
+  },
+  '& input::placeholder': {
+    color: theme.palette.text.secondary,
+    opacity: 1,
   },
 });
 export const languageEditorFieldListStyles: SxProps<Theme> = {

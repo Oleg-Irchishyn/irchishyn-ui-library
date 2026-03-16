@@ -225,8 +225,16 @@ export function FileNamingSection({
               },
             }}
           >
-            <Tab value={ADD_SEGMENT_TAB_VARIABLE} label="Variable" data-testid="add-segment-tab-variable" />
-            <Tab value={ADD_SEGMENT_TAB_STATIC} label="Static Text" data-testid="add-segment-tab-static" />
+            <Tab
+              value={ADD_SEGMENT_TAB_VARIABLE}
+              label="Variable"
+              data-testid="add-segment-tab-variable"
+            />
+            <Tab
+              value={ADD_SEGMENT_TAB_STATIC}
+              label="Static Text"
+              data-testid="add-segment-tab-static"
+            />
           </Tabs>
 
           {addSegmentTab === ADD_SEGMENT_TAB_VARIABLE && (

@@ -144,6 +144,11 @@ export function useLanguageEditor({
   const savedSelectionRef = useRef<Range | null>(null);
   /** Character offsets survive blur (innerHTML replace); range does not. */
   const savedOffsetsRef = useRef<{ start: number; end: number } | null>(null);
+  /** After insert we set refs to "end"; ignore selectionchange briefly so we don't overwrite with wrong position when dropdown closes. */
+  const lastInsertAtRef = useRef<number>(0);
+  const SELECTION_SAVE_DEBOUNCE_MS = 400;
+  /** True only after the user has clicked/typed in the editor since the last insert. If false, we insert at end (don't trust refs). */
+  const userMovedCursorAfterInsertRef = useRef<boolean>(false);
 
   const [fieldDropdownAnchor, setFieldDropdownAnchor] = useState<HTMLElement | null>(null);
   const [showConditionBuilder, setShowConditionBuilder] = useState(false);
@@ -151,18 +156,20 @@ export function useLanguageEditor({
 
   const fieldDropdownOpen = Boolean(fieldDropdownAnchor);
 
-  /** Keep saving selection (as range and offsets) when it's inside the editor, so we restore at cursor after blur. */
+  /** Save selection when it's in the editor and editor has focus (user moved cursor). Skip right after an insert. */
   useEffect(() => {
     if (readOnly) return;
     const onSelectionChange = () => {
+      if (Date.now() - lastInsertAtRef.current < SELECTION_SAVE_DEBOUNCE_MS) return;
       const editor = editorRef.current;
-      if (!editor) return;
+      if (!editor || document.activeElement !== editor) return;
       const sel = window.getSelection();
       if (!sel || sel.rangeCount === 0) return;
       const range = sel.getRangeAt(0);
       if (editor.contains(range.startContainer)) {
         savedSelectionRef.current = range.cloneRange();
         savedOffsetsRef.current = getSelectionOffsets(editor, range);
+        userMovedCursorAfterInsertRef.current = true;
       }
     };
     document.addEventListener('selectionchange', onSelectionChange);
@@ -185,9 +192,9 @@ export function useLanguageEditor({
     const editor = editorRef.current;
     if (!editor) return;
     editor.focus();
+    const len = getEditorTextLength(editor);
     const offsets = savedOffsetsRef.current;
     if (offsets) {
-      const len = getEditorTextLength(editor);
       const start = Math.min(offsets.start, len);
       const end = Math.min(offsets.end, len);
       if (setSelectionAtOffsets(editor, start, end)) return;
@@ -198,11 +205,16 @@ export function useLanguageEditor({
         selection.removeAllRanges();
         try {
           selection.addRange(savedSelectionRef.current);
+          if (editor.contains(selection.getRangeAt(0).startContainer)) return;
         } catch {
           // Range may be detached after blur
         }
       }
     }
+    // Default: paste at end of editor when user hasn't clicked elsewhere after last insert
+    setSelectionAtOffsets(editor, len, len);
+    savedOffsetsRef.current = { start: len, end: len };
+    savedSelectionRef.current = null;
   }, []);
 
   const execCommand = useCallback(
@@ -234,6 +246,8 @@ export function useLanguageEditor({
       const formattedContent = formatConditionalSyntax(plainContent);
       if (editorRef.current.innerHTML !== formattedContent) {
         editorRef.current.innerHTML = formattedContent;
+        // Range is now detached; keep offsets (they still match the new DOM’s logical content)
+        savedSelectionRef.current = null;
       }
     }
   }, []);
@@ -289,7 +303,14 @@ export function useLanguageEditor({
         return;
       }
 
-      restoreSelection();
+      if (!userMovedCursorAfterInsertRef.current) {
+        const len = getEditorTextLength(editor);
+        setSelectionAtOffsets(editor, len, len);
+        savedOffsetsRef.current = { start: len, end: len };
+        savedSelectionRef.current = null;
+      } else {
+        restoreSelection();
+      }
 
       const selection = window.getSelection();
       if (!selection) {
@@ -331,6 +352,12 @@ export function useLanguageEditor({
       setFieldDropdownAnchor(null);
       editor.focus();
 
+      const len = getEditorTextLength(editor);
+      savedOffsetsRef.current = { start: len, end: len };
+      savedSelectionRef.current = null;
+      lastInsertAtRef.current = Date.now();
+      userMovedCursorAfterInsertRef.current = false;
+
       if (onChange) {
         onChange(stripConditionalFormatting(editor.innerHTML));
       }
@@ -351,10 +378,25 @@ export function useLanguageEditor({
   const handleInsertConditional = useCallback(
     (conditionalText: string) => {
       if (readOnly) return;
-      restoreSelection();
+
+      const editor = editorRef.current;
+      if (!editor) return;
+
+      if (!userMovedCursorAfterInsertRef.current) {
+        const len = getEditorTextLength(editor);
+        setSelectionAtOffsets(editor, len, len);
+        savedOffsetsRef.current = { start: len, end: len };
+        savedSelectionRef.current = null;
+      } else {
+        restoreSelection();
+      }
 
       const selection = window.getSelection();
-      if (selection && selection.rangeCount > 0) {
+      if (
+        selection &&
+        selection.rangeCount > 0 &&
+        editor.contains(selection.getRangeAt(0).startContainer)
+      ) {
         const range = selection.getRangeAt(0);
         const textNode = document.createTextNode(conditionalText);
         range.deleteContents();
@@ -363,25 +405,30 @@ export function useLanguageEditor({
         range.setEndAfter(textNode);
         selection.removeAllRanges();
         selection.addRange(range);
-      } else if (editorRef.current) {
-        editorRef.current.focus();
+      } else if (editor) {
+        editor.focus();
         const textNode = document.createTextNode(conditionalText);
-        editorRef.current.appendChild(textNode);
+        editor.appendChild(textNode);
       }
 
       setShowConditionBuilder(false);
-      editorRef.current?.focus();
-      savedSelectionRef.current = null;
-      savedOffsetsRef.current = null;
+      editor?.focus();
 
-      if (editorRef.current && onChange) {
-        onChange(stripConditionalFormatting(editorRef.current.innerHTML));
+      if (editor && onChange) {
+        onChange(stripConditionalFormatting(editor.innerHTML));
       }
+
+      userMovedCursorAfterInsertRef.current = false;
 
       setTimeout(() => {
         if (editorRef.current) {
           const plainContent = stripConditionalFormatting(editorRef.current.innerHTML);
           editorRef.current.innerHTML = formatConditionalSyntax(plainContent);
+          const len = getEditorTextLength(editorRef.current);
+          setSelectionAtOffsets(editorRef.current, len, len);
+          savedOffsetsRef.current = { start: len, end: len };
+          savedSelectionRef.current = null;
+          lastInsertAtRef.current = Date.now();
         }
       }, 10);
     },
@@ -403,13 +450,16 @@ export function useLanguageEditor({
   }, [content]);
 
   const syncEditorContent = useCallback(() => {
-    if (editorRef.current) {
-      const formattedValue = formatConditionalSyntax(content);
-      const currentStripped = stripConditionalFormatting(editorRef.current.innerHTML);
-      if (currentStripped !== content) {
-        editorRef.current.innerHTML = formattedValue;
-      }
-    }
+    if (!editorRef.current) return;
+    const currentStripped = stripConditionalFormatting(editorRef.current.innerHTML);
+    if (currentStripped === content) return;
+    // Never overwrite with shorter content: parent may not have flushed onChange yet (e.g. after Insert Field), so we’d truncate and break “paste at end”
+    if (content.length < currentStripped.length) return;
+    const formattedValue = formatConditionalSyntax(content);
+    editorRef.current.innerHTML = formattedValue;
+    savedSelectionRef.current = null;
+    const len = getEditorTextLength(editorRef.current);
+    savedOffsetsRef.current = { start: len, end: len };
   }, [content]);
 
   return {
