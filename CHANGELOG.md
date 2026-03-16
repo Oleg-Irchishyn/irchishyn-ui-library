@@ -1,3 +1,10 @@
+## [1.5.1](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.5.0...v1.5.1) (2026-03-16)
+
+
+### Bug Fixes
+
+* [Issue-12527]: [FE]: Editor fixes ([96d5a15](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/96d5a1583541fb4a525d75bc59091fb611b83233)), closes [#12527](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/12527)
+
 # [1.5.0](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.4.7...v1.5.0) (2026-03-16)
 
 ### Features
