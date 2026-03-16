@@ -1,30 +1,39 @@
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 
+import { FileNamingSection } from './FileNamingSection';
 import { FileSplittingSection } from './FileSplittingSection';
 import { OutputFormatSection } from './OutputFormatSection';
 import {
   getOutputConfigurationPanelRootStyles,
-  outputConfigurationPanelPlaceholderStyles,
+  getOutputConfigurationSectionCardStyles,
 } from './styles';
 import type { OutputConfigurationPanelProps } from './types';
 import { useOutputConfigurationPanel } from './useOutputConfigurationPanel';
 
+const sectionCardStyles = getOutputConfigurationSectionCardStyles();
+
 export function OutputConfigurationPanel({
   outputFormat,
   fileSplitting,
+  fileNaming,
   sx,
 }: OutputConfigurationPanelProps) {
-  const { outputFormatProps, fileSplittingProps } = useOutputConfigurationPanel({
+  const { outputFormatProps, fileSplittingProps, fileNamingProps } = useOutputConfigurationPanel({
     outputFormat,
     fileSplitting,
+    fileNaming,
   });
 
   return (
     <Box data-testid="output-configuration-panel" sx={getOutputConfigurationPanelRootStyles(sx)}>
-      <OutputFormatSection {...outputFormatProps} />
-      <FileSplittingSection {...fileSplittingProps} />
-      <Box component="section" sx={outputConfigurationPanelPlaceholderStyles}>
-        <Typography component="span">File Naming Convention — coming soon</Typography>
+      <Box component="section" sx={sectionCardStyles} data-testid="output-format-section-card">
+        <OutputFormatSection {...outputFormatProps} />
+      </Box>
+      <Box component="section" sx={sectionCardStyles} data-testid="file-splitting-section-card">
+        <FileSplittingSection {...fileSplittingProps} />
+      </Box>
+      <Box component="section" sx={sectionCardStyles} data-testid="file-naming-section-card">
+        <FileNamingSection {...fileNamingProps} />
       </Box>
     </Box>
   );

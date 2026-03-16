@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import type { Theme } from '@mui/material/styles';
 import { useMemo, useState } from 'react';
@@ -6,11 +7,18 @@ import { action } from '@storybook/addon-actions';
 import { FileText, FileType } from 'lucide-react';
 
 import { Gen2ThemeProvider } from '../../providers';
-import { OutputConfigurationPanel, OutputFormatSection, FileSplittingSection } from '.';
+import {
+  OutputConfigurationPanel,
+  OutputFormatSection,
+  FileSplittingSection,
+  FileNamingSection,
+} from '.';
 import {
   DEFAULT_OUTPUT_FORMATS,
   DEFAULT_SELECTED_FORMATS,
   DEFAULT_SPLIT_MODE,
+  DEFAULT_FILE_NAMING_TOKENS,
+  DEFAULT_FILE_NAMING_VARIABLES,
   OUTPUT_FORMAT_ID_PDF,
   OUTPUT_FORMAT_ID_WORD,
 } from './constants';
@@ -22,7 +30,9 @@ const meta: Meta<typeof OutputConfigurationPanel> = {
   decorators: [
     (Story) => (
       <Gen2ThemeProvider>
-        <Story />
+        <Box sx={{ width: '100%', maxWidth: 720 }}>
+          <Story />
+        </Box>
       </Gen2ThemeProvider>
     ),
   ],
@@ -31,13 +41,14 @@ const meta: Meta<typeof OutputConfigurationPanel> = {
     docs: {
       description: {
         component:
-          'Reusable Output Configuration Panel with Output Format, File Splitting (radio options), and File Naming Convention placeholder.',
+          "Reusable Output Configuration Panel with Output Format, File Splitting, and File Naming Convention (preview, token chips, + Add, Reset to Default). Uses theme tokens throughout so it adapts to the app's light/dark switcher (AC10).",
       },
     },
   },
   argTypes: {
     outputFormat: { control: false },
     fileSplitting: { control: false },
+    fileNaming: { control: false },
     sx: { control: false },
   },
 };
@@ -111,6 +122,30 @@ function PanelWithFileSplittingState() {
 }
 
 export const Default: Story = {
+  render: () => <PanelWithState />,
+};
+
+/** AC10: Theme Compatibility — validate in Storybook by toggling theme or viewing this story */
+export const DarkModeAC10: Story = {
+  name: 'Dark Mode',
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'AC10: Renders in dark theme. Section backgrounds, checkbox/radio, token chips, preview text, buttons, and labels use MUI theme tokens and adapt for full legibility.',
+      },
+    },
+    backgrounds: { default: 'dark' },
+  },
+  decorators: [
+    (Story) => (
+      <Gen2ThemeProvider mode="dark">
+        <Box sx={{ width: '100%', maxWidth: 720 }}>
+          <Story />
+        </Box>
+      </Gen2ThemeProvider>
+    ),
+  ],
   render: () => <PanelWithState />,
 };
 
@@ -195,4 +230,131 @@ export const FileSplittingSectionStandalone: Story = {
     },
   },
   render: () => <FileSplittingSectionStandaloneWrapper />,
+};
+
+function PanelWithFileNamingState() {
+  const [selectedFormats, setSelectedFormats] = useState<string[]>(DEFAULT_SELECTED_FORMATS);
+  const [splitMode, setSplitMode] = useState<SplitMode>(DEFAULT_SPLIT_MODE);
+  const [tokens, setTokens] = useState(DEFAULT_FILE_NAMING_TOKENS);
+  const theme = useTheme();
+  const formatsWithIcons = useMemo(() => getFormatsWithIcons(theme), [theme]);
+
+  const previewFileNames = useMemo(() => {
+    const demoValues: Record<string, string> = {
+      fundGroup: 'Global Fund II',
+      eventType: 'Capital Call',
+      noticeDate: '2025-01-29',
+    };
+    const parts = tokens.map((t) =>
+      t.type === 'variable' ? (demoValues[t.value] ?? t.value) : t.value,
+    );
+    const base = parts.join('');
+    if (!base) return [];
+    const names: string[] = [];
+    if (selectedFormats.includes(OUTPUT_FORMAT_ID_PDF)) names.push(`${base}.pdf`);
+    if (selectedFormats.includes(OUTPUT_FORMAT_ID_WORD)) names.push(`${base}.docx`);
+    return names;
+  }, [tokens, selectedFormats]);
+
+  const fileNamingSubtitle =
+    splitMode === 'splitPerInvestor'
+      ? 'Configure how individual investor files should be named by combining static text and variables.'
+      : 'Configure the output file name by combining static text and variables.';
+
+  return (
+    <OutputConfigurationPanel
+      outputFormat={{
+        formats: formatsWithIcons,
+        selectedFormats,
+        onFormatsChange: (ids) => {
+          action('onFormatsChange')(ids);
+          setSelectedFormats(ids);
+        },
+        minSelected: 1,
+      }}
+      fileSplitting={{
+        splitMode,
+        onSplitModeChange: (mode) => {
+          action('onSplitModeChange')(mode);
+          setSplitMode(mode);
+        },
+      }}
+      fileNaming={{
+        tokens,
+        availableVariables: DEFAULT_FILE_NAMING_VARIABLES,
+        onTokensChange: (next) => {
+          action('onTokensChange')(next);
+          setTokens(next);
+        },
+        onReset: () => {
+          action('onReset')();
+          setTokens(DEFAULT_FILE_NAMING_TOKENS);
+        },
+        previewFileNames,
+        subtitle: fileNamingSubtitle,
+      }}
+    />
+  );
+}
+
+export const WithFileNamingInteractive: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'Full panel with Output Format, File Splitting, and File Naming Convention. Add/remove tokens, reset to default; preview updates in real time (AC5–AC8).',
+      },
+    },
+  },
+  render: () => <PanelWithFileNamingState />,
+};
+
+const FILE_NAMING_STANDALONE_FORMATS = [OUTPUT_FORMAT_ID_PDF];
+
+function FileNamingSectionStandaloneWrapper() {
+  const [tokens, setTokens] = useState(DEFAULT_FILE_NAMING_TOKENS);
+  const previewFileNames = useMemo(() => {
+    const demoValues: Record<string, string> = {
+      fundGroup: 'Global Fund II',
+      eventType: 'Capital Call',
+      noticeDate: '2025-01-29',
+    };
+    const parts = tokens.map((t) =>
+      t.type === 'variable' ? (demoValues[t.value] ?? t.value) : t.value,
+    );
+    const base = parts.join('');
+    if (!base) return [];
+    const names: string[] = [];
+    if (FILE_NAMING_STANDALONE_FORMATS.includes(OUTPUT_FORMAT_ID_PDF)) names.push(`${base}.pdf`);
+    if (FILE_NAMING_STANDALONE_FORMATS.includes(OUTPUT_FORMAT_ID_WORD)) names.push(`${base}.docx`);
+    return names;
+  }, [tokens]);
+
+  return (
+    <FileNamingSection
+      tokens={tokens}
+      availableVariables={DEFAULT_FILE_NAMING_VARIABLES}
+      onTokensChange={(next) => {
+        action('onTokensChange')(next);
+        setTokens(next);
+      }}
+      onReset={() => {
+        action('onReset')();
+        setTokens(DEFAULT_FILE_NAMING_TOKENS);
+      }}
+      previewFileNames={previewFileNames}
+    />
+  );
+}
+
+export const FileNamingSectionStandalone: Story = {
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'File Naming Convention section only: preview, token chips (removable), + Add picker, Reset to Default.',
+      },
+    },
+  },
+  render: () => <FileNamingSectionStandaloneWrapper />,
 };

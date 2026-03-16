@@ -4,9 +4,15 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { describe, expect, it, vi } from 'vitest';
 
 import {
+  DEFAULT_FILE_NAMING_TOKENS,
+  DEFAULT_FILE_NAMING_TOKENS_PER_INVESTOR,
+  DEFAULT_FILE_NAMING_VARIABLES,
+  DEFAULT_FILE_NAMING_VARIABLES_PER_INVESTOR,
   DEFAULT_MIN_SELECTED_FORMATS,
   DEFAULT_SELECTED_FORMATS,
   DEFAULT_SPLIT_MODE,
+  FILE_NAMING_SUBTITLE_CONSOLIDATED,
+  FILE_NAMING_SUBTITLE_PER_INVESTOR,
   OUTPUT_FORMAT_ID_PDF,
   OUTPUT_FORMAT_ID_WORD,
   SPLIT_MODE_SPLIT_PER_INVESTOR,
@@ -110,5 +116,102 @@ describe('useOutputConfigurationPanel', () => {
 
     expect(result.current.fileSplittingProps.splitMode).toBe(SPLIT_MODE_SPLIT_PER_INVESTOR);
     expect(result.current.fileSplittingProps.onSplitModeChange).toBe(onSplitModeChange);
+  });
+
+  it('when fileNaming is undefined, returns fileNamingProps with default tokens and computed preview', () => {
+    const { result } = renderHook(() => useOutputConfigurationPanel({}), { wrapper });
+
+    expect(result.current.fileNamingProps.tokens).toEqual(DEFAULT_FILE_NAMING_TOKENS);
+    expect(result.current.fileNamingProps.availableVariables).toEqual(
+      DEFAULT_FILE_NAMING_VARIABLES,
+    );
+    expect(result.current.fileNamingProps.previewFileNames).toHaveLength(1);
+    expect(result.current.fileNamingProps.previewFileNames[0]).toContain('Global Fund II');
+    expect(result.current.fileNamingProps.previewFileNames[0]).toContain('Capital Call');
+    expect(result.current.fileNamingProps.previewFileNames[0]).toContain('2025-01-29');
+    expect(result.current.fileNamingProps.previewFileNames[0]).toMatch(/\.pdf$/);
+    expect(typeof result.current.fileNamingProps.onTokensChange).toBe('function');
+    expect(typeof result.current.fileNamingProps.onReset).toBe('function');
+  });
+
+  it('when fileNaming is undefined, onTokensChange updates tokens and preview', () => {
+    const { result } = renderHook(() => useOutputConfigurationPanel({}), { wrapper });
+
+    const newTokens = result.current.fileNamingProps.tokens.slice(0, 2);
+    act(() => {
+      result.current.fileNamingProps.onTokensChange(newTokens);
+    });
+
+    expect(result.current.fileNamingProps.tokens).toEqual(newTokens);
+    expect(result.current.fileNamingProps.previewFileNames[0]).not.toContain('Notice Date');
+  });
+
+  it('when fileNaming is undefined, onReset restores default tokens', () => {
+    const { result } = renderHook(() => useOutputConfigurationPanel({}), { wrapper });
+
+    act(() => {
+      result.current.fileNamingProps.onTokensChange([result.current.fileNamingProps.tokens[0]]);
+    });
+    expect(result.current.fileNamingProps.tokens).toHaveLength(1);
+
+    act(() => {
+      result.current.fileNamingProps.onReset();
+    });
+    expect(result.current.fileNamingProps.tokens).toEqual(DEFAULT_FILE_NAMING_TOKENS);
+  });
+
+  it('when fileNaming is undefined and split mode changes to splitPerInvestor, resets tokens and uses per-investor variables and subtitle', () => {
+    const { result } = renderHook(() => useOutputConfigurationPanel({}), { wrapper });
+
+    expect(result.current.fileNamingProps.availableVariables).toEqual(
+      DEFAULT_FILE_NAMING_VARIABLES,
+    );
+    expect(result.current.fileNamingProps.subtitle).toBe(FILE_NAMING_SUBTITLE_CONSOLIDATED);
+
+    act(() => {
+      result.current.fileSplittingProps.onSplitModeChange(SPLIT_MODE_SPLIT_PER_INVESTOR);
+    });
+
+    expect(result.current.fileNamingProps.tokens).toEqual(DEFAULT_FILE_NAMING_TOKENS_PER_INVESTOR);
+    expect(result.current.fileNamingProps.availableVariables).toEqual(
+      DEFAULT_FILE_NAMING_VARIABLES_PER_INVESTOR,
+    );
+    expect(result.current.fileNamingProps.subtitle).toBe(FILE_NAMING_SUBTITLE_PER_INVESTOR);
+    expect(result.current.fileNamingProps.previewFileNames[0]).toMatch(/\.pdf$/);
+  });
+
+  it('when fileNaming is undefined and both formats selected, previewFileNames contains pdf and docx', () => {
+    const { result } = renderHook(() => useOutputConfigurationPanel({}), { wrapper });
+
+    act(() => {
+      result.current.outputFormatProps.onFormatsChange([
+        OUTPUT_FORMAT_ID_PDF,
+        OUTPUT_FORMAT_ID_WORD,
+      ]);
+    });
+
+    expect(result.current.fileNamingProps.previewFileNames).toHaveLength(2);
+    expect(result.current.fileNamingProps.previewFileNames[0]).toMatch(/\.pdf$/);
+    expect(result.current.fileNamingProps.previewFileNames[1]).toMatch(/\.docx$/);
+  });
+
+  it('when fileNaming is provided, returns it as fileNamingProps', () => {
+    const onTokensChange = vi.fn();
+    const onReset = vi.fn();
+    const customFileNaming = {
+      tokens: [{ type: 'static' as const, value: 'custom' }],
+      availableVariables: [],
+      onTokensChange,
+      onReset,
+      previewFileNames: ['custom.pdf'],
+    };
+    const { result } = renderHook(
+      () => useOutputConfigurationPanel({ fileNaming: customFileNaming }),
+      { wrapper },
+    );
+
+    expect(result.current.fileNamingProps).toBe(customFileNaming);
+    expect(result.current.fileNamingProps.tokens).toHaveLength(1);
+    expect(result.current.fileNamingProps.previewFileNames).toEqual(['custom.pdf']);
   });
 });

@@ -19,7 +19,9 @@ describe('OutputConfigurationPanel', () => {
     expect(screen.getByText('File Splitting')).toBeTruthy();
     expect(screen.getByText('Consolidated File')).toBeTruthy();
     expect(screen.getByText('Split Per Investor')).toBeTruthy();
-    expect(screen.getByText(/File Naming Convention — coming soon/)).toBeTruthy();
+    expect(screen.getByTestId('file-naming-section')).toBeTruthy();
+    expect(screen.getByText('File Naming Convention')).toBeTruthy();
+    expect(screen.getByTestId('file-naming-preview')).toBeTruthy();
   });
 
   it('renders with custom outputFormat props', () => {

@@ -5,6 +5,9 @@ export const getOutputFormatSectionStyles = (): SxProps<Theme> => () => ({
   display: 'flex',
   flexDirection: 'column',
   gap: 1.5,
+  width: '100%',
+  minWidth: 0,
+  boxSizing: 'border-box',
 });
 
 export const getOutputFormatSectionHeadingStyles = (): SxProps<Theme> => (theme) => ({
