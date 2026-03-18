@@ -4,101 +4,101 @@
 
 ## Overall coverage
 
-**94.74%** (average of statements, branches, functions, lines)
+**94.77%** (average of statements, branches, functions, lines)
 
-| Statements | Branches | Functions | Lines  |
-| ---------- | -------- | --------- | ------ |
-| 95.55%     | 89.63%   | 97.51%    | 96.27% |
+| Statements | Branches | Functions | Lines |
+|------------|----------|-----------|-------|
+| 95.61% | 89.70% | 97.51% | 96.27% |
 
 ## Summary (covered / total)
 
-| Metric     | Coverage | Covered / Total |
-| ---------- | -------- | --------------- |
-| Statements | 95.55%   | 1676 / 1754     |
-| Branches   | 89.63%   | 1262 / 1408     |
-| Functions  | 97.51%   | 511 / 524       |
-| Lines      | 96.27%   | 1472 / 1529     |
+| Metric      | Coverage | Covered / Total |
+|------------|----------|-----------------|
+| Statements | 95.61%    | 1679 / 1756        |
+| Branches   | 89.70%    | 1263 / 1408        |
+| Functions  | 97.51%   | 511 / 524         |
+| Lines      | 96.27%   | 1475 / 1532        |
 
 ## Coverage by file
 
-| File                                                                                | Statements | Branches | Functions | Lines   |
-| ----------------------------------------------------------------------------------- | ---------- | -------- | --------- | ------- |
-| src/App.tsx                                                                         | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/Alert/Alert.tsx                                                      | 100.00%    | 89.47%   | 100.00%   | 100.00% |
-| src/components/Alert/styles.ts                                                      | 100.00%    | 96.66%   | 100.00%   | 100.00% |
-| src/components/Alert/useAlert.ts                                                    | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/Badge/Badge.tsx                                                      | 100.00%    | 80.00%   | 100.00%   | 100.00% |
-| src/components/Badge/styles.ts                                                      | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/Badge/utils.ts                                                       | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/DatePicker/components/DatePickerQuickSelectPanel.tsx                 | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/DatePicker/components/DatePickerSingleField.tsx                      | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/DatePicker/DatePicker.tsx                                            | 100.00%    | 92.30%   | 100.00%   | 100.00% |
-| src/components/DatePicker/styles.ts                                                 | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/DatePicker/useDatePicker.ts                                          | 98.73%     | 97.56%   | 90.00%    | 98.71%  |
-| src/components/DatePicker/utils.ts                                                  | 96.07%     | 96.00%   | 92.85%    | 96.00%  |
-| src/components/DateTextSelect/DateTextSelect.tsx                                    | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/DateTextSelect/styles.ts                                             | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/DateTextSelect/useDateTextSelect.ts                                  | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/DateTextSelect/utils.ts                                              | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/DocumentTemplateCard/components/DocumentTemplateCardActionButton.tsx | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/DocumentTemplateCard/components/DocumentTemplateCardFileIcon.tsx     | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/DocumentTemplateCard/DocumentTemplateCard.tsx                        | 100.00%    | 88.88%   | 100.00%   | 100.00% |
-| src/components/DocumentTemplateCard/styles.ts                                       | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/DocumentTemplateCard/useDocumentTemplateCard.tsx                     | 97.72%     | 100.00%  | 93.33%    | 97.36%  |
-| src/components/DocumentTemplateCard/utils.ts                                        | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/FileUpload/FileUpload.tsx                                            | 100.00%    | 85.71%   | 100.00%   | 100.00% |
-| src/components/FileUpload/styles.ts                                                 | 100.00%    | 92.85%   | 100.00%   | 100.00% |
-| src/components/FileUpload/useFileUpload.ts                                          | 97.36%     | 87.50%   | 100.00%   | 100.00% |
-| src/components/FileUpload/utils.ts                                                  | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/HistoryAuditTrail/components/columns/HistoryAuditActivityColumns.tsx | 100.00%    | 86.66%   | 100.00%   | 100.00% |
-| src/components/HistoryAuditTrail/components/columns/HistoryAuditTimestampColumn.tsx | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/HistoryAuditTrail/components/columns/styles.ts                       | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/HistoryAuditTrail/components/HistoryAuditExport.tsx                  | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/HistoryAuditTrail/components/HistoryAuditTrailEmpty.tsx              | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/HistoryAuditTrail/components/HistoryAuditTrailError.tsx              | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/HistoryAuditTrail/components/HistoryAuditTrailHeader.tsx             | 100.00%    | 92.30%   | 100.00%   | 100.00% |
-| src/components/HistoryAuditTrail/components/HistoryAuditTrailIcons.tsx              | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/HistoryAuditTrail/components/HistoryAuditTrailLoader.tsx             | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/HistoryAuditTrail/components/HistoryAuditTrailSearch.tsx             | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/HistoryAuditTrail/components/HistoryAuditTrailTable.tsx              | 100.00%    | 75.00%   | 100.00%   | 100.00% |
-| src/components/HistoryAuditTrail/components/HistoryAudtitTrailModuleDropdown.tsx    | 100.00%    | 92.30%   | 100.00%   | 100.00% |
-| src/components/HistoryAuditTrail/components/styles.ts                               | 96.42%     | 80.00%   | 90.00%    | 100.00% |
-| src/components/HistoryAuditTrail/HistoryAuditTrail.tsx                              | 100.00%    | 90.90%   | 100.00%   | 100.00% |
-| src/components/HistoryAuditTrail/styles.ts                                          | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/HistoryAuditTrail/useHistoryAuditTrail.ts                            | 97.79%     | 88.46%   | 93.54%    | 97.50%  |
-| src/components/HistoryAuditTrail/utils.ts                                           | 100.00%    | 87.23%   | 100.00%   | 100.00% |
-| src/components/LanguageEditor/components/ConditionalLanguageBuilder.tsx             | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/LanguageEditor/components/ConditionalLanguageBuilderClauseRow.tsx    | 94.11%     | 84.61%   | 90.90%    | 93.75%  |
-| src/components/LanguageEditor/components/ConditionalLanguageBuilderElseBlock.tsx    | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/LanguageEditor/components/ConditionalLanguageBuilderElseIfBlock.tsx  | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/LanguageEditor/components/ConditionalLanguageBuilderIfBlock.tsx      | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/LanguageEditor/components/ConditionalLanguageBuilderValueInput.tsx   | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/LanguageEditor/components/FieldInsertDropdown.tsx                    | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/LanguageEditor/components/LanguageEditor.tsx                         | 100.00%    | 93.33%   | 100.00%   | 100.00% |
-| src/components/LanguageEditor/components/LanguageEditorToolbar.tsx                  | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/LanguageEditor/components/styles.ts                                  | 100.00%    | 75.00%   | 100.00%   | 100.00% |
-| src/components/LanguageEditor/hooks/useLanguageEditor.ts                            | 78.57%     | 62.83%   | 90.62%    | 81.85%  |
-| src/components/LanguageEditor/useConditionalLanguageBuilder.ts                      | 100.00%    | 83.33%   | 100.00%   | 100.00% |
-| src/components/LanguageEditor/utils/buildConditionalString.ts                       | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/LanguageEditor/utils/languageEditorUtils.ts                          | 99.03%     | 82.00%   | 100.00%   | 98.97%  |
-| src/components/OutputConfigurationPanel/FileNamingSection.styles.ts                 | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/OutputConfigurationPanel/FileNamingSection.tsx                       | 100.00%    | 88.00%   | 100.00%   | 100.00% |
-| src/components/OutputConfigurationPanel/FileNamingSection.utils.ts                  | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/OutputConfigurationPanel/FileSplittingSection.styles.ts              | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/OutputConfigurationPanel/FileSplittingSection.tsx                    | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/OutputConfigurationPanel/OutputConfigurationPanel.tsx                | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/OutputConfigurationPanel/OutputFormatSection.styles.ts               | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/OutputConfigurationPanel/OutputFormatSection.tsx                     | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/OutputConfigurationPanel/styles.ts                                   | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/OutputConfigurationPanel/useOutputConfigurationPanel.tsx             | 97.50%     | 90.00%   | 100.00%   | 100.00% |
-| src/components/OutputConfigurationPanel/useOutputFormatSection.ts                   | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/SearchTextBox/SearchTextBox.tsx                                      | 100.00%    | 90.00%   | 100.00%   | 100.00% |
-| src/components/SearchTextBox/styles.ts                                              | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/components/SearchTextBox/useSearchTextBox.ts                                    | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/providers/AlertToastProvider.tsx                                                | 100.00%    | 83.33%   | 100.00%   | 100.00% |
-| src/providers/Gen2ThemeProvider.tsx                                                 | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/providers/hooks/useAlertToast.ts                                                | 100.00%    | 100.00%  | 100.00%   | 100.00% |
-| src/theme.ts                                                                        | 86.66%     | 97.97%   | 100.00%   | 100.00% |
+| File | Statements | Branches | Functions | Lines |
+|------|------------|----------|-----------|-------|
+| src/App.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/Alert/Alert.tsx | 100.00% | 89.47% | 100.00% | 100.00% |
+| src/components/Alert/styles.ts | 100.00% | 96.66% | 100.00% | 100.00% |
+| src/components/Alert/useAlert.ts | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/Badge/Badge.tsx | 100.00% | 80.00% | 100.00% | 100.00% |
+| src/components/Badge/styles.ts | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/Badge/utils.ts | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/DatePicker/components/DatePickerQuickSelectPanel.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/DatePicker/components/DatePickerSingleField.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/DatePicker/DatePicker.tsx | 100.00% | 92.30% | 100.00% | 100.00% |
+| src/components/DatePicker/styles.ts | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/DatePicker/useDatePicker.ts | 98.73% | 97.56% | 90.00% | 98.71% |
+| src/components/DatePicker/utils.ts | 96.07% | 96.00% | 92.85% | 96.00% |
+| src/components/DateTextSelect/DateTextSelect.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/DateTextSelect/styles.ts | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/DateTextSelect/useDateTextSelect.ts | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/DateTextSelect/utils.ts | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/DocumentTemplateCard/components/DocumentTemplateCardActionButton.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/DocumentTemplateCard/components/DocumentTemplateCardFileIcon.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/DocumentTemplateCard/DocumentTemplateCard.tsx | 100.00% | 88.88% | 100.00% | 100.00% |
+| src/components/DocumentTemplateCard/styles.ts | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/DocumentTemplateCard/useDocumentTemplateCard.tsx | 97.72% | 100.00% | 93.33% | 97.36% |
+| src/components/DocumentTemplateCard/utils.ts | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/FileUpload/FileUpload.tsx | 100.00% | 85.71% | 100.00% | 100.00% |
+| src/components/FileUpload/styles.ts | 100.00% | 92.85% | 100.00% | 100.00% |
+| src/components/FileUpload/useFileUpload.ts | 97.36% | 87.50% | 100.00% | 100.00% |
+| src/components/FileUpload/utils.ts | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/HistoryAuditTrail/components/columns/HistoryAuditActivityColumns.tsx | 100.00% | 86.66% | 100.00% | 100.00% |
+| src/components/HistoryAuditTrail/components/columns/HistoryAuditTimestampColumn.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/HistoryAuditTrail/components/columns/styles.ts | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/HistoryAuditTrail/components/HistoryAuditExport.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/HistoryAuditTrail/components/HistoryAuditTrailEmpty.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/HistoryAuditTrail/components/HistoryAuditTrailError.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/HistoryAuditTrail/components/HistoryAuditTrailHeader.tsx | 100.00% | 92.30% | 100.00% | 100.00% |
+| src/components/HistoryAuditTrail/components/HistoryAuditTrailIcons.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/HistoryAuditTrail/components/HistoryAuditTrailLoader.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/HistoryAuditTrail/components/HistoryAuditTrailSearch.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/HistoryAuditTrail/components/HistoryAuditTrailTable.tsx | 100.00% | 75.00% | 100.00% | 100.00% |
+| src/components/HistoryAuditTrail/components/HistoryAudtitTrailModuleDropdown.tsx | 100.00% | 92.30% | 100.00% | 100.00% |
+| src/components/HistoryAuditTrail/components/styles.ts | 96.42% | 80.00% | 90.00% | 100.00% |
+| src/components/HistoryAuditTrail/HistoryAuditTrail.tsx | 100.00% | 90.90% | 100.00% | 100.00% |
+| src/components/HistoryAuditTrail/styles.ts | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/HistoryAuditTrail/useHistoryAuditTrail.ts | 97.79% | 88.46% | 93.54% | 97.50% |
+| src/components/HistoryAuditTrail/utils.ts | 100.00% | 87.23% | 100.00% | 100.00% |
+| src/components/LanguageEditor/components/ConditionalLanguageBuilder.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/LanguageEditor/components/ConditionalLanguageBuilderClauseRow.tsx | 94.11% | 84.61% | 90.90% | 93.75% |
+| src/components/LanguageEditor/components/ConditionalLanguageBuilderElseBlock.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/LanguageEditor/components/ConditionalLanguageBuilderElseIfBlock.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/LanguageEditor/components/ConditionalLanguageBuilderIfBlock.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/LanguageEditor/components/ConditionalLanguageBuilderValueInput.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/LanguageEditor/components/FieldInsertDropdown.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/LanguageEditor/components/LanguageEditor.tsx | 100.00% | 93.33% | 100.00% | 100.00% |
+| src/components/LanguageEditor/components/LanguageEditorToolbar.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/LanguageEditor/components/styles.ts | 100.00% | 75.00% | 100.00% | 100.00% |
+| src/components/LanguageEditor/hooks/useLanguageEditor.ts | 78.91% | 63.51% | 90.62% | 81.85% |
+| src/components/LanguageEditor/useConditionalLanguageBuilder.ts | 100.00% | 83.33% | 100.00% | 100.00% |
+| src/components/LanguageEditor/utils/buildConditionalString.ts | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/LanguageEditor/utils/languageEditorUtils.ts | 99.05% | 82.00% | 100.00% | 99.00% |
+| src/components/OutputConfigurationPanel/FileNamingSection.styles.ts | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/OutputConfigurationPanel/FileNamingSection.tsx | 100.00% | 88.00% | 100.00% | 100.00% |
+| src/components/OutputConfigurationPanel/FileNamingSection.utils.ts | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/OutputConfigurationPanel/FileSplittingSection.styles.ts | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/OutputConfigurationPanel/FileSplittingSection.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/OutputConfigurationPanel/OutputConfigurationPanel.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/OutputConfigurationPanel/OutputFormatSection.styles.ts | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/OutputConfigurationPanel/OutputFormatSection.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/OutputConfigurationPanel/styles.ts | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/OutputConfigurationPanel/useOutputConfigurationPanel.tsx | 97.50% | 90.00% | 100.00% | 100.00% |
+| src/components/OutputConfigurationPanel/useOutputFormatSection.ts | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/SearchTextBox/SearchTextBox.tsx | 100.00% | 90.00% | 100.00% | 100.00% |
+| src/components/SearchTextBox/styles.ts | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/SearchTextBox/useSearchTextBox.ts | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/providers/AlertToastProvider.tsx | 100.00% | 83.33% | 100.00% | 100.00% |
+| src/providers/Gen2ThemeProvider.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/providers/hooks/useAlertToast.ts | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/theme.ts | 86.66% | 97.97% | 100.00% | 100.00% |
 
 ---
 
