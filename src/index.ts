@@ -145,6 +145,15 @@ export {
 } from './components/DatePicker';
 
 export { DateTextSelect, useDateTextSelect } from './components/DateTextSelect';
+
+export { MultiSelectDropdown, useMultiSelectDropdown } from './components/MultiSelectDropdown';
+export type {
+  MultiSelectDropdownProps,
+  MultiSelectOption,
+  UseMultiSelectDropdownParams,
+  UseMultiSelectDropdownResult,
+} from './components/MultiSelectDropdown';
+export { MULTI_SELECT_LABELS, MULTI_SELECT_LAYOUT } from './components/MultiSelectDropdown';
 export type { DateTextSelectProps, DateTextSelectOption } from './components/DateTextSelect';
 export {
   DATE_TEXT_SELECT_DATE_FORMAT,

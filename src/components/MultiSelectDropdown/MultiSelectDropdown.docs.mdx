@@ -1,0 +1,54 @@
+import { ArgTypes, Canvas, Description, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as Stories from './MultiSelectDropdown.stories';
+
+<Meta of={Stories} />
+<Title>MultiSelectDropdown</Title>
+<Subtitle>A reusable multi-select dropdown with inline search and checkbox selection.</Subtitle>
+<Description>
+  Displays a trigger button showing the current selection label. On open, a search input (powered
+  by SearchTextBox) filters the list of options — each rendered with a checkbox. Supports a
+  Select All toggle, a Clear action, configurable trigger label logic (names vs. count), and full
+  light/dark theme compatibility via MUI tokens.
+</Description>
+
+## Import
+
+```ts
+import { MultiSelectDropdown } from '@gen2fund/gen2verse-ui-library';
+```
+
+## Quick start
+
+```tsx
+const [selected, setSelected] = useState<string[]>([]);
+
+<MultiSelectDropdown
+  options={[
+    { label: 'Acme Corp', value: 'acme-corp' },
+    { label: 'Omega Fund', value: 'omega-fund' },
+  ]}
+  selectedValues={selected}
+  onChange={setSelected}
+  placeholder="All Sponsors"
+  searchPlaceholder="Search sponsors..."
+/>
+```
+
+## States
+
+- **Default (nothing selected):** trigger shows `placeholder` (e.g. "All Sponsors").
+- **Partial — few names:** trigger shows comma-joined labels up to `maxDisplayNames`.
+- **Partial — many names:** trigger shows `"{count} Selected"`.
+- **All selected:** trigger reverts to `placeholder`.
+- **Disabled:** trigger is non-interactive and visually dimmed.
+
+<Canvas of={Stories.Default} />
+<Canvas of={Stories.PartialSelection} />
+<Canvas of={Stories.CountLabel} />
+<Canvas of={Stories.AllSelected} />
+<Canvas of={Stories.NoSelectAll} />
+<Canvas of={Stories.Disabled} />
+
+## Props
+
+<ArgTypes of={Stories.Default} />

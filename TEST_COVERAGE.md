@@ -4,20 +4,20 @@
 
 ## Overall coverage
 
-**94.77%** (average of statements, branches, functions, lines)
+**94.85%** (average of statements, branches, functions, lines)
 
 | Statements | Branches | Functions | Lines |
 |------------|----------|-----------|-------|
-| 95.61% | 89.70% | 97.51% | 96.27% |
+| 95.74% | 89.76% | 97.50% | 96.41% |
 
 ## Summary (covered / total)
 
 | Metric      | Coverage | Covered / Total |
 |------------|----------|-----------------|
-| Statements | 95.61%    | 1679 / 1756        |
-| Branches   | 89.70%    | 1263 / 1408        |
-| Functions  | 97.51%   | 511 / 524         |
-| Lines      | 96.27%   | 1475 / 1532        |
+| Statements | 95.74%    | 1757 / 1835        |
+| Branches   | 89.76%    | 1307 / 1456        |
+| Functions  | 97.50%   | 548 / 562         |
+| Lines      | 96.41%   | 1535 / 1592        |
 
 ## Coverage by file
 
@@ -81,6 +81,10 @@
 | src/components/LanguageEditor/useConditionalLanguageBuilder.ts | 100.00% | 83.33% | 100.00% | 100.00% |
 | src/components/LanguageEditor/utils/buildConditionalString.ts | 100.00% | 100.00% | 100.00% | 100.00% |
 | src/components/LanguageEditor/utils/languageEditorUtils.ts | 99.05% | 82.00% | 100.00% | 99.00% |
+| src/components/MultiSelectDropdown/MultiSelectDropdown.tsx | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/MultiSelectDropdown/styles.ts | 96.42% | 71.42% | 94.44% | 100.00% |
+| src/components/MultiSelectDropdown/useMultiSelectDropdown.ts | 100.00% | 100.00% | 100.00% | 100.00% |
+| src/components/MultiSelectDropdown/utils.ts | 100.00% | 100.00% | 100.00% | 100.00% |
 | src/components/OutputConfigurationPanel/FileNamingSection.styles.ts | 100.00% | 100.00% | 100.00% | 100.00% |
 | src/components/OutputConfigurationPanel/FileNamingSection.tsx | 100.00% | 88.00% | 100.00% | 100.00% |
 | src/components/OutputConfigurationPanel/FileNamingSection.utils.ts | 100.00% | 100.00% | 100.00% | 100.00% |
