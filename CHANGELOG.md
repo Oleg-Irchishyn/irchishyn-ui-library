@@ -1,3 +1,10 @@
+# [1.6.0](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.5.1...v1.6.0) (2026-03-23)
+
+
+### Features
+
+* [TASK-12862]: [FE]: Add Multiselect Search Component to Gen2Verse.UI.Library ([70855a4](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/70855a41cf3d76e94a88970f8e476c5610b7b82f)), closes [#12862](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/12862)
+
 ## [1.5.1](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.5.0...v1.5.1) (2026-03-16)
 
 
