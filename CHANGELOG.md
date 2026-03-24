@@ -1,3 +1,10 @@
+# [1.8.0](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.7.0...v1.8.0) (2026-03-24)
+
+
+### Features
+
+* [TASK-13012]: [FE] Add Select Dropdown with Search and Action buttons component to UI Library ([f383805](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/f3838057db0a657dcd891347202b7bb427eb7e86)), closes [#13012](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/13012)
+
 # [1.7.0](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.6.0...v1.7.0) (2026-03-24)
 
 ### Features
