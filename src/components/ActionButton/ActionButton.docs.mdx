@@ -1,0 +1,45 @@
+import { ArgTypes, Canvas, Description, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as ActionButtonStories from './ActionButton.stories';
+
+<Meta of={ActionButtonStories} />
+<Title>ActionButton</Title>
+<Subtitle>Reusable action button with primary, secondary, and icon-only variants.</Subtitle>
+<Description>
+  A single component that covers the three standard button styles used across all Gen2Verse MFEs.
+  Colors and spacing are driven by platform tokens via `Gen2ThemeProvider`.
+</Description>
+
+## Import
+
+```ts
+import { ActionButton } from '@gen2fund/gen2verse-ui-library';
+```
+
+## Quick start
+
+```tsx
+import { Plus } from 'lucide-react';
+import { ActionButton } from '@gen2fund/gen2verse-ui-library';
+
+// Primary with leading icon (matches "New Capital Event" design)
+<ActionButton label="New Capital Event" icon={<Plus size={16} />} />
+
+// Secondary
+<ActionButton variant="secondary" label="Cancel" />
+
+// Icon only — always provide a tooltip for accessibility
+<ActionButton variant="icon" icon={<Trash2 size={16} />} tooltip="Delete" />
+```
+
+## States
+
+<Canvas of={ActionButtonStories.PrimaryWithIcon} />
+<Canvas of={ActionButtonStories.PrimaryNoIcon} />
+<Canvas of={ActionButtonStories.Secondary} />
+<Canvas of={ActionButtonStories.Icon} />
+<Canvas of={ActionButtonStories.AllSizes} />
+<Canvas of={ActionButtonStories.Disabled} />
+
+## Props
+
+<ArgTypes of={ActionButtonStories.PrimaryWithIcon} />

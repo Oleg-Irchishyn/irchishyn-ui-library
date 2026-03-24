@@ -57,6 +57,10 @@ export const colors = {
   info: lightMode.info,
   success: lightMode.success,
 };
+export const common = {
+  black: '#000000',
+  white: '#ffffff',
+};
 export const fontFamily = {
   primary: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
 };

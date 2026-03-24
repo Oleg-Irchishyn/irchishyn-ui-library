@@ -1,3 +1,10 @@
+export { ActionButton } from './components/ActionButton';
+export type {
+  ActionButtonProps,
+  ActionButtonVariant,
+  ActionButtonSize,
+} from './components/ActionButton';
+
 export { HistoryAuditTrail } from './components/HistoryAuditTrail';
 export type {
   HistoryAuditTrailProps,
