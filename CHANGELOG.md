@@ -1,3 +1,10 @@
+# [1.7.0](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.6.0...v1.7.0) (2026-03-24)
+
+
+### Features
+
+* [TASK-11225]: [FE]: add ActionButton component ([d954731](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/d954731874da20a396feb2bb7159702ca9087ac3)), closes [#11225](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/11225) [#12954](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/12954) [#12955](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/12955)
+
 # [1.6.0](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.5.1...v1.6.0) (2026-03-23)
 
 
