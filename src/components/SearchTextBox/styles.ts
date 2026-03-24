@@ -17,6 +17,7 @@ export const getSearchTextBoxBaseStyles = (): SxProps<Theme> => (theme: Theme) =
     },
     '& input': {
       color: theme.palette.text.primary,
+      textOverflow: 'ellipsis',
     },
     '& input::placeholder': {
       color: theme.palette.text.secondary,

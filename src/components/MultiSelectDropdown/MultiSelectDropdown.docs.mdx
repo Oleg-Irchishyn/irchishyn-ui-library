@@ -5,10 +5,10 @@ import * as Stories from './MultiSelectDropdown.stories';
 <Title>MultiSelectDropdown</Title>
 <Subtitle>A reusable multi-select dropdown with inline search and checkbox selection.</Subtitle>
 <Description>
-  Displays a trigger button showing the current selection label. On open, a search input (powered
-  by SearchTextBox) filters the list of options — each rendered with a checkbox. Supports a
-  Select All toggle, a Clear action, configurable trigger label logic (names vs. count), and full
-  light/dark theme compatibility via MUI tokens.
+  Displays a trigger button showing the current selection label. On open, a search input (powered by
+  SearchTextBox) filters the list of options — each rendered with a checkbox. Supports a Select All
+  toggle, a Clear action, configurable trigger label logic (names vs. count), and full light/dark
+  theme compatibility via MUI tokens.
 </Description>
 
 ## Import
@@ -31,7 +31,7 @@ const [selected, setSelected] = useState<string[]>([]);
   onChange={setSelected}
   placeholder="All Sponsors"
   searchPlaceholder="Search sponsors..."
-/>
+/>;
 ```
 
 ## States

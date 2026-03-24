@@ -1,7 +1,11 @@
 import { useCallback, useState } from 'react';
 
 import { MULTI_SELECT_LAYOUT } from './constants';
-import type { MultiSelectOption, UseMultiSelectDropdownParams, UseMultiSelectDropdownResult } from './types';
+import type {
+  MultiSelectOption,
+  UseMultiSelectDropdownParams,
+  UseMultiSelectDropdownResult,
+} from './types';
 import { filterOptions, getTriggerLabel } from './utils';
 
 export function useMultiSelectDropdown({
@@ -50,9 +54,7 @@ export function useMultiSelectDropdown({
   }, [onChange]);
 
   const handleInvertSelection = useCallback(() => {
-    const inverted = options
-      .filter((o) => !selectedValues.includes(o.value))
-      .map((o) => o.value);
+    const inverted = options.filter((o) => !selectedValues.includes(o.value)).map((o) => o.value);
     onChange(inverted);
   }, [options, selectedValues, onChange]);
 

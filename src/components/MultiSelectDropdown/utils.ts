@@ -31,7 +31,10 @@ export function getTriggerLabel(
 /**
  * Filters options by search text (case-insensitive substring match).
  */
-export function filterOptions(options: MultiSelectOption[], searchText: string): MultiSelectOption[] {
+export function filterOptions(
+  options: MultiSelectOption[],
+  searchText: string,
+): MultiSelectOption[] {
   const trimmed = searchText.trim().toLowerCase();
   if (!trimmed) return options;
   return options.filter((o) => o.label.toLowerCase().includes(trimmed));

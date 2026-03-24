@@ -161,6 +161,16 @@ export type {
   UseMultiSelectDropdownResult,
 } from './components/MultiSelectDropdown';
 export { MULTI_SELECT_LABELS, MULTI_SELECT_LAYOUT } from './components/MultiSelectDropdown';
+
+export { SelectDropdown, useSelectDropdown } from './components/SelectDropdown';
+export type {
+  SelectDropdownProps,
+  SelectDropdownOption,
+  SelectDropdownActionButton,
+  UseSelectDropdownParams,
+  UseSelectDropdownResult,
+} from './components/SelectDropdown';
+export { SELECT_DROPDOWN_LABELS, SELECT_DROPDOWN_LAYOUT } from './components/SelectDropdown';
 export type { DateTextSelectProps, DateTextSelectOption } from './components/DateTextSelect';
 export {
   DATE_TEXT_SELECT_DATE_FORMAT,

@@ -88,13 +88,13 @@ export const MyComponent = ({ rawData }: { rawData: ApiResponse }) => {
 
 ## 4 — File placement by scope
 
-| Scope | Location |
-|---|---|
-| Used only by one component | alongside that component |
-| Multiple hooks in one component | `hooks/` sub-folder with `index.ts` barrel |
-| Multiple util files in one component | `utils/` sub-folder with `index.ts` barrel |
-| Multiple constant groups | `constants/` sub-folder with `index.ts` barrel |
-| Hook or util shared across multiple components | `src/hooks/` or `src/utils/` |
+| Scope                                          | Location                                       |
+| ---------------------------------------------- | ---------------------------------------------- |
+| Used only by one component                     | alongside that component                       |
+| Multiple hooks in one component                | `hooks/` sub-folder with `index.ts` barrel     |
+| Multiple util files in one component           | `utils/` sub-folder with `index.ts` barrel     |
+| Multiple constant groups                       | `constants/` sub-folder with `index.ts` barrel |
+| Hook or util shared across multiple components | `src/hooks/` or `src/utils/`                   |
 
 ---
 
@@ -116,21 +116,21 @@ Every component, hook, util, styles file, and provider must have a co-located `_
 
 ### File naming
 
-| Source file | Spec file |
-|---|---|
+| Source file         | Spec file                          |
+| ------------------- | ---------------------------------- |
 | `ComponentName.tsx` | `__tests__/ComponentName.spec.tsx` |
-| `useHookName.ts` | `__tests__/useHookName.spec.ts` |
-| `utils.ts` | `__tests__/utils.spec.ts` |
-| `styles.ts` | `__tests__/styles.spec.ts` |
+| `useHookName.ts`    | `__tests__/useHookName.spec.ts`    |
+| `utils.ts`          | `__tests__/utils.spec.ts`          |
+| `styles.ts`         | `__tests__/styles.spec.ts`         |
 
 ### Coverage targets (from `TEST_COVERAGE.md`)
 
-| Metric | Target |
-|---|---|
-| Statements | ≥ 95% |
-| Branches | ≥ 89% |
-| Functions | ≥ 97% |
-| Lines | ≥ 96% |
+| Metric     | Target |
+| ---------- | ------ |
+| Statements | ≥ 95%  |
+| Branches   | ≥ 89%  |
+| Functions  | ≥ 97%  |
+| Lines      | ≥ 96%  |
 
 Run: `npm run test:coverage` — HTML report at `coverage/index.html`.
 
@@ -228,14 +228,17 @@ import * as Stories from './ComponentName.stories';
 <Description>What it does and when to use it.</Description>
 
 ## Import
+
 \`\`\`ts
 import { ComponentName } from '@gen2fund/gen2verse-ui-library';
 \`\`\`
 
 ## Quick start
+
 ...minimal working example...
 
 ## States
+
 - **Loading**: ...
 - **Empty**: ...
 - **Error**: ...
@@ -246,6 +249,7 @@ import { ComponentName } from '@gen2fund/gen2verse-ui-library';
 <Canvas of={Stories.Error} />
 
 ## Props
+
 <ArgTypes of={Stories.Default} />
 ```
 

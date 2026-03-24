@@ -1,0 +1,65 @@
+import { ArgTypes, Canvas, Description, Meta, Subtitle, Title } from '@storybook/blocks';
+import * as Stories from './SelectDropdown.stories';
+
+<Meta of={Stories} />
+<Title>SelectDropdown</Title>
+<Subtitle>
+  A reusable single-select dropdown with inline search and optional action buttons.
+</Subtitle>
+<Description>
+  Displays a trigger button showing the currently selected option — including an optional prefix
+  badge (e.g. "System"). On open, a search input (powered by SearchTextBox) filters the option list
+  in real time. Each option can display a Badge prefix. Configurable action buttons (e.g. Refresh
+  List, Create New) are rendered above the options list. Supports controlled and uncontrolled usage,
+  disabled state, and full light/dark theme compatibility via MUI tokens.
+</Description>
+
+## Import
+
+```ts
+import { SelectDropdown } from '@gen2fund/gen2verse-ui-library';
+```
+
+## Quick start
+
+```tsx
+const [value, setValue] = useState<string | null>(null);
+
+<SelectDropdown
+  options={[
+    { label: 'Fund of Funds', value: 'fof', badgeLabel: 'System' },
+    { label: 'Direct Fund', value: 'df', badgeLabel: 'System' },
+  ]}
+  value={value}
+  onChange={(option) => setValue(option.value)}
+  placeholder="Select a driver report..."
+  searchPlaceholder="Search driver reports..."
+  actionButtons={[
+    { label: 'Refresh List', icon: <RefreshCwIcon size={14} />, onClick: handleRefresh },
+    {
+      label: 'Create New Driver Report',
+      icon: <PlusIcon size={14} />,
+      onClick: handleCreate,
+      closeOnClick: true,
+    },
+  ]}
+/>;
+```
+
+## States
+
+- **Default (nothing selected):** trigger shows `placeholder`.
+- **Option selected:** trigger shows the option label; if the option has `badgeLabel` the badge appears left of the label.
+- **Searching:** option list filters in real time as the user types.
+- **Action buttons:** rendered as clickable rows between the search box and the options list; `closeOnClick` controls whether the dropdown closes on click.
+- **Disabled:** trigger is non-interactive and visually dimmed.
+
+<Canvas of={Stories.Default} />
+<Canvas of={Stories.WithPreselectedValue} />
+<Canvas of={Stories.WithActionButtons} />
+<Canvas of={Stories.NoBadges} />
+<Canvas of={Stories.Disabled} />
+
+## Props
+
+<ArgTypes of={Stories.Default} />

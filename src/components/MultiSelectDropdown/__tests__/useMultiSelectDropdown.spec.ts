@@ -64,7 +64,9 @@ describe('useMultiSelectDropdown', () => {
       const { result } = buildHook();
       const fakeEl = document.createElement('button');
       act(() => {
-        result.current.handleOpen({ currentTarget: fakeEl } as unknown as React.MouseEvent<HTMLElement>);
+        result.current.handleOpen({
+          currentTarget: fakeEl,
+        } as unknown as React.MouseEvent<HTMLElement>);
       });
       expect(result.current.isOpen).toBe(true);
       expect(result.current.anchorEl).toBe(fakeEl);
@@ -74,7 +76,9 @@ describe('useMultiSelectDropdown', () => {
       const { result } = buildHook();
       const fakeEl = document.createElement('button');
       act(() => {
-        result.current.handleOpen({ currentTarget: fakeEl } as unknown as React.MouseEvent<HTMLElement>);
+        result.current.handleOpen({
+          currentTarget: fakeEl,
+        } as unknown as React.MouseEvent<HTMLElement>);
       });
       act(() => {
         result.current.handleSearchChange('acme');

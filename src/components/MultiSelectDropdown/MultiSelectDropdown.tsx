@@ -1,12 +1,4 @@
-import {
-  Box,
-  ButtonBase,
-  Checkbox,
-  IconButton,
-  Popover,
-  Tooltip,
-  Typography,
-} from '@mui/material';
+import { Box, ButtonBase, Checkbox, IconButton, Popover, Tooltip, Typography } from '@mui/material';
 import {
   CheckCheck as CheckCheckIcon,
   ChevronsUpDown as ChevronsUpDownIcon,
@@ -99,117 +91,117 @@ export const MultiSelectDropdown = ({
         disableEnforceFocus
       >
         <Box data-testid="multi-select-dropdown-popover">
-        {/* Row 1: search input */}
-        <Box sx={getMultiSelectHeaderStyles()}>
-          <SearchTextBox
-            value={searchText}
-            onChange={handleSearchChange}
-            placeholder={searchPlaceholder}
-            debounceMs={0}
-            data-testid="multi-select-dropdown-search"
-          />
-        </Box>
-
-        {/* Row 2: controls (Select All / Deselect All / Invert) */}
-        {showSelectAll && (
-          <Box sx={getMultiSelectControlsRowStyles()}>
-            {controlsLabel ? (
-              <Typography variant="caption" color="text.secondary">
-                {controlsLabel}
-              </Typography>
-            ) : (
-              <Box />
-            )}
-
-            <Box sx={{ display: 'flex', gap: 0.5 }}>
-              <Tooltip title={MULTI_SELECT_LABELS.SELECT_ALL}>
-                <span>
-                  <IconButton
-                    data-testid="multi-select-dropdown-select-all"
-                    size="small"
-                    disabled={!isSelectAllAvailable}
-                    onClick={handleSelectAll}
-                  >
-                    <CheckCheckIcon size={16} />
-                  </IconButton>
-                </span>
-              </Tooltip>
-
-              <Tooltip title={MULTI_SELECT_LABELS.DESELECT_ALL}>
-                <span>
-                  <IconButton
-                    data-testid="multi-select-dropdown-deselect-all"
-                    size="small"
-                    disabled={!isDeselectAllAvailable}
-                    onClick={handleDeselectAll}
-                  >
-                    <CircleXIcon size={16} />
-                  </IconButton>
-                </span>
-              </Tooltip>
-
-              <Tooltip title={MULTI_SELECT_LABELS.INVERT_SELECTION}>
-                <IconButton
-                  data-testid="multi-select-dropdown-invert"
-                  size="small"
-                  onClick={handleInvertSelection}
-                >
-                  <ShuffleIcon size={16} />
-                </IconButton>
-              </Tooltip>
-            </Box>
+          {/* Row 1: search input */}
+          <Box sx={getMultiSelectHeaderStyles()}>
+            <SearchTextBox
+              value={searchText}
+              onChange={handleSearchChange}
+              placeholder={searchPlaceholder}
+              debounceMs={0}
+              data-testid="multi-select-dropdown-search"
+            />
           </Box>
-        )}
 
-        {/* Options list */}
-        <Box
-          component="ul"
-          role="listbox"
-          aria-multiselectable="true"
-          aria-label="Options"
-          sx={getMultiSelectListStyles()}
-        >
-          {filteredOptions.length === 0 ? (
-            <Box sx={getMultiSelectEmptyStateStyles()}>
-              <Typography variant="body2">{MULTI_SELECT_LABELS.NO_OPTIONS}</Typography>
-            </Box>
-          ) : (
-            filteredOptions.map((option) => {
-              const isChecked = selectedValues.includes(option.value);
-              return (
-                <Box
-                  key={option.value}
-                  component="li"
-                  role="option"
-                  aria-selected={isChecked}
-                  data-testid={`multi-select-option-${option.value}`}
-                  onClick={() => handleToggleOption(option.value)}
-                  sx={getMultiSelectOptionStyles(isChecked)}
-                >
-                  <Checkbox
+          {/* Row 2: controls (Select All / Deselect All / Invert) */}
+          {showSelectAll && (
+            <Box sx={getMultiSelectControlsRowStyles()}>
+              {controlsLabel ? (
+                <Typography variant="caption" color="text.secondary">
+                  {controlsLabel}
+                </Typography>
+              ) : (
+                <Box />
+              )}
+
+              <Box sx={{ display: 'flex', gap: 0.5 }}>
+                <Tooltip title={MULTI_SELECT_LABELS.SELECT_ALL}>
+                  <span>
+                    <IconButton
+                      data-testid="multi-select-dropdown-select-all"
+                      size="small"
+                      disabled={!isSelectAllAvailable}
+                      onClick={handleSelectAll}
+                    >
+                      <CheckCheckIcon size={16} />
+                    </IconButton>
+                  </span>
+                </Tooltip>
+
+                <Tooltip title={MULTI_SELECT_LABELS.DESELECT_ALL}>
+                  <span>
+                    <IconButton
+                      data-testid="multi-select-dropdown-deselect-all"
+                      size="small"
+                      disabled={!isDeselectAllAvailable}
+                      onClick={handleDeselectAll}
+                    >
+                      <CircleXIcon size={16} />
+                    </IconButton>
+                  </span>
+                </Tooltip>
+
+                <Tooltip title={MULTI_SELECT_LABELS.INVERT_SELECTION}>
+                  <IconButton
+                    data-testid="multi-select-dropdown-invert"
                     size="small"
-                    checked={isChecked}
-                    tabIndex={-1}
-                    disableRipple
-                    inputProps={{ 'aria-hidden': true }}
-                  />
-                  <Typography variant="body2">{option.label}</Typography>
-                </Box>
-              );
-            })
+                    onClick={handleInvertSelection}
+                  >
+                    <ShuffleIcon size={16} />
+                  </IconButton>
+                </Tooltip>
+              </Box>
+            </Box>
           )}
-        </Box>
 
-        {/* Clear selection — only when showSelectAll=false */}
-        {!showSelectAll && isDeselectAllAvailable && (
+          {/* Options list */}
           <Box
-            data-testid="multi-select-dropdown-clear-bottom"
-            onClick={handleDeselectAll}
-            sx={getMultiSelectClearButtonStyles()}
+            component="ul"
+            role="listbox"
+            aria-multiselectable="true"
+            aria-label="Options"
+            sx={getMultiSelectListStyles()}
           >
-            {MULTI_SELECT_LABELS.CLEAR_SELECTION}
+            {filteredOptions.length === 0 ? (
+              <Box sx={getMultiSelectEmptyStateStyles()}>
+                <Typography variant="body2">{MULTI_SELECT_LABELS.NO_OPTIONS}</Typography>
+              </Box>
+            ) : (
+              filteredOptions.map((option) => {
+                const isChecked = selectedValues.includes(option.value);
+                return (
+                  <Box
+                    key={option.value}
+                    component="li"
+                    role="option"
+                    aria-selected={isChecked}
+                    data-testid={`multi-select-option-${option.value}`}
+                    onClick={() => handleToggleOption(option.value)}
+                    sx={getMultiSelectOptionStyles(isChecked)}
+                  >
+                    <Checkbox
+                      size="small"
+                      checked={isChecked}
+                      tabIndex={-1}
+                      disableRipple
+                      inputProps={{ 'aria-hidden': true }}
+                    />
+                    <Typography variant="body2">{option.label}</Typography>
+                  </Box>
+                );
+              })
+            )}
           </Box>
-        )}
+
+          {/* Clear selection — only when showSelectAll=false */}
+          {!showSelectAll && isDeselectAllAvailable && (
+            <Box
+              data-testid="multi-select-dropdown-clear-bottom"
+              onClick={handleDeselectAll}
+              sx={getMultiSelectClearButtonStyles()}
+            >
+              {MULTI_SELECT_LABELS.CLEAR_SELECTION}
+            </Box>
+          )}
         </Box>
       </Popover>
     </Box>

@@ -2,7 +2,8 @@ import type { SxProps, Theme } from '@mui/material/styles';
 
 import { MULTI_SELECT_LAYOUT } from './constants';
 
-export const getMultiSelectTriggerStyles = (disabled?: boolean): SxProps<Theme> =>
+export const getMultiSelectTriggerStyles =
+  (disabled?: boolean): SxProps<Theme> =>
   (theme: Theme) => ({
     display: 'inline-flex',
     alignItems: 'center',
@@ -77,7 +78,8 @@ export const getMultiSelectControlsRowStyles = (): SxProps<Theme> => (theme: The
   minHeight: 36,
 });
 
-export const getMultiSelectActionIconStyles = (active: boolean): SxProps<Theme> =>
+export const getMultiSelectActionIconStyles =
+  (active: boolean): SxProps<Theme> =>
   (theme: Theme) => ({
     color: active ? theme.palette.primary.main : theme.palette.text.secondary,
     flexShrink: 0,
@@ -96,7 +98,8 @@ export const getMultiSelectListStyles = (): SxProps<Theme> => ({
   p: 0,
 });
 
-export const getMultiSelectOptionStyles = (checked: boolean): SxProps<Theme> =>
+export const getMultiSelectOptionStyles =
+  (checked: boolean): SxProps<Theme> =>
   (theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',

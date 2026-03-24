@@ -155,7 +155,9 @@ describe('MultiSelectDropdown', () => {
         anchorEl,
         isDeselectAllAvailable: true,
       });
-      render(<MultiSelectDropdown {...defaultProps} showSelectAll={false} selectedValues={['acme']} />);
+      render(
+        <MultiSelectDropdown {...defaultProps} showSelectAll={false} selectedValues={['acme']} />,
+      );
       expect(screen.getByTestId('multi-select-dropdown-clear-bottom')).toBeTruthy();
     });
 
@@ -195,7 +197,12 @@ describe('MultiSelectDropdown', () => {
   it('calls handleToggleOption when an option is clicked', () => {
     const anchorEl = document.createElement('button');
     const handleToggleOption = vi.fn();
-    useMultiSelectDropdownMock.mockReturnValue({ ...baseHook, isOpen: true, anchorEl, handleToggleOption });
+    useMultiSelectDropdownMock.mockReturnValue({
+      ...baseHook,
+      isOpen: true,
+      anchorEl,
+      handleToggleOption,
+    });
     render(<MultiSelectDropdown {...defaultProps} />);
     fireEvent.click(screen.getByTestId('multi-select-option-acme'));
     expect(handleToggleOption).toHaveBeenCalledWith('acme');
@@ -234,7 +241,12 @@ describe('MultiSelectDropdown', () => {
   it('calls handleInvertSelection when invert button is clicked', () => {
     const anchorEl = document.createElement('button');
     const handleInvertSelection = vi.fn();
-    useMultiSelectDropdownMock.mockReturnValue({ ...baseHook, isOpen: true, anchorEl, handleInvertSelection });
+    useMultiSelectDropdownMock.mockReturnValue({
+      ...baseHook,
+      isOpen: true,
+      anchorEl,
+      handleInvertSelection,
+    });
     render(<MultiSelectDropdown {...defaultProps} showSelectAll />);
     fireEvent.click(screen.getByTestId('multi-select-dropdown-invert'));
     expect(handleInvertSelection).toHaveBeenCalled();
