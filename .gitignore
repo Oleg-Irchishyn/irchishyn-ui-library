@@ -5,3 +5,8 @@ storybook-static
 *.log
 coverage
 
+# Playwright
+playwright-report/
+e2e-results/
+test-results/
+

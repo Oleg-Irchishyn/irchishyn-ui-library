@@ -25,6 +25,10 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage && node scripts/generate-coverage-md.cjs",
+    "test:e2e": "playwright test",
+    "test:e2e:smoke": "playwright test --project=smoke",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed",
     "prepublishOnly": "npm run build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -54,6 +58,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
+    "@playwright/test": "^1.58.2",
     "@storybook/addon-docs": "^8.6.17",
     "@storybook/addon-essentials": "^8.6.17",
     "@storybook/blocks": "^8.6.17",

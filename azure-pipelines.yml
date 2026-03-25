@@ -152,9 +152,56 @@ stages:
             env:
               COVERAGE_MIN: '${{ parameters.coverageMin }}'
 
+  - stage: E2E
+    displayName: 'E2E Tests (Playwright)'
+    dependsOn: Test
+    condition: succeeded()
+
+    jobs:
+      - job: E2EJob
+        displayName: 'Playwright e2e tests'
+        steps:
+          - task: NodeTool@0
+            displayName: 'Use Node $(nodeVersion)'
+            inputs:
+              versionSpec: '$(nodeVersion)'
+
+          - task: Cache@2
+            displayName: 'Cache npm'
+            inputs:
+              key: 'npm | "$(Agent.OS)" | package-lock.json'
+              restoreKeys: |
+                npm | "$(Agent.OS)"
+              path: '$(npmCacheFolder)'
+
+          - task: npmAuthenticate@0
+            displayName: 'Authenticate to npm feed'
+            inputs:
+              workingFile: '.npmrc'
+
+          - script: |
+              npm config set cache "$(npmCacheFolder)" --global
+              npm ci
+            displayName: 'Install dependencies (npm ci)'
+
+          - script: npx playwright install --with-deps chromium
+            displayName: 'Install Playwright browsers'
+
+          - script: npm run test:e2e
+            displayName: 'Run Playwright e2e tests'
+            env:
+              CI: 'true'
+
+          - task: PublishPipelineArtifact@1
+            displayName: 'Publish Playwright report'
+            condition: always()
+            inputs:
+              targetPath: 'e2e-results'
+              artifact: 'playwright-report'
+
   - stage: Release
     displayName: 'Release (version bump + changelog + publish)'
-    dependsOn: Test
+    dependsOn: E2E
     condition: |
       and(
         succeeded(),

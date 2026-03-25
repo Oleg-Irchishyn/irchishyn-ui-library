@@ -44,6 +44,14 @@ export default [
       'no-undef': 'off',
     },
   },
+  {
+    files: ['playwright.config.ts', 'e2e/**/*.ts'],
+    languageOptions: {
+      globals: {
+        process: 'readonly',
+      },
+    },
+  },
 
   // Must be last: turns off rules conflicting with Prettier.
   prettierConfig,

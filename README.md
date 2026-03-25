@@ -99,3 +99,39 @@ npm publish --access public
 ```bash
 npm install @gen2fund/gen2verse-ui-library@latest
 ```
+
+### E2E Tests (Playwright)
+
+Playwright is used for e2e testing against the Storybook dev server.
+
+**Prerequisites (first time only):**
+
+```bash
+npx playwright install chromium
+```
+
+**Run all e2e tests:**
+
+```bash
+npm run test:e2e
+```
+
+**Run smoke tests only:**
+
+```bash
+npm run test:e2e:smoke
+```
+
+**Open interactive UI mode:**
+
+```bash
+npm run test:e2e:ui
+```
+
+**Run with visible browser:**
+
+```bash
+npm run test:e2e:headed
+```
+
+Test results and HTML report are output to `e2e-results/`.
