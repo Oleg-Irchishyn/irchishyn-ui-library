@@ -193,11 +193,11 @@ pnpm run type-check   # No TypeScript errors
 
 **What changed and why**
 
-| Change | Detail |
-|---|---|
-| `package-lock.json` removed | Replaced by `pnpm-lock.yaml` |
-| `packageManager` field added | Enforces pnpm 9 via Corepack / engines check |
-| `engines.pnpm` set | Fails fast if wrong pnpm version is used |
-| `pnpm.overrides` pins `@mui/material: ^5` | Prevents pnpm from auto-resolving MUI v7 (which broke all tests) |
-| `.npmrc` hoist patterns | pnpm strict mode requires explicit hoisting for `@types/*`, `@mui/*`, `@emotion/*`, `react`, `react-dom`, `@storybook/*` |
-| CI pipeline updated | All 4 stages (Build, Test, E2E, Release) use `pnpm install --frozen-lockfile` and `pnpm dlx` |
+| Change                                    | Detail                                                                                                                   |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `package-lock.json` removed               | Replaced by `pnpm-lock.yaml`                                                                                             |
+| `packageManager` field added              | Enforces pnpm 9 via Corepack / engines check                                                                             |
+| `engines.pnpm` set                        | Fails fast if wrong pnpm version is used                                                                                 |
+| `pnpm.overrides` pins `@mui/material: ^5` | Prevents pnpm from auto-resolving MUI v7 (which broke all tests)                                                         |
+| `.npmrc` hoist patterns                   | pnpm strict mode requires explicit hoisting for `@types/*`, `@mui/*`, `@emotion/*`, `react`, `react-dom`, `@storybook/*` |
+| CI pipeline updated                       | All 4 stages (Build, Test, E2E, Release) use `pnpm install --frozen-lockfile` and `pnpm dlx`                             |
