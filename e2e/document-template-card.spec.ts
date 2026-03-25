@@ -31,10 +31,6 @@ test.describe('DocumentTemplateCard', () => {
     await expect(page.getByText('Addendum').first()).toBeVisible();
 
     // Click Cover Letter card to select it
-    const coverLetterCard = page
-      .getByText('Cover Letter - Standard.pdf')
-      .locator('xpath=ancestor::*[contains(@class,"MuiPaper") or contains(@class,"MuiCard")][1]');
-    // Use a broader click on the Cover Letter filename area
     await page.getByText('Cover Letter - Standard.pdf').click();
     // After click Cover Letter is selected - card is still visible
     await expect(page.getByText('Cover Letter - Standard.pdf')).toBeVisible();
