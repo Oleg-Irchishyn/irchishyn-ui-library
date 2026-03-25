@@ -19,7 +19,7 @@ parameters:
 
 variables:
   nodeVersion: '22.x'
-  npmCacheFolder: '$(Pipeline.Workspace)/.npm'
+  pnpmStoreDir: '$(Pipeline.Workspace)/.pnpm-store'
   artifactName: 'package'
   runStorybookBuild: 'true'
   enableRelease: 'true'
@@ -37,13 +37,16 @@ stages:
             inputs:
               versionSpec: '$(nodeVersion)'
 
+          - script: npm install -g pnpm@9
+            displayName: 'Install pnpm'
+
           - task: Cache@2
-            displayName: 'Cache npm'
+            displayName: 'Cache pnpm store'
             inputs:
-              key: 'npm | "$(Agent.OS)" | package-lock.json'
+              key: 'pnpm | "$(Agent.OS)" | pnpm-lock.yaml'
               restoreKeys: |
-                npm | "$(Agent.OS)"
-              path: '$(npmCacheFolder)'
+                pnpm | "$(Agent.OS)"
+              path: '$(pnpmStoreDir)'
 
           - task: npmAuthenticate@0
             displayName: 'Aunthenticate to npm feed'
@@ -51,14 +54,14 @@ stages:
               workingFile: '.npmrc'
 
           - script: |
-              npm config set cache "$(npmCacheFolder)" --global
-              npm ci
-            displayName: 'Install dependencies (npm ci)'
+              pnpm config set store-dir $(pnpmStoreDir)
+              pnpm install --frozen-lockfile
+            displayName: 'Install dependencies (pnpm install)'
 
-          - script: npm run build
+          - script: pnpm run build
             displayName: 'Build library (tsup)'
 
-          - script: npm run build-storybook
+          - script: pnpm run build-storybook
             displayName: 'Build Storybook'
             condition: and(succeeded(), eq(variables['runStorybookBuild'], 'true'))
 
@@ -69,7 +72,7 @@ stages:
               Contents: |
                 dist/**
                 package.json
-                package-lock.json
+                pnpm-lock.yaml
                 storybook-static/**
                 README.md
                 CHANGELOG.md
@@ -95,13 +98,16 @@ stages:
             inputs:
               versionSpec: '$(nodeVersion)'
 
+          - script: npm install -g pnpm@9
+            displayName: 'Install pnpm'
+
           - task: Cache@2
-            displayName: 'Cache npm'
+            displayName: 'Cache pnpm store'
             inputs:
-              key: 'npm | "$(Agent.OS)" | package-lock.json'
+              key: 'pnpm | "$(Agent.OS)" | pnpm-lock.yaml'
               restoreKeys: |
-                npm | "$(Agent.OS)"
-              path: '$(npmCacheFolder)'
+                pnpm | "$(Agent.OS)"
+              path: '$(pnpmStoreDir)'
 
           - task: npmAuthenticate@0
             displayName: 'Aunthenticate to npm feed'
@@ -109,17 +115,17 @@ stages:
               workingFile: '.npmrc'
 
           - script: |
-              npm config set cache "$(npmCacheFolder)" --global
-              npm ci
-            displayName: 'Install dependencies (npm ci)'
+              pnpm config set store-dir $(pnpmStoreDir)
+              pnpm install --frozen-lockfile
+            displayName: 'Install dependencies (pnpm install)'
 
-          - script: npm run lint
+          - script: pnpm run lint
             displayName: 'Lint'
 
-          - script: npm run type-check
+          - script: pnpm run type-check
             displayName: 'Typecheck'
 
-          - script: npm run test:coverage
+          - script: pnpm run test:coverage
             displayName: 'Unit tests with coverage'
 
           - task: Bash@3
@@ -166,13 +172,16 @@ stages:
             inputs:
               versionSpec: '$(nodeVersion)'
 
+          - script: npm install -g pnpm@9
+            displayName: 'Install pnpm'
+
           - task: Cache@2
-            displayName: 'Cache npm'
+            displayName: 'Cache pnpm store'
             inputs:
-              key: 'npm | "$(Agent.OS)" | package-lock.json'
+              key: 'pnpm | "$(Agent.OS)" | pnpm-lock.yaml'
               restoreKeys: |
-                npm | "$(Agent.OS)"
-              path: '$(npmCacheFolder)'
+                pnpm | "$(Agent.OS)"
+              path: '$(pnpmStoreDir)'
 
           - task: npmAuthenticate@0
             displayName: 'Authenticate to npm feed'
@@ -180,14 +189,14 @@ stages:
               workingFile: '.npmrc'
 
           - script: |
-              npm config set cache "$(npmCacheFolder)" --global
-              npm ci
-            displayName: 'Install dependencies (npm ci)'
+              pnpm config set store-dir $(pnpmStoreDir)
+              pnpm install --frozen-lockfile
+            displayName: 'Install dependencies (pnpm install)'
 
-          - script: npx playwright install --with-deps chromium
+          - script: pnpm dlx playwright install --with-deps chromium
             displayName: 'Install Playwright browsers'
 
-          - script: npm run test:e2e
+          - script: pnpm run test:e2e
             displayName: 'Run Playwright e2e tests'
             env:
               CI: 'true'
@@ -222,13 +231,16 @@ stages:
             inputs:
               versionSpec: '$(nodeVersion)'
 
+          - script: npm install -g pnpm@9
+            displayName: 'Install pnpm'
+
           - task: Cache@2
-            displayName: 'Cache npm'
+            displayName: 'Cache pnpm store'
             inputs:
-              key: 'npm | "$(Agent.OS)" | package-lock.json'
+              key: 'pnpm | "$(Agent.OS)" | pnpm-lock.yaml'
               restoreKeys: |
-                npm | "$(Agent.OS)"
-              path: '$(npmCacheFolder)'
+                pnpm | "$(Agent.OS)"
+              path: '$(pnpmStoreDir)'
 
           - task: npmAuthenticate@0
             displayName: 'Authenticate with Azure Artifacts (.npmrc)'
@@ -236,12 +248,12 @@ stages:
               workingFile: '.npmrc'
 
           - script: |
-              npm config set cache "$(npmCacheFolder)" --global
-              npm ci
-            displayName: 'Install dependencies (npm ci)'
+              pnpm config set store-dir $(pnpmStoreDir)
+              pnpm install --frozen-lockfile
+            displayName: 'Install dependencies (pnpm install)'
 
           - script: |
-              npx -y \
+              pnpm dlx \
                 -p semantic-release@25.0.3 \
                 -p @semantic-release/changelog@6.0.3 \
                 -p @semantic-release/commit-analyzer@13.0.1 \
