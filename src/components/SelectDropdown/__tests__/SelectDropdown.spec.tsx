@@ -145,6 +145,40 @@ describe('SelectDropdown', () => {
     expect(screen.getByText('No options found')).toBeTruthy();
   });
 
+  it('renders loading spinner when loading=true', () => {
+    const anchorEl = document.createElement('button');
+    useSelectDropdownMock.mockReturnValue({ ...baseHook, isOpen: true, anchorEl });
+    render(<SelectDropdown {...defaultProps} loading />);
+    expect(screen.getByTestId('select-dropdown-loading')).toBeTruthy();
+  });
+
+  it('does not render options when loading=true', () => {
+    const anchorEl = document.createElement('button');
+    useSelectDropdownMock.mockReturnValue({ ...baseHook, isOpen: true, anchorEl });
+    render(<SelectDropdown {...defaultProps} loading />);
+    expect(screen.queryByTestId('select-dropdown-option-fof')).toBeNull();
+    expect(screen.queryByTestId('select-dropdown-option-df')).toBeNull();
+  });
+
+  it('does not render empty state when loading=true', () => {
+    const anchorEl = document.createElement('button');
+    useSelectDropdownMock.mockReturnValue({
+      ...baseHook,
+      isOpen: true,
+      anchorEl,
+      filteredOptions: [],
+    });
+    render(<SelectDropdown {...defaultProps} loading />);
+    expect(screen.queryByText('No options found')).toBeNull();
+  });
+
+  it('does not render loading spinner when loading=false', () => {
+    const anchorEl = document.createElement('button');
+    useSelectDropdownMock.mockReturnValue({ ...baseHook, isOpen: true, anchorEl });
+    render(<SelectDropdown {...defaultProps} loading={false} />);
+    expect(screen.queryByTestId('select-dropdown-loading')).toBeNull();
+  });
+
   it('calls handleOpen when trigger is clicked', () => {
     const handleOpen = vi.fn();
     useSelectDropdownMock.mockReturnValue({ ...baseHook, handleOpen });

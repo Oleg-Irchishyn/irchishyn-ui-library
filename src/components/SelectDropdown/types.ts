@@ -34,6 +34,8 @@ export interface SelectDropdownProps {
   placeholder?: string;
   /** Disables the trigger button */
   disabled?: boolean;
+  /** Shows a loading spinner inside the dropdown list while options are being fetched */
+  loading?: boolean;
   /** Additional MUI sx styles for the root element */
   sx?: SxProps<Theme>;
 }

@@ -128,3 +128,11 @@ export const getSelectDropdownEmptyStateStyles = (): SxProps<Theme> => ({
   textAlign: 'center',
   color: 'text.secondary',
 });
+
+export const getSelectDropdownLoadingStateStyles = (): SxProps<Theme> => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  px: 2,
+  py: 2,
+});

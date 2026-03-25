@@ -1,4 +1,4 @@
-import { Box, ButtonBase, Popover, Typography } from '@mui/material';
+import { Box, ButtonBase, CircularProgress, Popover, Typography } from '@mui/material';
 import { ChevronsUpDown as ChevronsUpDownIcon } from 'lucide-react';
 
 import { Badge } from '../Badge';
@@ -9,6 +9,7 @@ import {
   getSelectDropdownActionsDividerStyles,
   getSelectDropdownEmptyStateStyles,
   getSelectDropdownHeaderStyles,
+  getSelectDropdownLoadingStateStyles,
   getSelectDropdownListStyles,
   getSelectDropdownOptionStyles,
   getSelectDropdownPopoverPaperStyles,
@@ -27,6 +28,7 @@ export const SelectDropdown = ({
   actionButtons = [],
   placeholder = SELECT_DROPDOWN_LABELS.DEFAULT_PLACEHOLDER,
   disabled = false,
+  loading = false,
   sx,
 }: SelectDropdownProps) => {
   const {
@@ -130,7 +132,11 @@ export const SelectDropdown = ({
             aria-label="Options"
             sx={getSelectDropdownListStyles()}
           >
-            {filteredOptions.length === 0 ? (
+            {loading ? (
+              <Box data-testid="select-dropdown-loading" sx={getSelectDropdownLoadingStateStyles()}>
+                <CircularProgress size={20} aria-label={SELECT_DROPDOWN_LABELS.LOADING} />
+              </Box>
+            ) : filteredOptions.length === 0 ? (
               <Box sx={getSelectDropdownEmptyStateStyles()}>
                 <Typography variant="body2">{SELECT_DROPDOWN_LABELS.NO_OPTIONS}</Typography>
               </Box>

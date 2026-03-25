@@ -64,6 +64,7 @@ const meta: Meta<typeof SelectDropdown> = {
   argTypes: {
     onChange: { action: 'changed' },
     disabled: { control: 'boolean' },
+    loading: { control: 'boolean' },
     placeholder: { control: 'text' },
     searchPlaceholder: { control: 'text' },
   },
@@ -73,6 +74,7 @@ const meta: Meta<typeof SelectDropdown> = {
     placeholder: 'Select a driver report...',
     searchPlaceholder: 'Search driver reports...',
     disabled: false,
+    loading: false,
   },
 };
 
@@ -143,6 +145,22 @@ export const NoBadges: Story = {
     value: null,
     placeholder: 'Select a fund...',
     searchPlaceholder: 'Search funds...',
+  },
+};
+
+export const Loading: Story = {
+  name: 'Loading',
+  render: (args) => <InteractiveRenderer {...args} />,
+  args: {
+    value: null,
+    loading: true,
+    actionButtons: [
+      {
+        label: 'Refresh List',
+        icon: <RefreshCwIcon size={14} />,
+        onClick: action('onRefreshClick'),
+      },
+    ],
   },
 };
 
