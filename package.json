@@ -29,7 +29,7 @@
     "test:e2e:smoke": "playwright test --project=smoke",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:headed": "playwright test --headed",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "pnpm run build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier . --write",
@@ -44,8 +44,15 @@
     "react": ">=18",
     "react-dom": ">=18"
   },
+  "packageManager": "pnpm@9.15.9",
+  "pnpm": {
+    "overrides": {
+      "@mui/material": "^5"
+    }
+  },
   "engines": {
-    "node": "^22.14.0 || >=24.10.0"
+    "node": "^22.14.0 || >=24.10.0",
+    "pnpm": ">=9.0.0"
   },
   "dependencies": {
     "@gen2fund/platform.style": "^0.2.0",
