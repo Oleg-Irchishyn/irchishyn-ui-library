@@ -1,3 +1,10 @@
+## [1.8.1](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.8.0...v1.8.1) (2026-03-25)
+
+
+### Bug Fixes
+
+* [Issue-13012]: [FE] Add loading state to SelectDropdown ([6107e0a](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/6107e0a7124006497b898a5a4d1c757649dd617d)), closes [#13012](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/13012)
+
 # [1.8.0](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.7.0...v1.8.0) (2026-03-24)
 
 
