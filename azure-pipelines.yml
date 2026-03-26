@@ -182,11 +182,9 @@ stages:
 
           - task: SonarQubeAnalyze@7
             displayName: 'SonarQube Analysis'
-            condition: ne(variables['Build.Reason'], 'PullRequest')
 
           - task: SonarQubePublish@7
             displayName: 'SonarQube Quality Gate'
-            condition: ne(variables['Build.Reason'], 'PullRequest')
             inputs:
               pollingTimeoutSec: '300'
 
