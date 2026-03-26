@@ -132,7 +132,7 @@ Every component, hook, util, styles file, and provider must have a co-located `_
 | Functions  | ≥ 97%  |
 | Lines      | ≥ 96%  |
 
-Run: `npm run test:coverage` — HTML report at `coverage/index.html`.
+Run: `pnpm run test:coverage` — HTML report at `coverage/index.html`.
 
 ### Testing patterns
 
@@ -268,6 +268,6 @@ import { ComponentName } from '@gen2fund/gen2verse-ui-library';
 - [ ] Shared hooks/utils are in `src/hooks/` or `src/utils/`
 - [ ] New providers are in `src/providers/` with unit tests
 - [ ] Every modified file has an updated `__tests__/` spec
-- [ ] Coverage targets still met (`npm run test:coverage`)
+- [ ] Coverage targets still met (`pnpm run test:coverage`)
 - [ ] Stories cover all meaningful states and feature variants
 - [ ] Docs MDX exists with `<Title>`, import snippet, quick start, `<Canvas>` per story, and `<ArgTypes>`

@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const BASE = (id: string) =>
-  `/iframe.html?id=components-historyaudittrail--${id}&viewMode=story`;
+const BASE = (id: string) => `/iframe.html?id=components-historyaudittrail--${id}&viewMode=story`;
 
 test.describe('HistoryAuditTrail', () => {
   test('Default renders "Activity History" title and at least one event @smoke', async ({
@@ -24,7 +23,9 @@ test.describe('HistoryAuditTrail', () => {
   test('Loading renders loading indicator', async ({ page }) => {
     await page.goto(BASE('loading'));
     // Loading spinner or progress indicator present
-    await expect(page.locator('[role="progressbar"], .MuiCircularProgress-root').first()).toBeVisible();
+    await expect(
+      page.locator('[role="progressbar"], .MuiCircularProgress-root').first(),
+    ).toBeVisible();
   });
 
   test('Error renders "Audit Trail request failed (401)" message', async ({ page }) => {
@@ -35,9 +36,13 @@ test.describe('HistoryAuditTrail', () => {
   test('ExportEnabled - export button is visible', async ({ page }) => {
     await page.goto(BASE('export-enabled'));
     // Export button - look for download/export icon button
-    await expect(page.getByRole('button').filter({ hasText: /export/i }).or(
-      page.locator('button[aria-label*="export" i], button[aria-label*="download" i]')
-    ).first()).toBeVisible();
+    await expect(
+      page
+        .getByRole('button')
+        .filter({ hasText: /export/i })
+        .or(page.locator('button[aria-label*="export" i], button[aria-label*="download" i]'))
+        .first(),
+    ).toBeVisible();
   });
 
   test('InlineMode - renders in inline mode showing events', async ({ page }) => {

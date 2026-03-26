@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const BASE = (id: string) =>
-  `/iframe.html?id=components-multiselectdropdown--${id}&viewMode=story`;
+const BASE = (id: string) => `/iframe.html?id=components-multiselectdropdown--${id}&viewMode=story`;
 
 test.describe('MultiSelectDropdown', () => {
   test('Default renders dropdown with "All Sponsors" placeholder @smoke', async ({ page }) => {
