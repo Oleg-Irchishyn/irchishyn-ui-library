@@ -39,7 +39,9 @@ test.describe('OutputConfigurationPanel', () => {
     await expect(pdfCheckbox).toBeChecked();
   });
 
-  test('FileSplittingSectionStandalone - radio buttons for split mode visible', async ({ page }) => {
+  test('FileSplittingSectionStandalone - radio buttons for split mode visible', async ({
+    page,
+  }) => {
     await page.goto(BASE('file-splitting-section-standalone'));
     await expect(page.getByRole('radio').first()).toBeVisible();
     await expect(page.getByText(/Consolidated File/i)).toBeVisible();

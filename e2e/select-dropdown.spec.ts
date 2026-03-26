@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const BASE = (id: string) =>
-  `/iframe.html?id=components-selectdropdown--${id}&viewMode=story`;
+const BASE = (id: string) => `/iframe.html?id=components-selectdropdown--${id}&viewMode=story`;
 
 test.describe('SelectDropdown', () => {
   test('Default renders dropdown with "Select a driver report..." placeholder @smoke', async ({

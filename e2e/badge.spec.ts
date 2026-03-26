@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const BASE = (id: string) =>
-  `/iframe.html?id=components-badge--${id}&viewMode=story`;
+const BASE = (id: string) => `/iframe.html?id=components-badge--${id}&viewMode=story`;
 
 test.describe('Badge', () => {
   test('Default renders "Capital Call" badge @smoke', async ({ page }) => {

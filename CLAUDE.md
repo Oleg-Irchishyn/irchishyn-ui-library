@@ -2,6 +2,26 @@
 
 These rules apply to **every session**. Follow them for all new components and when modifying existing ones.
 
+## Development Commands
+
+```bash
+pnpm install                  # install dependencies
+pnpm run dev                  # start Storybook dev server (http://localhost:6006)
+pnpm run build                # build library → dist/
+pnpm run test                 # run unit tests (Vitest)
+pnpm run test:watch           # unit tests in watch mode
+pnpm run test:coverage        # unit tests + coverage report → coverage/index.html
+pnpm run test:e2e             # run all Playwright e2e tests
+pnpm run test:e2e:smoke       # smoke tests only
+pnpm run test:e2e:ui          # Playwright interactive UI mode
+pnpm run type-check           # TypeScript type check (no emit)
+pnpm run lint                 # ESLint
+pnpm run format               # Prettier (write)
+pnpm run build-storybook      # build static Storybook → storybook-static/
+```
+
+---
+
 ## Reference implementation
 
 **`src/components/HistoryAuditTrail`** is the canonical example. Study it before building or refactoring anything.
@@ -132,7 +152,7 @@ Every component, hook, util, styles file, and provider must have a co-located `_
 | Functions  | ≥ 97%  |
 | Lines      | ≥ 96%  |
 
-Run: `npm run test:coverage` — HTML report at `coverage/index.html`.
+Run: `pnpm run test:coverage` — HTML report at `coverage/index.html`.
 
 ### Testing patterns
 
@@ -173,9 +193,9 @@ Cover: default state, loading, empty, error, and all significant conditional bra
 
 ---
 
-## 7 — Storybook
+## 7 — Storybook and E2E tests
 
-Every component must have both a stories file and a docs MDX file.
+Every component must have a stories file, a docs MDX file, and an E2E spec file.
 
 ### `ComponentName.stories.tsx`
 
@@ -212,6 +232,33 @@ export const Default: Story = { args: { items: sampleItems } };
 export const Empty: Story = { args: { items: [] } };
 export const Loading: Story = { args: { items: [], loading: true } };
 export const Error: Story = { args: { items: [], error: 'Something went wrong' } };
+```
+
+### `e2e/component-name.spec.ts`
+
+Each component must have a Playwright spec in `e2e/`. Tag smoke tests with `@smoke`.
+
+- At minimum, cover `Default` and any state variants that have a story (`Disabled`, `Error`, `Loading`, etc.)
+- Use `@smoke` on the 1–2 most critical assertions so they run in the fast smoke pass
+- Use the same `iframe.html?id=components-componentname--story-name` URL pattern
+
+```ts
+import { test, expect } from '@playwright/test';
+
+const BASE = (id: string) =>
+  `/iframe.html?id=components-mycomponent--${id}&viewMode=story`;
+
+test.describe('MyComponent', () => {
+  test('Default renders correctly @smoke', async ({ page }) => {
+    await page.goto(BASE('default'));
+    await expect(page.getByText('Expected text')).toBeVisible();
+  });
+
+  test('Disabled state shows disabled button @smoke', async ({ page }) => {
+    await page.goto(BASE('disabled'));
+    await expect(page.getByRole('button', { name: /action/i })).toBeDisabled();
+  });
+});
 ```
 
 ### `ComponentName.docs.mdx`
@@ -255,6 +302,22 @@ import { ComponentName } from '@gen2fund/gen2verse-ui-library';
 
 ---
 
+## PR naming conventions
+
+PR titles are parsed by **semantic-release** (see `azure-pipelines.yml` Release stage) to automatically bump the `@gen2fund/gen2verse-ui-library` package version on every merge to `main`. Getting the prefix wrong means the wrong version is published — or no release happens at all.
+
+| Type    | Format                                        | Example                                              | Version bump |
+| ------- | --------------------------------------------- | ---------------------------------------------------- | ------------ |
+| Feature | `feat: [TASK]: [FE-1111]: Description`        | `feat: [TASK]: [FE-2341]: Add DateRangePicker`       | **minor**    |
+| Bug fix | `fix: [Issue-1111]: [FE] Description`         | `fix: [Issue-4412]: [FE] Fix disabled Browse button` | **patch**    |
+
+**Rules:**
+- Always start with `feat:` or `fix:` — semantic-release keys off this prefix
+- Include the ticket/issue reference so the changelog is traceable
+- Breaking changes: add `BREAKING CHANGE:` in the PR body (not the title) to trigger a **major** bump
+
+---
+
 ## Checklist before marking a task done
 
 - [ ] Component is pure — no logic, only JSX and a hook call
@@ -268,6 +331,11 @@ import { ComponentName } from '@gen2fund/gen2verse-ui-library';
 - [ ] Shared hooks/utils are in `src/hooks/` or `src/utils/`
 - [ ] New providers are in `src/providers/` with unit tests
 - [ ] Every modified file has an updated `__tests__/` spec
-- [ ] Coverage targets still met (`npm run test:coverage`)
+- [ ] Coverage targets still met (`pnpm run test:coverage`)
 - [ ] Stories cover all meaningful states and feature variants
 - [ ] Docs MDX exists with `<Title>`, import snippet, quick start, `<Canvas>` per story, and `<ArgTypes>`
+- [ ] E2E spec exists in `e2e/` covering Default and key variant stories, with `@smoke` tags on critical assertions
+- [ ] `pnpm run test:e2e:smoke` passes
+- [ ] `pnpm run lint` passes with no errors
+- [ ] `pnpm run type-check` passes with no errors
+- [ ] `pnpm run format` applied (no unformatted files)

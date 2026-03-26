@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const BASE = (id: string) =>
-  `/iframe.html?id=components-alert--${id}&viewMode=story`;
+const BASE = (id: string) => `/iframe.html?id=components-alert--${id}&viewMode=story`;
 
 test.describe('Alert', () => {
   test('renders default info alert with title "Heads up" @smoke', async ({ page }) => {

@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const BASE = (id: string) =>
-  `/iframe.html?id=components-datetextselect--${id}&viewMode=story`;
+const BASE = (id: string) => `/iframe.html?id=components-datetextselect--${id}&viewMode=story`;
 
 test.describe('DateTextSelect', () => {
   test('Default renders component with "Due Date Type" label, date input and select dropdown @smoke', async ({
