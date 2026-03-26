@@ -19,6 +19,7 @@ parameters:
 
 variables:
   nodeVersion: '22.x'
+  pnpmVersion: '9'
   pnpmStoreDir: '$(Pipeline.Workspace)/.pnpm-store'
   artifactName: 'package'
   runStorybookBuild: 'true'
@@ -37,8 +38,10 @@ stages:
             inputs:
               versionSpec: '$(nodeVersion)'
 
-          - script: npm install -g pnpm@9
-            displayName: 'Install pnpm'
+          - script: |
+              corepack enable
+              corepack prepare pnpm@$(pnpmVersion) --activate
+            displayName: 'Install pnpm via corepack'
 
           - task: Cache@2
             displayName: 'Cache pnpm store'
@@ -98,8 +101,10 @@ stages:
             inputs:
               versionSpec: '$(nodeVersion)'
 
-          - script: npm install -g pnpm@9
-            displayName: 'Install pnpm'
+          - script: |
+              corepack enable
+              corepack prepare pnpm@$(pnpmVersion) --activate
+            displayName: 'Install pnpm via corepack'
 
           - task: Cache@2
             displayName: 'Cache pnpm store'
@@ -196,8 +201,10 @@ stages:
             inputs:
               versionSpec: '$(nodeVersion)'
 
-          - script: npm install -g pnpm@9
-            displayName: 'Install pnpm'
+          - script: |
+              corepack enable
+              corepack prepare pnpm@$(pnpmVersion) --activate
+            displayName: 'Install pnpm via corepack'
 
           - task: Cache@2
             displayName: 'Cache pnpm store'
@@ -255,8 +262,10 @@ stages:
             inputs:
               versionSpec: '$(nodeVersion)'
 
-          - script: npm install -g pnpm@9
-            displayName: 'Install pnpm'
+          - script: |
+              corepack enable
+              corepack prepare pnpm@$(pnpmVersion) --activate
+            displayName: 'Install pnpm via corepack'
 
           - task: Cache@2
             displayName: 'Cache pnpm store'
