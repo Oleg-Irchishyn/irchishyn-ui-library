@@ -1,7 +1,8 @@
 import { Box, Button, Link, Popover, Tab, Tabs, TextField, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { FileEdit, FileInput, Plus, RotateCcw } from 'lucide-react';
 
+import { ActionButton } from '../ActionButton';
 import { Badge } from '../Badge';
 import {
   ADD_BUTTON_LABEL,
@@ -36,7 +37,6 @@ import {
   getFileNamingVariableTagStyles,
   getFileNamingStaticTagStyles,
   getFileNamingResetLinkStyles,
-  getFileNamingAddButtonStyles,
 } from './FileNamingSection.styles';
 import { getTokenDisplayLabel } from './FileNamingSection.utils';
 import type { AddSegmentTab, FileNamingSectionProps, FileNamingVariable } from './types';
@@ -54,9 +54,12 @@ export function FileNamingSection({
   const [addAnchorEl, setAddAnchorEl] = useState<null | HTMLElement>(null);
   const [addSegmentTab, setAddSegmentTab] = useState<AddSegmentTab>(ADD_SEGMENT_TAB_VARIABLE);
   const [newStaticText, setNewStaticText] = useState('');
+  const addButtonRef = useRef<HTMLSpanElement>(null);
 
-  const handleAddClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAddAnchorEl(event.currentTarget);
+  const handleAddClick = () => {
+    if (addButtonRef.current) {
+      setAddAnchorEl(addButtonRef.current);
+    }
     setAddSegmentTab(ADD_SEGMENT_TAB_VARIABLE);
     setNewStaticText('');
   };
@@ -172,19 +175,21 @@ export function FileNamingSection({
               }
             />
           ))}
-          <Button
-            variant="outlined"
-            size="small"
+          <span
+            ref={addButtonRef}
             onClick={handleAddClick}
+            data-testid="file-naming-add-button"
             aria-haspopup="dialog"
             aria-expanded={Boolean(addAnchorEl)}
-            aria-label={`${ADD_BUTTON_LABEL} segment`}
-            data-testid="file-naming-add-button"
-            startIcon={<Plus size={14} aria-hidden />}
-            sx={getFileNamingAddButtonStyles()}
+            style={{ display: 'inline-flex' }}
           >
-            {ADD_BUTTON_LABEL}
-          </Button>
+            <ActionButton
+              variant="secondary"
+              label={ADD_BUTTON_LABEL}
+              icon={<Plus size={14} aria-hidden />}
+              size="small"
+            />
+          </span>
         </Box>
       </Box>
 
