@@ -25,7 +25,7 @@ describe('DatePicker utils', () => {
   });
 
   it('formats date labels for date and null values', () => {
-    expect(toDateLabel(new Date('2026-03-09T00:00:00.000Z'))).toBe('03/09/2026');
+    expect(toDateLabel(new Date('2026-03-09T12:00:00.000Z'))).toBe('03/09/2026');
     expect(toDateLabel(null)).toBe('');
   });
 
@@ -72,8 +72,8 @@ describe('DatePicker utils', () => {
 
     const rangeLabel = getQuickSelectTriggerLabel(
       {
-        from: new Date('2026-01-01T00:00:00.000Z'),
-        to: new Date('2026-01-31T00:00:00.000Z'),
+        from: new Date('2026-01-01T12:00:00.000Z'),
+        to: new Date('2026-01-31T12:00:00.000Z'),
       },
       'Select date range',
     );
@@ -125,8 +125,8 @@ describe('DatePicker utils', () => {
   });
 
   it('builds validation messages for custom format and min/max paths', () => {
-    const minDate = new Date('2026-01-01T00:00:00.000Z');
-    const maxDate = new Date('2026-12-31T00:00:00.000Z');
+    const minDate = new Date('2026-01-01T12:00:00.000Z');
+    const maxDate = new Date('2026-12-31T12:00:00.000Z');
 
     expect(getDatePickerValidationMessage('invalidDate', minDate, maxDate, 'dd/MM/yyyy')).toBe(
       'Enter a valid date (DD/MM/YYYY)',

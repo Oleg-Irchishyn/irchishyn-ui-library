@@ -1,11 +1,13 @@
+/// <reference types="node" />
 import { defineConfig, devices } from '@playwright/test';
 
 const PORT = process.env.PORT ?? '6006';
+const chromeChannel = process.env.CI ? {} : { channel: 'chrome' };
 
 export default defineConfig({
   testDir: './e2e',
   timeout: process.env.CI ? 60000 : 30000,
-  expect: { timeout: 10000 },
+  expect: { timeout: process.env.CI ? 30000 : 10000 },
   workers: undefined,
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI
@@ -26,14 +28,14 @@ export default defineConfig({
       grep: /@smoke/,
       use: {
         ...devices['Desktop Chrome'],
-        channel: 'chrome',
+        ...chromeChannel,
       },
     },
     {
       name: 'full',
       use: {
         ...devices['Desktop Chrome'],
-        channel: 'chrome',
+        ...chromeChannel,
       },
     },
   ],

@@ -36,6 +36,12 @@ export default defineConfig({
         '**/constants.ts',
         '**/*.constants.ts',
       ],
+      thresholds: {
+        statements: 80,
+        branches: 80,
+        functions: 80,
+        lines: 80,
+      },
     },
   },
 });

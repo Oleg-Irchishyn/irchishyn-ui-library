@@ -245,8 +245,7 @@ Each component must have a Playwright spec in `e2e/`. Tag smoke tests with `@smo
 ```ts
 import { test, expect } from '@playwright/test';
 
-const BASE = (id: string) =>
-  `/iframe.html?id=components-mycomponent--${id}&viewMode=story`;
+const BASE = (id: string) => `/iframe.html?id=components-mycomponent--${id}&viewMode=story`;
 
 test.describe('MyComponent', () => {
   test('Default renders correctly @smoke', async ({ page }) => {
@@ -306,12 +305,13 @@ import { ComponentName } from '@gen2fund/gen2verse-ui-library';
 
 PR titles are parsed by **semantic-release** (see `azure-pipelines.yml` Release stage) to automatically bump the `@gen2fund/gen2verse-ui-library` package version on every merge to `main`. Getting the prefix wrong means the wrong version is published — or no release happens at all.
 
-| Type    | Format                                        | Example                                              | Version bump |
-| ------- | --------------------------------------------- | ---------------------------------------------------- | ------------ |
-| Feature | `feat: [TASK]: [FE-1111]: Description`        | `feat: [TASK]: [FE-2341]: Add DateRangePicker`       | **minor**    |
-| Bug fix | `fix: [Issue-1111]: [FE] Description`         | `fix: [Issue-4412]: [FE] Fix disabled Browse button` | **patch**    |
+| Type    | Format                                 | Example                                              | Version bump |
+| ------- | -------------------------------------- | ---------------------------------------------------- | ------------ |
+| Feature | `feat: [TASK]: [FE-1111]: Description` | `feat: [TASK]: [FE-2341]: Add DateRangePicker`       | **minor**    |
+| Bug fix | `fix: [Issue-1111]: [FE] Description`  | `fix: [Issue-4412]: [FE] Fix disabled Browse button` | **patch**    |
 
 **Rules:**
+
 - Always start with `feat:` or `fix:` — semantic-release keys off this prefix
 - Include the ticket/issue reference so the changelog is traceable
 - Breaking changes: add `BREAKING CHANGE:` in the PR body (not the title) to trigger a **major** bump

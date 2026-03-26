@@ -9,7 +9,7 @@ pr:
       - main
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: 'az-agent'
 
 parameters:
   - name: coverageMin
@@ -19,6 +19,7 @@ parameters:
 
 variables:
   nodeVersion: '22.x'
+  pnpmVersion: '9'
   pnpmStoreDir: '$(Pipeline.Workspace)/.pnpm-store'
   artifactName: 'package'
   runStorybookBuild: 'true'
@@ -37,8 +38,10 @@ stages:
             inputs:
               versionSpec: '$(nodeVersion)'
 
-          - script: npm install -g pnpm@9
-            displayName: 'Install pnpm'
+          - script: |
+              corepack enable
+              corepack prepare pnpm@$(pnpmVersion) --activate
+            displayName: 'Install pnpm via corepack'
 
           - task: Cache@2
             displayName: 'Cache pnpm store'
@@ -49,7 +52,7 @@ stages:
               path: '$(pnpmStoreDir)'
 
           - task: npmAuthenticate@0
-            displayName: 'Aunthenticate to npm feed'
+            displayName: 'Authenticate to npm feed'
             inputs:
               workingFile: '.npmrc'
 
@@ -98,8 +101,10 @@ stages:
             inputs:
               versionSpec: '$(nodeVersion)'
 
-          - script: npm install -g pnpm@9
-            displayName: 'Install pnpm'
+          - script: |
+              corepack enable
+              corepack prepare pnpm@$(pnpmVersion) --activate
+            displayName: 'Install pnpm via corepack'
 
           - task: Cache@2
             displayName: 'Cache pnpm store'
@@ -110,7 +115,7 @@ stages:
               path: '$(pnpmStoreDir)'
 
           - task: npmAuthenticate@0
-            displayName: 'Aunthenticate to npm feed'
+            displayName: 'Authenticate to npm feed'
             inputs:
               workingFile: '.npmrc'
 
@@ -118,6 +123,23 @@ stages:
               pnpm config set store-dir $(pnpmStoreDir)
               pnpm install --frozen-lockfile
             displayName: 'Install dependencies (pnpm install)'
+
+          - task: SonarQubePrepare@7
+            displayName: 'SonarQube Prepare'
+            condition: ne(variables['Build.Reason'], 'PullRequest')
+            inputs:
+              SonarQube: 'SonarQube server'
+              scannerMode: 'cli'
+              configMode: 'manual'
+              cliProjectKey: 'gen2verse-ui-library'
+              cliProjectName: 'Gen2Verse UI Library'
+              extraProperties: |
+                sonar.sources=src
+                sonar.tests=src
+                sonar.test.inclusions=**/*.spec.ts,**/*.spec.tsx
+                sonar.exclusions=**/*.spec.ts,**/*.spec.tsx,**/__tests__/**,**/*.stories.ts,**/*.stories.tsx
+                sonar.javascript.lcov.reportPaths=coverage/lcov.info
+                sonar.typescript.lcov.reportPaths=coverage/lcov.info
 
           - script: pnpm run lint
             displayName: 'Lint'
@@ -158,6 +180,16 @@ stages:
             env:
               COVERAGE_MIN: '${{ parameters.coverageMin }}'
 
+          - task: SonarQubeAnalyze@7
+            displayName: 'SonarQube Analysis'
+            condition: ne(variables['Build.Reason'], 'PullRequest')
+
+          - task: SonarQubePublish@7
+            displayName: 'SonarQube Quality Gate'
+            condition: ne(variables['Build.Reason'], 'PullRequest')
+            inputs:
+              pollingTimeoutSec: '300'
+
   - stage: E2E
     displayName: 'E2E Tests (Playwright)'
     dependsOn: Test
@@ -172,8 +204,10 @@ stages:
             inputs:
               versionSpec: '$(nodeVersion)'
 
-          - script: npm install -g pnpm@9
-            displayName: 'Install pnpm'
+          - script: |
+              corepack enable
+              corepack prepare pnpm@$(pnpmVersion) --activate
+            displayName: 'Install pnpm via corepack'
 
           - task: Cache@2
             displayName: 'Cache pnpm store'
@@ -193,7 +227,11 @@ stages:
               pnpm install --frozen-lockfile
             displayName: 'Install dependencies (pnpm install)'
 
-          - script: pnpm dlx playwright install --with-deps chromium
+          - script: |
+              sudo dnf install -y atk at-spi2-atk cups-libs libXcomposite libXdamage libXrandr mesa-libgbm pango alsa-lib nss libdrm libxkbcommon
+            displayName: 'Install Chromium system dependencies (RHEL)'
+
+          - script: pnpm dlx playwright install chromium
             displayName: 'Install Playwright browsers'
 
           - script: pnpm run test:e2e
@@ -231,8 +269,10 @@ stages:
             inputs:
               versionSpec: '$(nodeVersion)'
 
-          - script: npm install -g pnpm@9
-            displayName: 'Install pnpm'
+          - script: |
+              corepack enable
+              corepack prepare pnpm@$(pnpmVersion) --activate
+            displayName: 'Install pnpm via corepack'
 
           - task: Cache@2
             displayName: 'Cache pnpm store'

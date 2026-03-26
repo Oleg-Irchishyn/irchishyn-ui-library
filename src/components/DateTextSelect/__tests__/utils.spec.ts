@@ -12,8 +12,8 @@ describe('DateTextSelect utils', () => {
   });
 
   it('returns min and max date messages', () => {
-    const minDate = new Date('2026-01-01T00:00:00.000Z');
-    const maxDate = new Date('2026-12-31T00:00:00.000Z');
+    const minDate = new Date('2026-01-01T12:00:00.000Z');
+    const maxDate = new Date('2026-12-31T12:00:00.000Z');
 
     expect(getDateValidationMessage('minDate', false, minDate, maxDate)).toContain('01/01/2026');
     expect(getDateValidationMessage('maxDate', false, minDate, maxDate)).toContain('12/31/2026');
