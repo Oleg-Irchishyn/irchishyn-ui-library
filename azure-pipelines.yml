@@ -49,7 +49,7 @@ stages:
               path: '$(pnpmStoreDir)'
 
           - task: npmAuthenticate@0
-            displayName: 'Aunthenticate to npm feed'
+            displayName: 'Authenticate to npm feed'
             inputs:
               workingFile: '.npmrc'
 
@@ -110,7 +110,7 @@ stages:
               path: '$(pnpmStoreDir)'
 
           - task: npmAuthenticate@0
-            displayName: 'Aunthenticate to npm feed'
+            displayName: 'Authenticate to npm feed'
             inputs:
               workingFile: '.npmrc'
 
@@ -118,6 +118,22 @@ stages:
               pnpm config set store-dir $(pnpmStoreDir)
               pnpm install --frozen-lockfile
             displayName: 'Install dependencies (pnpm install)'
+
+          - task: SonarQubePrepare@7
+            displayName: 'SonarQube Prepare'
+            inputs:
+              SonarQube: 'SonarQube server'
+              scannerMode: 'cli'
+              configMode: 'manual'
+              cliProjectKey: 'gen2verse-ui-library'
+              cliProjectName: 'Gen2Verse UI Library'
+              extraProperties: |
+                sonar.sources=src
+                sonar.tests=src
+                sonar.test.inclusions=**/*.spec.ts,**/*.spec.tsx
+                sonar.exclusions=**/*.spec.ts,**/*.spec.tsx,**/__tests__/**,**/*.stories.ts,**/*.stories.tsx
+                sonar.javascript.lcov.reportPaths=coverage/lcov.info
+                sonar.typescript.lcov.reportPaths=coverage/lcov.info
 
           - script: pnpm run lint
             displayName: 'Lint'
@@ -157,6 +173,14 @@ stages:
                 PY
             env:
               COVERAGE_MIN: '${{ parameters.coverageMin }}'
+
+          - task: SonarQubeAnalyze@7
+            displayName: 'SonarQube Analysis'
+
+          - task: SonarQubePublish@7
+            displayName: 'SonarQube Quality Gate'
+            inputs:
+              pollingTimeoutSec: '300'
 
   - stage: E2E
     displayName: 'E2E Tests (Playwright)'
