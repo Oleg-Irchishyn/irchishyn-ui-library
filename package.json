@@ -56,10 +56,10 @@
   },
   "dependencies": {
     "@gen2fund/platform.style": "^0.2.0",
-    "@mui/x-date-pickers": "^8.27.2",
-    "ag-grid-community": "^34.2.0",
-    "ag-grid-enterprise": "^34.3.1",
-    "ag-grid-react": "^34.2.0",
+    "@mui/x-date-pickers": "8.27.2",
+    "ag-grid-community": "34.3.1",
+    "ag-grid-enterprise": "34.3.1",
+    "ag-grid-react": "34.3.1",
     "date-fns": "^4.1.0",
     "lucide-react": "^0.563.0"
   },
