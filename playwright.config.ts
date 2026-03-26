@@ -1,6 +1,8 @@
+/// <reference types="node" />
 import { defineConfig, devices } from '@playwright/test';
 
 const PORT = process.env.PORT ?? '6006';
+const chromeChannel = process.env.CI ? {} : { channel: 'chrome' };
 
 export default defineConfig({
   testDir: './e2e',
@@ -26,14 +28,14 @@ export default defineConfig({
       grep: /@smoke/,
       use: {
         ...devices['Desktop Chrome'],
-        channel: 'chrome',
+        ...chromeChannel,
       },
     },
     {
       name: 'full',
       use: {
         ...devices['Desktop Chrome'],
-        channel: 'chrome',
+        ...chromeChannel,
       },
     },
   ],
