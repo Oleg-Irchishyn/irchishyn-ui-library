@@ -77,8 +77,8 @@ describe('useDateTextSelect', () => {
   });
 
   it('shows min/max range error messages', () => {
-    const minDate = new Date('2026-01-01T00:00:00.000Z');
-    const maxDate = new Date('2026-12-31T00:00:00.000Z');
+    const minDate = new Date('2026-01-01T12:00:00.000Z');
+    const maxDate = new Date('2026-12-31T12:00:00.000Z');
     const { result } = renderHook(() =>
       useDateTextSelect({
         dateValue: null,
