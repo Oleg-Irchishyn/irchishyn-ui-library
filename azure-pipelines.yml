@@ -228,7 +228,7 @@ stages:
             displayName: 'Install dependencies (pnpm install)'
 
           - script: |
-              sudo dnf install -y atk at-spi2-atk cups-libs libXcomposite libXdamage libXrandr mesa-libgbm pango alsa-lib nss libdrm libxkbcommon
+              sudo dnf install -y atk at-spi2-atk cups-libs libXcomposite libXdamage libXrandr mesa-libgbm pango alsa-lib nss libdrm libxkbcommon || true
             displayName: 'Install Chromium system dependencies (RHEL)'
 
           - script: pnpm dlx playwright install chromium
