@@ -253,7 +253,8 @@ stages:
             displayName: 'Install dependencies (pnpm install)'
 
           - script: |
-              pnpm dlx \
+              npx \
+                --yes \
                 --package semantic-release@25.0.3 \
                 --package @semantic-release/changelog@6.0.3 \
                 --package @semantic-release/commit-analyzer@13.0.1 \
