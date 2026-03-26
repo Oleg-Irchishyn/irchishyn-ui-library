@@ -227,7 +227,11 @@ stages:
               pnpm install --frozen-lockfile
             displayName: 'Install dependencies (pnpm install)'
 
-          - script: pnpm dlx playwright install --with-deps chromium
+          - script: |
+              sudo dnf install -y atk at-spi2-atk cups-libs libXcomposite libXdamage libXrandr mesa-libgbm pango alsa-lib nss libdrm libxkbcommon
+            displayName: 'Install Chromium system dependencies (RHEL)'
+
+          - script: pnpm dlx playwright install chromium
             displayName: 'Install Playwright browsers'
 
           - script: pnpm run test:e2e
