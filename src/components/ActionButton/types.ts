@@ -9,6 +9,7 @@ export interface ActionButtonProps {
   icon?: ReactNode;
   size?: ActionButtonSize;
   disabled?: boolean;
+  loading?: boolean;
   onClick?: () => void;
   tooltip?: string;
 }

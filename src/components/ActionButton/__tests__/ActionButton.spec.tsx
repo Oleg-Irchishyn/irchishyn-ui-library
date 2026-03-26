@@ -41,6 +41,30 @@ describe('ActionButton', () => {
       expect(onClick).toHaveBeenCalledTimes(1);
     });
 
+    it('fires onClick when Enter key is pressed while focused', () => {
+      const onClick = vi.fn();
+      render(<ActionButton label="Save" onClick={onClick} />);
+
+      fireEvent.keyDown(screen.getByTestId('action-button'), { key: 'Enter' });
+      expect(onClick).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not fire onClick on Enter when disabled', () => {
+      const onClick = vi.fn();
+      render(<ActionButton label="Save" disabled onClick={onClick} />);
+
+      fireEvent.keyDown(screen.getByTestId('action-button'), { key: 'Enter' });
+      expect(onClick).not.toHaveBeenCalled();
+    });
+
+    it('does not fire onClick on Enter when loading', () => {
+      const onClick = vi.fn();
+      render(<ActionButton label="Save" loading onClick={onClick} />);
+
+      fireEvent.keyDown(screen.getByTestId('action-button'), { key: 'Enter' });
+      expect(onClick).not.toHaveBeenCalled();
+    });
+
     it('does not fire onClick when disabled', () => {
       const onClick = vi.fn();
       render(<ActionButton label="Save" disabled onClick={onClick} />);
@@ -60,6 +84,29 @@ describe('ActionButton', () => {
 
       expect(screen.getByTestId('action-button').className).toContain('MuiButton-sizeLarge');
     });
+
+    it('renders CircularProgress spinner when loading', () => {
+      render(
+        <ActionButton label="Save" loading icon={<Plus data-testid="leading-icon" size={16} />} />,
+      );
+
+      expect(screen.getByRole('progressbar')).toBeTruthy();
+      expect(screen.queryByTestId('leading-icon')).toBeNull();
+    });
+
+    it('does not fire onClick when loading', () => {
+      const onClick = vi.fn();
+      render(<ActionButton label="Save" loading onClick={onClick} />);
+
+      fireEvent.click(screen.getByTestId('action-button'));
+      expect(onClick).not.toHaveBeenCalled();
+    });
+
+    it('is disabled when loading', () => {
+      render(<ActionButton label="Save" loading />);
+
+      expect(screen.getByTestId('action-button')).toHaveProperty('disabled', true);
+    });
   });
 
   describe('secondary variant', () => {
@@ -78,12 +125,40 @@ describe('ActionButton', () => {
       expect(onClick).toHaveBeenCalledTimes(1);
     });
 
+    it('fires onClick when Enter key is pressed while focused', () => {
+      const onClick = vi.fn();
+      render(<ActionButton variant="secondary" label="Cancel" onClick={onClick} />);
+
+      fireEvent.keyDown(screen.getByTestId('action-button'), { key: 'Enter' });
+      expect(onClick).toHaveBeenCalledTimes(1);
+    });
+
     it('does not fire onClick when disabled', () => {
       const onClick = vi.fn();
       render(<ActionButton variant="secondary" label="Cancel" disabled onClick={onClick} />);
 
       fireEvent.click(screen.getByTestId('action-button'));
       expect(onClick).not.toHaveBeenCalled();
+    });
+
+    it('renders CircularProgress spinner when loading', () => {
+      render(<ActionButton variant="secondary" label="Cancel" loading />);
+
+      expect(screen.getByRole('progressbar')).toBeTruthy();
+    });
+
+    it('does not fire onClick when loading', () => {
+      const onClick = vi.fn();
+      render(<ActionButton variant="secondary" label="Cancel" loading onClick={onClick} />);
+
+      fireEvent.click(screen.getByTestId('action-button'));
+      expect(onClick).not.toHaveBeenCalled();
+    });
+
+    it('is disabled when loading', () => {
+      render(<ActionButton variant="secondary" label="Cancel" loading />);
+
+      expect(screen.getByTestId('action-button')).toHaveProperty('disabled', true);
     });
   });
 
@@ -123,6 +198,21 @@ describe('ActionButton', () => {
       expect(onClick).toHaveBeenCalledTimes(1);
     });
 
+    it('fires onClick when Enter key is pressed while focused', () => {
+      const onClick = vi.fn();
+      render(
+        <ActionButton
+          variant="icon"
+          icon={<Trash2 size={16} />}
+          tooltip="Delete"
+          onClick={onClick}
+        />,
+      );
+
+      fireEvent.keyDown(screen.getByTestId('action-button-icon'), { key: 'Enter' });
+      expect(onClick).toHaveBeenCalledTimes(1);
+    });
+
     it('does not fire onClick when disabled', () => {
       const onClick = vi.fn();
       render(
@@ -131,6 +221,42 @@ describe('ActionButton', () => {
 
       fireEvent.click(screen.getByTestId('action-button-icon'));
       expect(onClick).not.toHaveBeenCalled();
+    });
+
+    it('renders CircularProgress spinner when loading and hides icon', () => {
+      render(
+        <ActionButton
+          variant="icon"
+          icon={<Trash2 data-testid="icon" size={16} />}
+          tooltip="Delete"
+          loading
+        />,
+      );
+
+      expect(screen.getByRole('progressbar')).toBeTruthy();
+      expect(screen.queryByTestId('icon')).toBeNull();
+    });
+
+    it('does not fire onClick when loading', () => {
+      const onClick = vi.fn();
+      render(
+        <ActionButton
+          variant="icon"
+          icon={<Trash2 size={16} />}
+          tooltip="Delete"
+          loading
+          onClick={onClick}
+        />,
+      );
+
+      fireEvent.click(screen.getByTestId('action-button-icon'));
+      expect(onClick).not.toHaveBeenCalled();
+    });
+
+    it('is disabled when loading', () => {
+      render(<ActionButton variant="icon" icon={<Trash2 size={16} />} tooltip="Delete" loading />);
+
+      expect(screen.getByTestId('action-button-icon')).toHaveProperty('disabled', true);
     });
   });
 });
