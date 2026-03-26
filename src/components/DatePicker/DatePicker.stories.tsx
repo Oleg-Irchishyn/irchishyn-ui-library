@@ -26,9 +26,9 @@ export default meta;
 type Story = StoryObj<typeof DatePicker>;
 
 const SingleDateStory = () => {
-  const [value, setValue] = useState<Date | null>(new Date('2026-04-06T00:00:00.000Z'));
-  const minDate = new Date('2020-01-01T00:00:00.000Z');
-  const maxDate = new Date('2035-12-31T00:00:00.000Z');
+  const [value, setValue] = useState<Date | null>(new Date('2026-04-06T12:00:00.000Z'));
+  const minDate = new Date('2020-01-01T12:00:00.000Z');
+  const maxDate = new Date('2035-12-31T12:00:00.000Z');
 
   return (
     <Stack spacing={1}>
@@ -122,9 +122,9 @@ const ErrorStateStory = () => {
 };
 
 const RangeValidationStory = () => {
-  const [value, setValue] = useState<Date | null>(new Date('2026-06-15T00:00:00.000Z'));
-  const minDate = new Date('2026-01-01T00:00:00.000Z');
-  const maxDate = new Date('2026-12-31T00:00:00.000Z');
+  const [value, setValue] = useState<Date | null>(new Date('2026-06-15T12:00:00.000Z'));
+  const minDate = new Date('2026-01-01T12:00:00.000Z');
+  const maxDate = new Date('2026-12-31T12:00:00.000Z');
 
   return (
     <Stack spacing={1}>
@@ -145,7 +145,7 @@ const RangeValidationStory = () => {
 };
 
 const CustomFormatStory = () => {
-  const [value, setValue] = useState<Date | null>(new Date('2026-04-06T00:00:00.000Z'));
+  const [value, setValue] = useState<Date | null>(new Date('2026-04-06T12:00:00.000Z'));
 
   return (
     <Stack spacing={1}>
@@ -236,7 +236,7 @@ export const Props: Story = {
   args: {
     variant: DATE_PICKER_VARIANTS.SINGLE,
     label: 'Notice Date',
-    value: new Date('2026-04-06T00:00:00.000Z'),
+    value: new Date('2026-04-06T12:00:00.000Z'),
     onChange: () => {},
     placeholder: 'Select Notice Date',
     required: false,

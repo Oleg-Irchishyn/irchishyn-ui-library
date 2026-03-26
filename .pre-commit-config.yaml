@@ -1,0 +1,74 @@
+repos:
+  # Basic file checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-merge-conflict
+      - id: detect-private-key
+      - id: no-commit-to-branch
+        args: ['--branch', 'main']
+
+  # Lint + Unit tests on commit
+  - repo: local
+    hooks:
+      - id: lockfile-check
+        name: pnpm lockfile consistency
+        entry: pnpm install --frozen-lockfile --ignore-scripts
+        language: system
+        pass_filenames: false
+        stages: [pre-commit]
+
+      - id: eslint-staged
+        name: eslint (staged files)
+        entry: npx eslint --ext .ts,.tsx --no-error-on-unmatched-pattern
+        language: system
+        types_or: [ts, tsx]
+        stages: [pre-commit]
+
+      - id: typecheck
+        name: typescript typecheck
+        entry: pnpm run type-check
+        language: system
+        pass_filenames: false
+        stages: [pre-commit]
+
+      - id: vitest-changed
+        name: vitest (changed files)
+        entry: pnpm run test -- --changed --passWithNoTests
+        language: system
+        pass_filenames: false
+        stages: [pre-commit]
+
+      # Smoke E2E on push
+      - id: e2e-smoke
+        name: playwright smoke e2e
+        entry: pnpm run test:e2e:smoke
+        language: system
+        pass_filenames: false
+        stages: [pre-push]
+        always_run: true
+
+  # Conventional commits
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v4.0.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+        args:
+          [
+            'feat',
+            'fix',
+            'chore',
+            'docs',
+            'style',
+            'refactor',
+            'perf',
+            'test',
+            'build',
+            'ci',
+            'revert',
+          ]

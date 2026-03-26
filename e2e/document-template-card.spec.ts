@@ -32,7 +32,7 @@ test.describe('DocumentTemplateCard', () => {
 
     // Click Cover Letter card to select it
     await page.getByText('Cover Letter - Standard.pdf').click();
-    // After click Cover Letter is selected - card is still visible
-    await expect(page.getByText('Cover Letter - Standard.pdf')).toBeVisible();
+    // After click Cover Letter is selected - card is still visible (use .first() because tooltip also contains the filename)
+    await expect(page.getByText('Cover Letter - Standard.pdf').first()).toBeVisible();
   });
 });
