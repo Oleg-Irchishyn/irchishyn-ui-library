@@ -18,6 +18,7 @@ const meta: Meta<typeof ActionButton> = {
       description: 'Button size',
     },
     disabled: { control: 'boolean' },
+    loading: { control: 'boolean' },
     label: { control: 'text' },
     tooltip: { control: 'text' },
   },
@@ -78,5 +79,14 @@ export const Disabled: Story = {
     label: 'New Capital Event',
     icon: <Plus size={16} />,
     disabled: true,
+  },
+};
+
+export const Loading: Story = {
+  name: 'Loading',
+  args: {
+    variant: 'primary',
+    label: 'Saving…',
+    loading: true,
   },
 };

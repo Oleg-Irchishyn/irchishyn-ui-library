@@ -24,6 +24,9 @@ import { ActionButton } from '@gen2fund/gen2verse-ui-library';
 // Primary with leading icon (matches "New Capital Event" design)
 <ActionButton label="New Capital Event" icon={<Plus size={16} />} />
 
+// Primary in loading state — non-interactive, shows spinner
+<ActionButton label="Saving…" loading />
+
 // Secondary
 <ActionButton variant="secondary" label="Cancel" />
 
@@ -39,6 +42,7 @@ import { ActionButton } from '@gen2fund/gen2verse-ui-library';
 <Canvas of={ActionButtonStories.Icon} />
 <Canvas of={ActionButtonStories.AllSizes} />
 <Canvas of={ActionButtonStories.Disabled} />
+<Canvas of={ActionButtonStories.Loading} />
 
 ## Props
 
