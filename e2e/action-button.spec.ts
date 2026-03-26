@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const BASE = (id: string) =>
-  `/iframe.html?id=components-actionbutton--${id}&viewMode=story`;
+const BASE = (id: string) => `/iframe.html?id=components-actionbutton--${id}&viewMode=story`;
 
 test.describe('ActionButton', () => {
   test('PrimaryWithIcon renders "New Capital Event" button @smoke', async ({ page }) => {

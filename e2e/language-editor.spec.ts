@@ -24,9 +24,7 @@ test.describe('LanguageEditor', () => {
     await expect(insertFieldBtn).toBeDisabled();
   });
 
-  test('Empty - editor renders with placeholder attribute set', async ({
-    page,
-  }) => {
+  test('Empty - editor renders with placeholder attribute set', async ({ page }) => {
     await page.goto(BASE('empty'));
     // The placeholder is a data-placeholder attribute on the contenteditable div
     const editorArea = page.locator('[data-placeholder="Start typing your content here..."]');
@@ -41,8 +39,6 @@ test.describe('LanguageEditor', () => {
     await expect(validateBtn).toBeVisible();
     await validateBtn.click();
     // After clicking validate, some error feedback should appear
-    await expect(
-      page.getByText(/error|invalid|unknown/i).first()
-    ).toBeVisible({ timeout: 5000 });
+    await expect(page.getByText(/error|invalid|unknown/i).first()).toBeVisible({ timeout: 5000 });
   });
 });

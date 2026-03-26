@@ -1,15 +1,13 @@
 # [1.10.0](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.9.0...v1.10.0) (2026-03-25)
 
-
 ### Bug Fixes
 
-* remove unused variable in document-template-card e2e spec ([2acfa38](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/2acfa384e00ed151bd8b5e61a8568d525c70bcec))
-
+- remove unused variable in document-template-card e2e spec ([2acfa38](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/2acfa384e00ed151bd8b5e61a8568d525c70bcec))
 
 ### Features
 
-* [TASK-13111]: [FE] Add Playwright e2e tests for all reusable components ([40e47ae](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/40e47aee54a5feefb6610553f37c9b1c80104a2a)), closes [#13111](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/13111)
-* [TASK-13111]: add Playwright e2e tests for all reusable components ([47db052](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/47db0525e45696fc8c248103ec5c9144ec2d8cec))
+- [TASK-13111]: [FE] Add Playwright e2e tests for all reusable components ([40e47ae](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/40e47aee54a5feefb6610553f37c9b1c80104a2a)), closes [#13111](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/13111)
+- [TASK-13111]: add Playwright e2e tests for all reusable components ([47db052](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/47db0525e45696fc8c248103ec5c9144ec2d8cec))
 
 # [1.9.0](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.8.1...v1.9.0) (2026-03-25)
 

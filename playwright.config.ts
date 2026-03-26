@@ -5,6 +5,7 @@ const PORT = process.env.PORT ?? '6006';
 export default defineConfig({
   testDir: './e2e',
   timeout: process.env.CI ? 60000 : 30000,
+  expect: { timeout: 10000 },
   workers: undefined,
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI

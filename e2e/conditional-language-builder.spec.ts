@@ -4,7 +4,9 @@ const BASE = (id: string) =>
   `/iframe.html?id=components-languageeditor-conditionallanguagebuilder--${id}&viewMode=story`;
 
 test.describe('ConditionalLanguageBuilder', () => {
-  test('Default story renders the dialog open with IF condition builder @smoke', async ({ page }) => {
+  test('Default story renders the dialog open with IF condition builder @smoke', async ({
+    page,
+  }) => {
     await page.goto(BASE('default'));
     const dialog = page.getByRole('dialog');
     await expect(dialog).toBeVisible();

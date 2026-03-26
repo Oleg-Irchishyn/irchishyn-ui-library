@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const BASE = (id: string) =>
-  `/iframe.html?id=components-fileupload--${id}&viewMode=story`;
+const BASE = (id: string) => `/iframe.html?id=components-fileupload--${id}&viewMode=story`;
 
 test.describe('FileUpload', () => {
   test('Default renders drop zone with "Browse" button @smoke', async ({ page }) => {

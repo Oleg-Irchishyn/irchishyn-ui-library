@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const BASE = (id: string) =>
-  `/iframe.html?id=components-searchtextbox--${id}&viewMode=story`;
+const BASE = (id: string) => `/iframe.html?id=components-searchtextbox--${id}&viewMode=story`;
 
 test.describe('SearchTextBox', () => {
   test('Default renders input with placeholder "Search reports..." @smoke', async ({ page }) => {

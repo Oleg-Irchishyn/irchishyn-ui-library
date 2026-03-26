@@ -1,7 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const BASE = (id: string) =>
-  `/iframe.html?id=components-datepicker--${id}&viewMode=story`;
+const BASE = (id: string) => `/iframe.html?id=components-datepicker--${id}&viewMode=story`;
 
 test.describe('DatePicker', () => {
   test('SingleDate renders date input with label "Notice Date" and pre-filled date @smoke', async ({

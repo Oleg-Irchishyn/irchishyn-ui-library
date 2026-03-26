@@ -142,40 +142,46 @@ Test results and HTML report are output to `e2e-results/`.
 
 This repo was migrated from npm to pnpm 9. If you had this repo cloned and were using `npm`, follow these steps once after pulling this branch:
 
-**Step 1 — Install pnpm 9**
+**Step 1 — Ensure Node.js ≥ 24.10.0 is active**
+
+This repo requires `^22.14.0 || >=24.10.0`. If you use nvm-windows, open **PowerShell as Administrator** and run:
+
+```powershell
+nvm list
+nvm use 24.14.1   # or whichever version >=24.10.0 you have installed
+```
+
+Must be run as Administrator — nvm needs elevated rights to update the Node symlink.
+
+**Step 2 — Install pnpm 9**
 
 ```bash
 npm install -g pnpm@9
 ```
 
-Or via Corepack (Node.js built-in):
+**Step 3 — Remove the old npm artifacts**
 
 ```bash
-corepack enable
-corepack prepare pnpm@9 --activate
-```
-
-**Step 2 — Remove the old npm artifacts**
-
-```bash
-# Remove npm's node_modules and lock file
 rm -rf node_modules
 rm package-lock.json   # already deleted in this repo; skip if missing
 ```
 
-**Step 3 — Authenticate to Azure Artifacts (first time only)**
+**Step 4 — Authenticate to Azure Artifacts (first time only)**
 
-pnpm reads the same `.npmrc` as npm, so your existing auth token works. If you have not authenticated yet:
+pnpm reads the same `.npmrc` as npm, so your existing auth token works. If you have not authenticated yet, open **PowerShell or CMD** (not Git Bash) and run:
 
-```bash
-# Option A — Azure CLI
-az artifacts npm login --registry https://pkgs.dev.azure.com/gen2fundprod/_packaging/gen2fund-packages/npm/registry/
-
-# Option B — vsts-npm-auth (Windows)
+```powershell
 vsts-npm-auth -config .npmrc
 ```
 
-**Step 4 — Install dependencies**
+If `vsts-npm-auth` is not installed:
+
+```powershell
+npm install -g vsts-npm-auth
+vsts-npm-auth -config .npmrc
+```
+
+**Step 5 — Install dependencies**
 
 ```bash
 pnpm install
@@ -183,7 +189,7 @@ pnpm install
 
 pnpm creates `node_modules/` and a `pnpm-lock.yaml` (already committed). Do **not** commit a new `package-lock.json`.
 
-**Step 5 — Verify everything works**
+**Step 6 — Verify everything works**
 
 ```bash
 pnpm run dev          # Storybook should open on http://localhost:6006
