@@ -1,3 +1,19 @@
+# [1.11.0](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.10.0...v1.11.0) (2026-03-26)
+
+
+### Bug Fixes
+
+* [NO-TASK]: [FE]: Update CLAUDE.MD configuration and README.MD based on pnpm implementation ([9003594](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/9003594c4a120925049f59f65d2a58f65abbb975))
+* [TASK-12630]: [FE]: use ActionButton in FileNamingSection File Name Structure ([f07e47f](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/f07e47f320b122ac557cbf5668cfc6ad28c5e433)), closes [#12630](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/12630) [#12630](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/12630)
+* [TASK-12630]: [UI.Library]: use ActionButton in FileNamingSection File Name Structure ([4117ab7](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/4117ab7daa89e41af7721536b3525987a8babeee))
+* use pnpm run dev in playwright webServer config ([9705b55](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/9705b55bcb8aa6c8f635faba56b6261a54f67280))
+
+
+### Features
+
+* [TASK-13198]: [FE]: add loading state and Enter key activation to ActionButton ([3eba09b](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/3eba09bfea87eb89316740f70c8772cac1357abc)), closes [#13198](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/issues/13198)
+* [TASK-13198]: [FE]: add loading state and Enter key activation to ActionButton ([74855db](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/74855db4977f0a7ddaa55ce73f5597892cc91e4d))
+
 # [1.10.0](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.9.0...v1.10.0) (2026-03-25)
 
 ### Bug Fixes
