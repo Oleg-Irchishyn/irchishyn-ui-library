@@ -1,3 +1,11 @@
+## [1.11.1](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.11.0...v1.11.1) (2026-03-27)
+
+
+### Bug Fixes
+
+* [NO-TASK]: [FE] Fix main branch pipeline issue for e2e tests ([2920f95](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/2920f95e8cf4a4e811301edae13f82d9c538b7ca))
+* [NO-TASK]: [FE] fixing e2e tests pipeline issue on main branch ([6cb71b0](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/commit/6cb71b0488ea022264cf9d4f3368aa5118c1a698))
+
 # [1.11.0](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.10.0...v1.11.0) (2026-03-26)
 
 

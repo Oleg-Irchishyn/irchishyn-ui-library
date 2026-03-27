@@ -1,6 +1,6 @@
 {
   "name": "@gen2fund/gen2verse-ui-library",
-  "version": "1.11.0",
+  "version": "1.11.1",
   "description": "Gen2Verse UI component library",
   "license": "UNLICENSED",
   "sideEffects": false,
