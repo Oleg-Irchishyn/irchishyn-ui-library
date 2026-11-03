@@ -3,7 +3,6 @@
     "deny": [
       "Read(**/.env)",
       "Read(**/.env.*)",
-      "Read(**/.azuredevops/**)",
       "Read(**/node_modules/**)",
       "Read(**/dist/**)",
       "Read(**/.git/**)",
@@ -18,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "npx tsx .claude/hooks/post-write.ts",
+            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/post-write.mjs\"",
             "statusMessage": "Running Prettier, ESLint, TypeScript check..."
           }
         ]
