@@ -87,7 +87,28 @@ The version bump is derived from commit / PR-title prefixes (Conventional Commit
 | `feat!:` / `BREAKING CHANGE:` in the footer | major   |
 | `chore:`, `docs:`, `test:`, `refactor:`     | none    |
 
-Do **not** run `pnpm version` / `pnpm publish` by hand for normal releases.
+Do **not** run `pnpm version` / `pnpm publish` by hand for normal releases (see [Manual release](#manual-release-emergency-only) for the emergency path).
+
+The release configuration lives in [`.releaserc.json`](.releaserc.json) (branches, tag format, plugins) and the `release` job of
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml) (which pins the semantic-release plugin versions).
+
+### Manual release (emergency only)
+
+Use this **only** if CI is unavailable. It bypasses semantic-release, so `CHANGELOG.md` is not updated and the
+version can drift from the commit history (the next CI release will compute its version from git tags).
+
+Requires `NODE_AUTH_TOKEN` set to a GitHub PAT (classic) with `write:packages`.
+
+```bash
+pnpm version patch   # bugfixes / small issues
+pnpm version minor   # new features, no breaking changes
+pnpm version major   # breaking changes
+pnpm publish
+git push --follow-tags
+```
+
+`pnpm version` creates the commit and the `vX.Y.Z` tag; pushing the tag lets semantic-release continue from it.
+Add `[skip ci]` to the commit message if you do not want CI to run another release.
 
 ### One-time GitHub repository setup (maintainer)
 
