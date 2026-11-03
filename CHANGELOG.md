@@ -1,3 +1,24 @@
+# [2.0.0](https://github.com/Oleg-Irchishyn/irchishyn-ui-library/compare/v1.11.1...v2.0.0) (2026-11-03)
+
+
+* feat!: rename to irchishyn-ui-library and publish via GitHub Packages ([1f08393](https://github.com/Oleg-Irchishyn/irchishyn-ui-library/commit/1f08393803c4274662bcab15092a21bb1def70c6))
+
+
+### Bug Fixes
+
+* use packageManager field for pnpm version in CI ([31785b3](https://github.com/Oleg-Irchishyn/irchishyn-ui-library/commit/31785b36a1c72e2ebef2c9baf31fa6c8833033ae))
+
+
+### BREAKING CHANGES
+
+* package renamed to @oleg-irchishyn/irchishyn-ui-library and
+Gen2ThemeProvider renamed to IrchishynThemeProvider.
+
+- replace private @gen2fund/platform.style with MUI-derived tokens (src/tokens.ts)
+- move CI/release from Azure Pipelines to GitHub Actions
+- configure .npmrc and publishConfig for GitHub Packages
+- update README with release and consumer setup instructions
+
 ## [1.11.1](https://dev.azure.com/gen2fundprod/GenIIVerse/_git/Gen2Verse.UI.Library/compare/v1.11.0...v1.11.1) (2026-03-27)
 
 
