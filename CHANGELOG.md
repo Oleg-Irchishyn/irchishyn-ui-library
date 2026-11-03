@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/Oleg-Irchishyn/irchishyn-ui-library/compare/v2.0.0...v2.0.1) (2026-11-03)
+
+
+### Bug Fixes
+
+* document manual release and release configuration in README ([a557ce4](https://github.com/Oleg-Irchishyn/irchishyn-ui-library/commit/a557ce41083641fc3b74425ae6f8a94ab9b634eb))
+
 # [2.0.0](https://github.com/Oleg-Irchishyn/irchishyn-ui-library/compare/v1.11.1...v2.0.0) (2026-11-03)
 
 
