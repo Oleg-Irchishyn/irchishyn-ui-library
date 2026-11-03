@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/Oleg-Irchishyn/irchishyn-ui-library/compare/v2.0.1...v2.0.2) (2026-11-03)
+
+
+### Bug Fixes
+
+* lower minimum supported Node.js version to 24.5.0 ([8d586db](https://github.com/Oleg-Irchishyn/irchishyn-ui-library/commit/8d586dbd63796a71899cc461174475c83813359a))
+
 ## [2.0.1](https://github.com/Oleg-Irchishyn/irchishyn-ui-library/compare/v2.0.0...v2.0.1) (2026-11-03)
 
 
