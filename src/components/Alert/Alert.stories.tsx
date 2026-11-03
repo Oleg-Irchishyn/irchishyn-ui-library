@@ -3,7 +3,7 @@ import { Box, Button, Stack, Typography } from '@mui/material';
 import { action } from '@storybook/addon-actions';
 import { useState } from 'react';
 
-import { AlertToastProvider, Gen2ThemeProvider, useAlertToast } from '../../providers';
+import { AlertToastProvider, IrchishynThemeProvider, useAlertToast } from '../../providers';
 import { Alert } from './Alert';
 import { ALERT_SEVERITIES, ALERT_VARIANTS } from './constants';
 
@@ -302,7 +302,7 @@ export const ThemeCompatibility: Story = {
         <Typography variant="subtitle2" sx={{ mb: 1 }}>
           Light
         </Typography>
-        <Gen2ThemeProvider mode="light">
+        <IrchishynThemeProvider mode="light">
           <Stack spacing={1}>
             <Alert severity="info" title="Info" message="Theme-aware info message." />
             <Alert severity="success" variant="filled" message="Theme-aware success message." />
@@ -313,14 +313,14 @@ export const ThemeCompatibility: Story = {
               message="Theme-aware warning message."
             />
           </Stack>
-        </Gen2ThemeProvider>
+        </IrchishynThemeProvider>
       </Box>
 
       <Box sx={{ p: 2, borderRadius: 1, backgroundColor: '#111827' }}>
         <Typography variant="subtitle2" sx={{ mb: 1, color: '#E5E7EB' }}>
           Dark
         </Typography>
-        <Gen2ThemeProvider mode="dark">
+        <IrchishynThemeProvider mode="dark">
           <Stack spacing={1}>
             <Alert severity="info" title="Info" message="Theme-aware info message." />
             <Alert severity="success" variant="filled" message="Theme-aware success message." />
@@ -331,7 +331,7 @@ export const ThemeCompatibility: Story = {
               message="Theme-aware warning message."
             />
           </Stack>
-        </Gen2ThemeProvider>
+        </IrchishynThemeProvider>
       </Box>
     </Stack>
   ),

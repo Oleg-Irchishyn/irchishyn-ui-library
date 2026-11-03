@@ -9,8 +9,6 @@ build/
 .next/
 
 # CI/CD pipelines
-azure-pipelines.yml
-.azuredevops/
 
 # Third-party content (prompt injection risk)
 node_modules/

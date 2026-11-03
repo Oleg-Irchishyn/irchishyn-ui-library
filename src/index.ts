@@ -67,8 +67,8 @@ export { default as App } from './App';
 export type { AppProps } from './App';
 
 export { createAppTheme } from './theme';
-export { Gen2ThemeProvider, AlertToastProvider, useAlertToast } from './providers';
-export type { Gen2ThemeProviderProps } from './providers';
+export { IrchishynThemeProvider, AlertToastProvider, useAlertToast } from './providers';
+export type { IrchishynThemeProviderProps } from './providers';
 
 export { Badge } from './components/Badge';
 export type { BadgeProps, BadgeVariant, BadgeSize } from './components/Badge';

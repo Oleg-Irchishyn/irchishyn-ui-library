@@ -1,4 +1,4 @@
-import { info, neutral, primary } from '@gen2fund/platform.style';
+import { info, neutral, primary } from '../../tokens';
 import type { SxProps, Theme } from '@mui/material/styles';
 
 export const getFileNamingSectionStyles = (): SxProps<Theme> => () => ({

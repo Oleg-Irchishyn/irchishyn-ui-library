@@ -1,7 +1,7 @@
 {
-  "name": "@gen2fund/gen2verse-ui-library",
+  "name": "@oleg-irchishyn/irchishyn-ui-library",
   "version": "1.11.1",
-  "description": "Gen2Verse UI component library",
+  "description": "Irchishyn UI component library",
   "license": "UNLICENSED",
   "sideEffects": false,
   "files": [
@@ -55,7 +55,6 @@
     "pnpm": ">=9.0.0"
   },
   "dependencies": {
-    "@gen2fund/platform.style": "^0.2.0",
     "@mui/x-date-pickers": "8.27.2",
     "ag-grid-community": "34.3.1",
     "ag-grid-enterprise": "34.3.1",
@@ -88,6 +87,15 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.0.0",
     "vite": "^6.4.1",
-    "vitest": "^4.0.18"
+    "vitest": "^4.0.18",
+    "@mui/icons-material": "^5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Oleg-Irchishyn/irchishyn-ui-library.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
   }
 }

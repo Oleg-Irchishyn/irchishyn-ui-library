@@ -1,4 +1,4 @@
-# Gen2Verse.UI.Library — Task Runner
+# irchishyn-ui-library — Task Runner
 # Run `just --list` to see all available recipes
 
 set shell := ["bash", "-cu"]

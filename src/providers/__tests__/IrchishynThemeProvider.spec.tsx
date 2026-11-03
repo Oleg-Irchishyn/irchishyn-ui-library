@@ -20,14 +20,14 @@ vi.mock('@mui/material', () => ({
   CssBaseline: () => <div data-testid="css-baseline-mock">css-baseline</div>,
 }));
 
-import { Gen2ThemeProvider } from '../Gen2ThemeProvider';
+import { IrchishynThemeProvider } from '../IrchishynThemeProvider';
 
-describe('Gen2ThemeProvider', () => {
+describe('IrchishynThemeProvider', () => {
   it('creates theme from mode and renders CssBaseline by default', () => {
     render(
-      <Gen2ThemeProvider mode="dark">
+      <IrchishynThemeProvider mode="dark">
         <span>Child content</span>
-      </Gen2ThemeProvider>,
+      </IrchishynThemeProvider>,
     );
 
     expect(createAppThemeMock).toHaveBeenCalledWith('dark');
@@ -39,9 +39,9 @@ describe('Gen2ThemeProvider', () => {
     const explicitTheme = { marker: 'explicit' } as unknown as Theme;
 
     render(
-      <Gen2ThemeProvider mode="light" theme={explicitTheme}>
+      <IrchishynThemeProvider mode="light" theme={explicitTheme}>
         <span>Theme override</span>
-      </Gen2ThemeProvider>,
+      </IrchishynThemeProvider>,
     );
 
     expect(themeProviderSpy).toHaveBeenLastCalledWith(explicitTheme);
@@ -49,9 +49,9 @@ describe('Gen2ThemeProvider', () => {
 
   it('does not render CssBaseline when cssBaseline is false', () => {
     render(
-      <Gen2ThemeProvider cssBaseline={false}>
+      <IrchishynThemeProvider cssBaseline={false}>
         <span>No baseline</span>
-      </Gen2ThemeProvider>,
+      </IrchishynThemeProvider>,
     );
 
     expect(screen.queryByTestId('css-baseline-mock')).toBeNull();

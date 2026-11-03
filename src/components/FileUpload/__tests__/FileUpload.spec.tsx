@@ -3,11 +3,11 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { Gen2ThemeProvider } from '../../../providers';
+import { IrchishynThemeProvider } from '../../../providers';
 import { FileUpload } from '../FileUpload';
 
 const renderWithTheme = (ui: React.ReactElement) =>
-  render(<Gen2ThemeProvider mode="light">{ui}</Gen2ThemeProvider>);
+  render(<IrchishynThemeProvider mode="light">{ui}</IrchishynThemeProvider>);
 
 function createFile(name: string, size: number, type = ''): File {
   return new File([new ArrayBuffer(size)], name, { type });

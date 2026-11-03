@@ -1,5 +1,5 @@
 import type { SxProps, Theme } from '@mui/material';
-import { common } from '@gen2fund/platform.style';
+import { common } from '../../tokens';
 
 import type { ActionButtonSize } from './types';
 

@@ -2,7 +2,7 @@ import type { SxProps, Theme } from '@mui/material/styles';
 import { createTheme } from '@mui/material/styles';
 import { describe, expect, it } from 'vitest';
 
-import { info } from '@gen2fund/platform.style';
+import { info } from '../../../../tokens';
 
 import {
   getLanguageEditorEditableAreaStyles,

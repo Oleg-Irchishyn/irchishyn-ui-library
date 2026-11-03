@@ -1,5 +1,5 @@
 /**
- * MUI Theme configuration using @gen2fund/platform.style tokens
+ * MUI Theme configuration using MUI-derived tokens (src/tokens.ts)
  * This creates proper MUI themes that respond to light/dark mode from the container
  */
 import { createTheme, Theme } from '@mui/material/styles';
@@ -11,7 +11,7 @@ import {
   neutral,
   colors,
   fontFamily,
-} from '@gen2fund/platform.style';
+} from './tokens';
 
 function safeGet<T>(obj: unknown, path: string): T | undefined;
 function safeGet<T>(obj: unknown, path: string, defaultValue: T): T;

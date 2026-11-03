@@ -4,7 +4,7 @@ const loadThemeModule = async () => import('../theme');
 
 afterEach(() => {
   vi.resetModules();
-  vi.unmock('@gen2fund/platform.style');
+  vi.unmock('../tokens');
 });
 
 describe('createAppTheme', () => {
@@ -27,7 +27,7 @@ describe('createAppTheme', () => {
   });
 
   it('falls back to default values when platform tokens are missing', async () => {
-    vi.doMock('@gen2fund/platform.style', () => ({
+    vi.doMock('../tokens', () => ({
       lightMode: {},
       darkMode: {},
       primary: {},

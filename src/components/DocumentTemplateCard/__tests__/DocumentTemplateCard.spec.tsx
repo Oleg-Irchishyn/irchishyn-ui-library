@@ -3,14 +3,14 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { Gen2ThemeProvider } from '../../../providers';
+import { IrchishynThemeProvider } from '../../../providers';
 import { DOCUMENT_TEMPLATE_CARD_ACTION_TYPES } from '../constants';
 import { DocumentTemplateCard } from '../DocumentTemplateCard';
 import type { DocumentTemplateCardAction } from '../types';
 import * as useDocumentTemplateCardModule from '../useDocumentTemplateCard';
 
 const renderWithTheme = (ui: React.ReactElement) =>
-  render(<Gen2ThemeProvider mode="light">{ui}</Gen2ThemeProvider>);
+  render(<IrchishynThemeProvider mode="light">{ui}</IrchishynThemeProvider>);
 
 describe('DocumentTemplateCard', () => {
   afterEach(() => {
@@ -34,9 +34,9 @@ describe('DocumentTemplateCard', () => {
     expect(screen.getByText('PDF')).toBeInTheDocument();
 
     rerender(
-      <Gen2ThemeProvider mode="light">
+      <IrchishynThemeProvider mode="light">
         <DocumentTemplateCard type="Template" label="Template" fileName="Template.docx" />
-      </Gen2ThemeProvider>,
+      </IrchishynThemeProvider>,
     );
 
     expect(screen.queryByText('PDF')).not.toBeInTheDocument();
@@ -123,14 +123,14 @@ describe('DocumentTemplateCard', () => {
     expect(card).not.toHaveAttribute('tabindex');
 
     rerender(
-      <Gen2ThemeProvider mode="light">
+      <IrchishynThemeProvider mode="light">
         <DocumentTemplateCard
           type="Template"
           label="Template"
           fileName="Template.docx"
           onClick={vi.fn()}
         />
-      </Gen2ThemeProvider>,
+      </IrchishynThemeProvider>,
     );
 
     expect(screen.getByTestId('document-template-card')).toHaveAttribute('role', 'button');

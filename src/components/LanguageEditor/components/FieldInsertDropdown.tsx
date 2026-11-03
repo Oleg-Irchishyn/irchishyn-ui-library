@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { Search as SearchIcon } from 'lucide-react';
 
-import { info, neutral, primary } from '@gen2fund/platform.style';
+import { info, neutral, primary } from '../../../tokens';
 
 import { LANGUAGE_EDITOR_LABELS } from '../constants';
 import type { FieldDefinition, FieldInsertDropdownProps, FieldType } from '../types';

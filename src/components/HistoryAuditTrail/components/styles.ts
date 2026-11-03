@@ -1,4 +1,4 @@
-import { primary } from '@gen2fund/platform.style';
+import { primary } from '../../../tokens';
 import type { SxProps, Theme } from '@mui/material/styles';
 
 import { HISTORY_AUDIT_LAYOUT } from '../constants';

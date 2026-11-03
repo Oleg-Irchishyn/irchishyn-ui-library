@@ -1,5 +1,5 @@
 import { alpha } from '@mui/material/styles';
-import { info, neutral, primary } from '@gen2fund/platform.style';
+import { info, neutral, primary } from '../../../tokens';
 import type { SxProps, Theme } from '@mui/material/styles';
 
 import { LANGUAGE_EDITOR_LAYOUT } from '../constants';

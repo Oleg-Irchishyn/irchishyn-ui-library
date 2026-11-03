@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Box, Button, Stack, Typography } from '@mui/material';
 
-import { Gen2ThemeProvider } from '../../providers';
+import { IrchishynThemeProvider } from '../../providers';
 import { DATE_PICKER_VARIANTS } from './constants';
 import { DatePicker } from './DatePicker';
 import type { DatePickerProps, DateRange, QuickSelectOption } from './types';
@@ -13,11 +13,11 @@ const meta: Meta<typeof DatePicker> = {
   component: DatePicker,
   decorators: [
     (Story) => (
-      <Gen2ThemeProvider mode="light">
+      <IrchishynThemeProvider mode="light">
         <Box sx={{ p: 2, maxWidth: 420 }}>
           <Story />
         </Box>
-      </Gen2ThemeProvider>
+      </IrchishynThemeProvider>
     ),
   ],
 };
@@ -205,11 +205,11 @@ export const QuickSelect: Story = {
 export const DarkMode: Story = {
   decorators: [
     (Story) => (
-      <Gen2ThemeProvider mode="dark">
+      <IrchishynThemeProvider mode="dark">
         <Box sx={{ p: 2, maxWidth: 420, bgcolor: 'background.default' }}>
           <Story />
         </Box>
-      </Gen2ThemeProvider>
+      </IrchishynThemeProvider>
     ),
   ],
   render: DarkModeStory,

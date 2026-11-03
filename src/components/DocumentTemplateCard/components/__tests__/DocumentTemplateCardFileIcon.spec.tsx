@@ -3,11 +3,11 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { Gen2ThemeProvider } from '../../../../providers';
+import { IrchishynThemeProvider } from '../../../../providers';
 import { DocumentTemplateCardFileIcon } from '../DocumentTemplateCardFileIcon';
 
 const renderWithTheme = (ui: React.ReactElement) =>
-  render(<Gen2ThemeProvider mode="light">{ui}</Gen2ThemeProvider>);
+  render(<IrchishynThemeProvider mode="light">{ui}</IrchishynThemeProvider>);
 
 describe('DocumentTemplateCardFileIcon', () => {
   it('renders PDF marker for pdf file kind', () => {

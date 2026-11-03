@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 import { Box, Typography, Stack } from '@mui/material';
 
-import { Gen2ThemeProvider } from '../../providers';
+import { IrchishynThemeProvider } from '../../providers';
 import { FileUpload } from './FileUpload';
 
 const meta: Meta<typeof FileUpload> = {
@@ -30,11 +30,11 @@ const meta: Meta<typeof FileUpload> = {
   },
   decorators: [
     (Story) => (
-      <Gen2ThemeProvider mode="light">
+      <IrchishynThemeProvider mode="light">
         <Box sx={{ p: 2 }}>
           <Story />
         </Box>
-      </Gen2ThemeProvider>
+      </IrchishynThemeProvider>
     ),
   ],
 };
@@ -132,11 +132,11 @@ export const AllStates: Story = {
 export const DarkMode: Story = {
   decorators: [
     (Story) => (
-      <Gen2ThemeProvider mode="dark">
+      <IrchishynThemeProvider mode="dark">
         <Box sx={{ p: 2, bgcolor: 'background.default', minHeight: 200 }}>
           <Story />
         </Box>
-      </Gen2ThemeProvider>
+      </IrchishynThemeProvider>
     ),
   ],
   args: {

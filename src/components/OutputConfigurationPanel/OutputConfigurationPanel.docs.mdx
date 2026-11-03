@@ -10,7 +10,7 @@ import * as Stories from './OutputConfigurationPanel.stories';
   `OutputConfigurationPanel` is a reusable panel that combines three optional sections: **Output
   Format** (select one or more formats, e.g. PDF/Word), **File Splitting** (Consolidated File vs
   Split Per Investor), and **File Naming Convention** (preview, token chips, + Add segment, Reset to
-  Default). Each section is optional via props. Styling uses `@gen2fund/platform.style` and MUI
+  Default). Each section is optional via props. Styling uses MUI palette tokens (`src/tokens.ts`)
   theme tokens so the panel adapts to light/dark theme (AC10). For building custom layouts with the
   same data and validation, use the `useOutputConfigurationPanel` hook.
 </Description>
@@ -24,7 +24,7 @@ import {
   FileSplittingSection,
   FileNamingSection,
   useOutputConfigurationPanel,
-} from '@gen2fund/gen2verse-ui-library';
+} from '@oleg-irchishyn/irchishyn-ui-library';
 ```
 
 ## Basic usage

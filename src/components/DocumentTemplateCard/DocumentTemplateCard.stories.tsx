@@ -3,7 +3,7 @@ import { Box, Stack, Typography } from '@mui/material';
 import { useMemo, useState } from 'react';
 import { action } from '@storybook/addon-actions';
 
-import { Gen2ThemeProvider } from '../../providers';
+import { IrchishynThemeProvider } from '../../providers';
 import { DocumentTemplateCard } from './DocumentTemplateCard';
 import { DOCUMENT_TEMPLATE_CARD_ACTION_TYPES } from './constants';
 import type { DocumentTemplateCardAction } from './types';
@@ -28,11 +28,11 @@ const meta: Meta<typeof DocumentTemplateCard> = {
   },
   decorators: [
     (Story) => (
-      <Gen2ThemeProvider mode="light">
+      <IrchishynThemeProvider mode="light">
         <Box sx={{ p: 3 }}>
           <Story />
         </Box>
-      </Gen2ThemeProvider>
+      </IrchishynThemeProvider>
     ),
   ],
 };
@@ -135,11 +135,11 @@ export const InteractiveSet: Story = {
 export const DarkMode: Story = {
   decorators: [
     (Story) => (
-      <Gen2ThemeProvider mode="dark">
+      <IrchishynThemeProvider mode="dark">
         <Box sx={{ p: 3, bgcolor: 'background.default', minHeight: 240 }}>
           <Story />
         </Box>
-      </Gen2ThemeProvider>
+      </IrchishynThemeProvider>
     ),
   ],
   args: {

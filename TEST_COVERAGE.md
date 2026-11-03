@@ -106,7 +106,7 @@
 | src/components/SelectDropdown/useSelectDropdown.ts                                  | 100.00%    | 100.00%  | 100.00%   | 100.00% |
 | src/components/SelectDropdown/utils.ts                                              | 100.00%    | 100.00%  | 100.00%   | 100.00% |
 | src/providers/AlertToastProvider.tsx                                                | 100.00%    | 83.33%   | 100.00%   | 100.00% |
-| src/providers/Gen2ThemeProvider.tsx                                                 | 100.00%    | 100.00%  | 100.00%   | 100.00% |
+| src/providers/IrchishynThemeProvider.tsx                                                 | 100.00%    | 100.00%  | 100.00%   | 100.00% |
 | src/providers/hooks/useAlertToast.ts                                                | 100.00%    | 100.00%  | 100.00%   | 100.00% |
 | src/theme.ts                                                                        | 86.66%     | 97.97%   | 100.00%   | 100.00% |
 

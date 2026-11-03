@@ -16,8 +16,8 @@ import * as Stories from './HistoryAuditTrail.stories';
 ## Import
 
 ```ts
-import { HistoryAuditTrail, HISTORY_AUDIT_RENDER_MODES } from '@gen2fund/gen2verse-ui-library';
-import type { HistoryAuditTrailEvent } from '@gen2fund/gen2verse-ui-library';
+import { HistoryAuditTrail, HISTORY_AUDIT_RENDER_MODES } from '@oleg-irchishyn/irchishyn-ui-library';
+import type { HistoryAuditTrailEvent } from '@oleg-irchishyn/irchishyn-ui-library';
 ```
 
 ## Quick start (rapid integration)
@@ -28,12 +28,12 @@ import type { HistoryAuditTrailEvent } from '@gen2fund/gen2verse-ui-library';
 4. Verify search/filter and optional export with real module data.
 
 ```bash
-npm install @gen2fund/gen2verse-ui-library
+npm install irchishyn-ui-library
 ```
 
 ```tsx
-import { HistoryAuditTrail, HISTORY_AUDIT_RENDER_MODES } from '@gen2fund/gen2verse-ui-library';
-import type { HistoryAuditTrailEvent } from '@gen2fund/gen2verse-ui-library';
+import { HistoryAuditTrail, HISTORY_AUDIT_RENDER_MODES } from '@oleg-irchishyn/irchishyn-ui-library';
+import type { HistoryAuditTrailEvent } from '@oleg-irchishyn/irchishyn-ui-library';
 
 export function QuickStartAudit({
   events,
@@ -57,8 +57,8 @@ export function QuickStartAudit({
 ## Basic usage
 
 ```tsx
-import { HistoryAuditTrail, HISTORY_AUDIT_RENDER_MODES } from '@gen2fund/gen2verse-ui-library';
-import type { HistoryAuditTrailEvent } from '@gen2fund/gen2verse-ui-library';
+import { HistoryAuditTrail, HISTORY_AUDIT_RENDER_MODES } from '@oleg-irchishyn/irchishyn-ui-library';
+import type { HistoryAuditTrailEvent } from '@oleg-irchishyn/irchishyn-ui-library';
 
 const events: HistoryAuditTrailEvent[] = [
   {
@@ -184,8 +184,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 ## Export-enabled usage
 
 ```tsx
-import { HistoryAuditTrail } from '@gen2fund/gen2verse-ui-library';
-import type { HistoryAuditTrailEvent } from '@gen2fund/gen2verse-ui-library';
+import { HistoryAuditTrail } from '@oleg-irchishyn/irchishyn-ui-library';
+import type { HistoryAuditTrailEvent } from '@oleg-irchishyn/irchishyn-ui-library';
 
 const events: HistoryAuditTrailEvent[] = [
   {
@@ -219,7 +219,7 @@ When `enableExport` is enabled:
 ## Multi-module usage
 
 ```tsx
-import { HistoryAuditTrail } from '@gen2fund/gen2verse-ui-library';
+import { HistoryAuditTrail } from '@oleg-irchishyn/irchishyn-ui-library';
 
 const moduleSources = [
   '/capevent/package/10001',

@@ -3,12 +3,12 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
-import { Gen2ThemeProvider } from '../../../../providers';
+import { IrchishynThemeProvider } from '../../../../providers';
 import { DOCUMENT_TEMPLATE_CARD_ACTION_TYPES } from '../../constants';
 import { DocumentTemplateCardActionButton } from '../DocumentTemplateCardActionButton';
 
 const renderWithTheme = (ui: React.ReactElement) =>
-  render(<Gen2ThemeProvider mode="light">{ui}</Gen2ThemeProvider>);
+  render(<IrchishynThemeProvider mode="light">{ui}</IrchishynThemeProvider>);
 
 describe('DocumentTemplateCardActionButton', () => {
   it('renders action button and handles click', () => {

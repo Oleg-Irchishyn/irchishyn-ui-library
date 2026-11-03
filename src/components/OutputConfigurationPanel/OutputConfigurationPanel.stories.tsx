@@ -6,7 +6,7 @@ import { useMemo, useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { FileText, FileType } from 'lucide-react';
 
-import { Gen2ThemeProvider } from '../../providers';
+import { IrchishynThemeProvider } from '../../providers';
 import {
   OutputConfigurationPanel,
   OutputFormatSection,
@@ -29,11 +29,11 @@ const meta: Meta<typeof OutputConfigurationPanel> = {
   component: OutputConfigurationPanel,
   decorators: [
     (Story) => (
-      <Gen2ThemeProvider>
+      <IrchishynThemeProvider>
         <Box sx={{ width: '100%', maxWidth: 720 }}>
           <Story />
         </Box>
-      </Gen2ThemeProvider>
+      </IrchishynThemeProvider>
     ),
   ],
   parameters: {
@@ -139,11 +139,11 @@ export const DarkModeAC10: Story = {
   },
   decorators: [
     (Story) => (
-      <Gen2ThemeProvider mode="dark">
+      <IrchishynThemeProvider mode="dark">
         <Box sx={{ width: '100%', maxWidth: 720 }}>
           <Story />
         </Box>
-      </Gen2ThemeProvider>
+      </IrchishynThemeProvider>
     ),
   ],
   render: () => <PanelWithState />,

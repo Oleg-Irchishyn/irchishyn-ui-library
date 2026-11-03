@@ -3,7 +3,7 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import type { Theme } from '@mui/material/styles';
 import createAppTheme from '../theme';
 
-export interface Gen2ThemeProviderProps {
+export interface IrchishynThemeProviderProps {
   children: React.ReactNode;
   mode?: 'light' | 'dark';
   /**
@@ -16,12 +16,12 @@ export interface Gen2ThemeProviderProps {
   cssBaseline?: boolean;
 }
 
-export function Gen2ThemeProvider({
+export function IrchishynThemeProvider({
   children,
   mode = 'light',
   theme,
   cssBaseline = true,
-}: Gen2ThemeProviderProps) {
+}: IrchishynThemeProviderProps) {
   const resolvedTheme = useMemo(() => theme ?? createAppTheme(mode), [theme, mode]);
 
   return (

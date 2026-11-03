@@ -2,7 +2,7 @@ import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Box, Button, Stack, Typography } from '@mui/material';
 
-import { Gen2ThemeProvider } from '../../providers';
+import { IrchishynThemeProvider } from '../../providers';
 import { DateTextSelect } from './DateTextSelect';
 import type { DateTextSelectOption } from './types';
 
@@ -17,11 +17,11 @@ const meta: Meta<typeof DateTextSelect> = {
   component: DateTextSelect,
   decorators: [
     (Story) => (
-      <Gen2ThemeProvider mode="light">
+      <IrchishynThemeProvider mode="light">
         <Box sx={{ p: 2, maxWidth: 620 }}>
           <Story />
         </Box>
-      </Gen2ThemeProvider>
+      </IrchishynThemeProvider>
     ),
   ],
 };
@@ -214,11 +214,11 @@ export const InvalidDateState: Story = {
 export const DarkMode: Story = {
   decorators: [
     (Story) => (
-      <Gen2ThemeProvider mode="dark">
+      <IrchishynThemeProvider mode="dark">
         <Box sx={{ p: 2, maxWidth: 620, bgcolor: 'background.default' }}>
           <Story />
         </Box>
-      </Gen2ThemeProvider>
+      </IrchishynThemeProvider>
     ),
   ],
   render: DarkModeStory,

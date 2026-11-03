@@ -15,14 +15,14 @@ import * as Stories from './DatePicker.stories';
 ## Import
 
 ```ts
-import { DatePicker, DATE_PICKER_VARIANTS } from '@gen2fund/gen2verse-ui-library';
+import { DatePicker, DATE_PICKER_VARIANTS } from '@oleg-irchishyn/irchishyn-ui-library';
 ```
 
 ## Basic usage
 
 ```tsx
 import { useState } from 'react';
-import { DatePicker, DATE_PICKER_VARIANTS } from '@gen2fund/gen2verse-ui-library';
+import { DatePicker, DATE_PICKER_VARIANTS } from '@oleg-irchishyn/irchishyn-ui-library';
 
 export function Example() {
   const [value, setValue] = useState<Date | null>(null);
@@ -45,7 +45,7 @@ export function Example() {
 <Source
   language="tsx"
   code={`import { useState } from 'react';
-import { DatePicker, DATE_PICKER_VARIANTS } from '@gen2fund/gen2verse-ui-library';
+import { DatePicker, DATE_PICKER_VARIANTS } from '@oleg-irchishyn/irchishyn-ui-library';
 
 export function NoticeDateField() {
   const [value, setValue] = useState<Date | null>(null);
@@ -70,8 +70,8 @@ maxDate={new Date('2026-12-31')}
 <Source
   language="tsx"
   code={`import { useMemo, useState } from 'react';
-import { DatePicker, DATE_PICKER_VARIANTS } from '@gen2fund/gen2verse-ui-library';
-import type { DateRange, QuickSelectOption } from '@gen2fund/gen2verse-ui-library';
+import { DatePicker, DATE_PICKER_VARIANTS } from '@oleg-irchishyn/irchishyn-ui-library';
+import type { DateRange, QuickSelectOption } from '@oleg-irchishyn/irchishyn-ui-library';
 
 const options: QuickSelectOption[] = [
 { value: 'last-1-month', label: 'Last 1 Month' },
@@ -100,8 +100,8 @@ placeholder="Select Date Range"
 
 ```tsx
 import { useState } from 'react';
-import { DatePicker, DATE_PICKER_VARIANTS } from '@gen2fund/gen2verse-ui-library';
-import type { DateRange, QuickSelectOption } from '@gen2fund/gen2verse-ui-library';
+import { DatePicker, DATE_PICKER_VARIANTS } from '@oleg-irchishyn/irchishyn-ui-library';
+import type { DateRange, QuickSelectOption } from '@oleg-irchishyn/irchishyn-ui-library';
 
 export function QuickSelectExample({ options }: { options: QuickSelectOption[] }) {
   const [value, setValue] = useState<DateRange | QuickSelectOption | null>(null);

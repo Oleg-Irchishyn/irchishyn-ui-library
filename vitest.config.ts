@@ -4,10 +4,6 @@ import path from 'node:path';
 export default defineConfig({
   resolve: {
     alias: {
-      '@gen2fund/platform.style': path.resolve(
-        __dirname,
-        'src/__tests__/mocks/platformStyleMock.ts',
-      ),
       '@mui/material/useMediaQuery': path.resolve(
         __dirname,
         'node_modules/@mui/material/node/useMediaQuery/index.js',

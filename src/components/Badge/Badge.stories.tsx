@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { Box, Stack, Typography } from '@mui/material';
 import { FileText } from 'lucide-react';
 
-import { Gen2ThemeProvider } from '../../providers';
+import { IrchishynThemeProvider } from '../../providers';
 import { Badge } from './Badge';
 import { BADGE_COLOR_PRESETS, BADGE_SIZES, BADGE_VARIANTS } from './constants';
 
@@ -119,7 +119,7 @@ export const ThemeCompatibility: Story = {
         <Typography variant="subtitle2" sx={{ mb: 1 }}>
           Light
         </Typography>
-        <Gen2ThemeProvider mode="light">
+        <IrchishynThemeProvider mode="light">
           <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
             <Badge label="Capital Call" color="info" />
             <Badge label="Editable" variant="outlined" color="success" />
@@ -130,14 +130,14 @@ export const ThemeCompatibility: Story = {
             />
             <Badge label="System" color="neutral" />
           </Stack>
-        </Gen2ThemeProvider>
+        </IrchishynThemeProvider>
       </Box>
 
       <Box sx={{ p: 2, borderRadius: 1, backgroundColor: '#111827' }}>
         <Typography variant="subtitle2" sx={{ mb: 1, color: '#E5E7EB' }}>
           Dark
         </Typography>
-        <Gen2ThemeProvider mode="dark">
+        <IrchishynThemeProvider mode="dark">
           <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
             <Badge label="Capital Call" color="info" />
             <Badge label="Editable" variant="outlined" color="success" />
@@ -148,7 +148,7 @@ export const ThemeCompatibility: Story = {
             />
             <Badge label="System" color="neutral" />
           </Stack>
-        </Gen2ThemeProvider>
+        </IrchishynThemeProvider>
       </Box>
     </Stack>
   ),

@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 import { Box, Typography, List, ListItem } from '@mui/material';
 
-import { Gen2ThemeProvider } from '../../providers';
+import { IrchishynThemeProvider } from '../../providers';
 import { SearchTextBox } from './SearchTextBox';
 
 const SAMPLE_ITEMS = [
@@ -33,11 +33,11 @@ const meta: Meta<typeof SearchTextBox> = {
   },
   decorators: [
     (Story) => (
-      <Gen2ThemeProvider mode="light">
+      <IrchishynThemeProvider mode="light">
         <Box sx={{ p: 2 }}>
           <Story />
         </Box>
-      </Gen2ThemeProvider>
+      </IrchishynThemeProvider>
     ),
   ],
 };
@@ -140,11 +140,11 @@ export const LiveFiltering: Story = {
 export const DarkMode: Story = {
   decorators: [
     (Story) => (
-      <Gen2ThemeProvider mode="dark">
+      <IrchishynThemeProvider mode="dark">
         <Box sx={{ p: 2, bgcolor: 'background.default', minHeight: 120 }}>
           <Story />
         </Box>
-      </Gen2ThemeProvider>
+      </IrchishynThemeProvider>
     ),
   ],
   args: {

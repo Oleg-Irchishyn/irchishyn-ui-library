@@ -3,12 +3,12 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
 
-import { Gen2ThemeProvider } from '../../../providers';
+import { IrchishynThemeProvider } from '../../../providers';
 import { SearchTextBox } from '../SearchTextBox';
 import { getSearchTextBoxBaseStyles } from '../styles';
 
 const renderWithTheme = (ui: React.ReactElement) =>
-  render(<Gen2ThemeProvider mode="light">{ui}</Gen2ThemeProvider>);
+  render(<IrchishynThemeProvider mode="light">{ui}</IrchishynThemeProvider>);
 
 describe('SearchTextBox', () => {
   beforeEach(() => {
@@ -102,9 +102,9 @@ describe('SearchTextBox', () => {
     expect(screen.queryByTestId('search-text-box-clear')).not.toBeInTheDocument();
 
     rerender(
-      <Gen2ThemeProvider mode="light">
+      <IrchishynThemeProvider mode="light">
         <SearchTextBox value="x" onChange={vi.fn()} placeholder="Search..." />
-      </Gen2ThemeProvider>,
+      </IrchishynThemeProvider>,
     );
     expect(screen.getByTestId('search-text-box-clear')).toBeInTheDocument();
   });
@@ -131,9 +131,9 @@ describe('SearchTextBox', () => {
     expect(input).toHaveValue('');
 
     rerender(
-      <Gen2ThemeProvider mode="light">
+      <IrchishynThemeProvider mode="light">
         <SearchTextBox value="external" onChange={onChange} placeholder="Search..." />
-      </Gen2ThemeProvider>,
+      </IrchishynThemeProvider>,
     );
     expect(screen.getByLabelText('Search...')).toHaveValue('external');
   });

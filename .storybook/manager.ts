@@ -4,7 +4,7 @@ import { create } from '@storybook/theming/create';
 addons.setConfig({
   theme: create({
     base: 'light',
-    brandTitle: 'Gen2Verse UI component library',
+    brandTitle: 'Irchishyn UI component library',
   }),
   sidebar: {
     showRoots: true,

@@ -1,4 +1,4 @@
-# Gen2Verse UI Library — Development Guidelines
+# Irchishyn UI Library — Development Guidelines
 
 These rules apply to **every session**. Follow them for all new components and when modifying existing ones.
 
@@ -124,7 +124,7 @@ export const MyComponent = ({ rawData }: { rawData: ApiResponse }) => {
 - Provider-specific hooks go in `src/providers/hooks/`.
 - Every provider must have a co-located `__tests__/` spec file.
 
-See `src/providers/AlertToastProvider.tsx` and `src/providers/Gen2ThemeProvider.tsx` as examples.
+See `src/providers/AlertToastProvider.tsx` and `src/providers/IrchishynThemeProvider.tsx` as examples.
 
 ---
 
@@ -276,7 +276,7 @@ import * as Stories from './ComponentName.stories';
 ## Import
 
 \`\`\`ts
-import { ComponentName } from '@gen2fund/gen2verse-ui-library';
+import { ComponentName } from '@oleg-irchishyn/irchishyn-ui-library';
 \`\`\`
 
 ## Quick start
@@ -303,7 +303,7 @@ import { ComponentName } from '@gen2fund/gen2verse-ui-library';
 
 ## PR naming conventions
 
-PR titles are parsed by **semantic-release** (see `azure-pipelines.yml` Release stage) to automatically bump the `@gen2fund/gen2verse-ui-library` package version on every merge to `main`. Getting the prefix wrong means the wrong version is published — or no release happens at all.
+PR titles are parsed by **semantic-release** (see `.github/workflows/ci.yml` release job) to automatically bump the `@oleg-irchishyn/irchishyn-ui-library` package version on every merge to `main`. Getting the prefix wrong means the wrong version is published — or no release happens at all.
 
 | Type    | Format                                 | Example                                              | Version bump |
 | ------- | -------------------------------------- | ---------------------------------------------------- | ------------ |

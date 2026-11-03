@@ -13,7 +13,7 @@ vi.mock('@mui/material', () => ({
 }));
 
 vi.mock('../providers', () => ({
-  Gen2ThemeProvider: ({
+  IrchishynThemeProvider: ({
     children,
     mode,
   }: {

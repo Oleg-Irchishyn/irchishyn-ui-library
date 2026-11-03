@@ -1,4 +1,4 @@
-import { common } from '@gen2fund/platform.style';
+import { common } from '../../../tokens';
 import { describe, expect, it } from 'vitest';
 
 import { loadingSpinnerSize, primaryButtonSx } from '../styles';

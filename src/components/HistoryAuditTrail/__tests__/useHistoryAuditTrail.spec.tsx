@@ -29,7 +29,7 @@ const events: HistoryAuditTrailEvent[] = [
     id: 'evt-2',
     source: '/capevent/allocations/10001',
     username: 'john.doe',
-    createdBy: 'john.doe@gen2fund.com',
+    createdBy: 'john.doe@example.com',
     auditEventType: 'CREATED',
     subject: 'Created allocation',
     timestamp: '2026-01-02T00:00:00.000Z',
@@ -76,7 +76,7 @@ describe('useHistoryAuditTrail', () => {
     expect(result.current.displayedCountLabel).toBe('1 of 2 events');
 
     act(() => {
-      result.current.setQuickFilterText('john.doe@gen2fund.com');
+      result.current.setQuickFilterText('john.doe@example.com');
     });
     expect(result.current.filteredRowCount).toBe(1);
   });

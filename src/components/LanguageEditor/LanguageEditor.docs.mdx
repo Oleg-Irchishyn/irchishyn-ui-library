@@ -7,21 +7,21 @@ import * as Stories from './LanguageEditor.stories';
 <Title>LanguageEditor</Title>
 <Subtitle>Rich text editor with conditional syntax and field references</Subtitle>
 <Description>
-  `LanguageEditor` (work item [10920](https://dev.azure.com/gen2fundprod/GenIIVerse/_workitems/edit/10920)) will be a component from `@gen2fund/gen2verse-ui-library` that renders editable rich text with embedded field references and conditional blocks (`{{IF}}` / `{{ELSE IF}}` / `{{ELSE}}` / `{{ENDIF}}`). It supports a toolbar (B/I/U, Insert Field, Conditional Language Builder, Validate), type-aware value input in the conditional builder, and validation. Styling for tokens must use the **@platform/style** library for colors and fonts; if required tokens or colors are not available there, request them from the platform team rather than hardcoding.
+  `LanguageEditor` (work item [10920](https://dev.azure.com/gen2fundprod/GenIIVerse/_workitems/edit/10920)) will be a component from `irchishyn-ui-library` that renders editable rich text with embedded field references and conditional blocks (`{{IF}}` / `{{ELSE IF}}` / `{{ELSE}}` / `{{ENDIF}}`). It supports a toolbar (B/I/U, Insert Field, Conditional Language Builder, Validate), type-aware value input in the conditional builder, and validation. Styling for tokens must use the **@platform/style** library for colors and fonts; if required tokens or colors are not available there, request them from the platform team rather than hardcoding.
 </Description>
 
 ## Import
 
 ```ts
-import { LanguageEditor } from '@gen2fund/gen2verse-ui-library';
-import type { FieldDefinition, ValidationResult } from '@gen2fund/gen2verse-ui-library';
+import { LanguageEditor } from '@oleg-irchishyn/irchishyn-ui-library';
+import type { FieldDefinition, ValidationResult } from '@oleg-irchishyn/irchishyn-ui-library';
 ```
 
 ## Basic usage
 
 ```tsx
-import { LanguageEditor } from '@gen2fund/gen2verse-ui-library';
-import type { FieldDefinition } from '@gen2fund/gen2verse-ui-library';
+import { LanguageEditor } from '@oleg-irchishyn/irchishyn-ui-library';
+import type { FieldDefinition } from '@oleg-irchishyn/irchishyn-ui-library';
 
 const fieldConfig: FieldDefinition[] = [
   {
@@ -59,11 +59,11 @@ The **Conditional Language Builder** is a modal dialog component that lets users
 **Import:**
 
 ```ts
-import { ConditionalLanguageBuilder } from '@gen2fund/gen2verse-ui-library';
+import { ConditionalLanguageBuilder } from '@oleg-irchishyn/irchishyn-ui-library';
 import type {
   FieldDefinition,
   ConditionalLanguageBuilderProps,
-} from '@gen2fund/gen2verse-ui-library';
+} from '@oleg-irchishyn/irchishyn-ui-library';
 ```
 
 **Usage:**
@@ -134,11 +134,11 @@ The **Conditional Language Builder** is a modal dialog component that lets users
 **Import:**
 
 ```ts
-import { ConditionalLanguageBuilder } from '@gen2fund/gen2verse-ui-library';
+import { ConditionalLanguageBuilder } from '@oleg-irchishyn/irchishyn-ui-library';
 import type {
   ConditionalLanguageBuilderProps,
   FieldDefinition,
-} from '@gen2fund/gen2verse-ui-library';
+} from '@oleg-irchishyn/irchishyn-ui-library';
 ```
 
 **Props:** `open`, `onClose`, `fieldConfig` (same `FieldDefinition[]` as the editor), `onInsertConditional: (conditionalText: string) => void`. When the user clicks **Insert Language**, the component builds the conditional string and calls `onInsertConditional(text)` then closes. The value input is type-aware per field `dataType` (text, number, date, boolean); operators **Blank** and **Not Blank** have no value input; **Between** uses two value inputs.

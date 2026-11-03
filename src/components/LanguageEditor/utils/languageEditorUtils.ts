@@ -1,4 +1,4 @@
-import { warning } from '@gen2fund/platform.style';
+import { warning } from '../../../tokens';
 
 import type {
   ConditionClause,

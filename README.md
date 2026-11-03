@@ -1,6 +1,6 @@
-## Gen2Verse.UI.Library
+## irchishyn-ui-library
 
-Gen2Verse UI component library built with **React** + **MUI**. Components are developed and previewed in **Storybook** and can be consumed by other apps as a Node module.
+Irchishyn UI component library built with **React** + **MUI**. Components are developed and previewed in **Storybook** and can be consumed by other apps as a Node module.
 
 ### Prerequisites
 
@@ -9,7 +9,10 @@ Gen2Verse UI component library built with **React** + **MUI**. Components are de
 
 ### Install
 
+`.npmrc` reads a GitHub token from `NODE_AUTH_TOKEN` (see [Use in another repo](#use-in-another-repo-install-as-a-node-module)). For local development of this repo any non-empty value is enough, because all dependencies are public:
+
 ```bash
+export NODE_AUTH_TOKEN=dummy   # PowerShell: $env:NODE_AUTH_TOKEN = "dummy"
 pnpm install
 ```
 
@@ -68,36 +71,107 @@ pnpm run type-check
 pnpm run format
 ```
 
-### Version and publish
+### Releases and publishing
 
-Update after resolving bugfixes or small issues:
+Releases are **fully automated**. On every push to `main` the GitHub Actions workflow
+([.github/workflows/ci.yml](.github/workflows/ci.yml)) runs lint, type-check, unit tests, build, Storybook build and e2e,
+then runs **semantic-release**, which bumps the version, updates `CHANGELOG.md`, creates a `vX.Y.Z` tag
+and publishes the package to **GitHub Packages**.
 
-```bash
-pnpm version patch
+The version bump is derived from commit / PR-title prefixes (Conventional Commits):
+
+| Prefix                                      | Release |
+| ------------------------------------------- | ------- |
+| `fix:`                                      | patch   |
+| `feat:`                                     | minor   |
+| `feat!:` / `BREAKING CHANGE:` in the footer | major   |
+| `chore:`, `docs:`, `test:`, `refactor:`     | none    |
+
+Do **not** run `pnpm version` / `pnpm publish` by hand for normal releases.
+
+### One-time GitHub repository setup (maintainer)
+
+1. **Actions permissions** — repo → _Settings → Actions → General → Workflow permissions_ → select **Read and write permissions**
+   (semantic-release must push the `CHANGELOG.md` commit and tags). If `main` is branch-protected, allow GitHub Actions to bypass it.
+2. **Package scope** — the package name must be `@<github-owner>/<name>`; here it is
+   `@oleg-irchishyn/irchishyn-ui-library` (see `name` and `publishConfig` in `package.json`).
+3. **Package access** (after the first release) — profile → _Packages_ → `irchishyn-ui-library` → _Package settings_ →
+   _Manage Actions access_ (keep this repo as **Write**) and, for **other repositories** that should install it, add them under
+   _Manage access_ / _Actions access_ with **Read**. Visibility follows the repo (private repo → private package).
+4. `GITHUB_TOKEN` is provided automatically in CI; no extra secrets are needed.
+
+### Use in another repo (install as a node module)
+
+Because the package lives in GitHub Packages (not public npm), every consumer needs a registry mapping and an auth token.
+
+**1. Create a token** (once per developer)
+
+GitHub → _Settings → Developer settings → Personal access tokens → Tokens (classic)_ → scope **`read:packages`**
+(add `repo` if the package is private and inherits repo visibility). Store it as an environment variable, never in a file:
+
+```powershell
+# PowerShell (persist for new terminals)
+[Environment]::SetEnvironmentVariable("NODE_AUTH_TOKEN", "<your token>", "User")
 ```
 
-Update after adding new features without breaking changes:
-
 ```bash
-pnpm version minor
+# bash / zsh (add to ~/.bashrc or ~/.zshrc)
+export NODE_AUTH_TOKEN=<your token>
 ```
 
-Update after adding new features with breaking changes:
+**2. Add `.npmrc` to the consuming repo** (safe to commit — it contains no secret)
 
-```bash
-pnpm version major
+```ini
+@oleg-irchishyn:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
 ```
 
-Publish (uses your configured npm registry, e.g. Azure Artifacts):
+**3. Install**
 
 ```bash
-pnpm publish --access public
+pnpm add @oleg-irchishyn/irchishyn-ui-library@latest
 ```
 
-### Use in another repo (installed package)
+The library has peer dependencies that the consumer must provide: `react`, `react-dom`, `@mui/material` (v5),
+`@emotion/react`, `@emotion/styled`.
+
+**4. Use**
+
+```tsx
+import { IrchishynThemeProvider, ActionButton } from '@oleg-irchishyn/irchishyn-ui-library';
+
+export const App = () => (
+  <IrchishynThemeProvider mode="light">
+    <ActionButton label="Save" />
+  </IrchishynThemeProvider>
+);
+```
+
+**CI of a consuming repo (GitHub Actions)**
+
+```yaml
+permissions:
+  contents: read
+  packages: read
+steps:
+  - uses: actions/setup-node@v4
+    with:
+      node-version: 22
+  - run: pnpm install --frozen-lockfile
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+`GITHUB_TOKEN` can read the package only if the consuming repo is granted access in the package settings (step 3 above);
+otherwise use a PAT stored as a repository secret.
+
+**Local development against an unpublished build**
 
 ```bash
-pnpm add @gen2fund/gen2verse-ui-library@latest
+# in irchishyn-ui-library
+pnpm run build
+# in the consumer
+pnpm add file:../irchishyn-ui-library
 ```
 
 ### E2E Tests (Playwright)
@@ -166,20 +240,9 @@ rm -rf node_modules
 rm package-lock.json   # already deleted in this repo; skip if missing
 ```
 
-**Step 4 — Authenticate to Azure Artifacts (first time only)**
+**Step 4 — Set `NODE_AUTH_TOKEN`**
 
-pnpm reads the same `.npmrc` as npm, so your existing auth token works. If you have not authenticated yet, open **PowerShell or CMD** (not Git Bash) and run:
-
-```powershell
-vsts-npm-auth -config .npmrc
-```
-
-If `vsts-npm-auth` is not installed:
-
-```powershell
-npm install -g vsts-npm-auth
-vsts-npm-auth -config .npmrc
-```
+See [Use in another repo](#use-in-another-repo-install-as-a-node-module); any non-empty value works for local development of this repo.
 
 **Step 5 — Install dependencies**
 
@@ -206,4 +269,4 @@ pnpm run type-check   # No TypeScript errors
 | `engines.pnpm` set                        | Fails fast if wrong pnpm version is used                                                                                 |
 | `pnpm.overrides` pins `@mui/material: ^5` | Prevents pnpm from auto-resolving MUI v7 (which broke all tests)                                                         |
 | `.npmrc` hoist patterns                   | pnpm strict mode requires explicit hoisting for `@types/*`, `@mui/*`, `@emotion/*`, `react`, `react-dom`, `@storybook/*` |
-| CI pipeline updated                       | All 4 stages (Build, Test, E2E, Release) use `pnpm install --frozen-lockfile` and `pnpm dlx`                             |
+| CI moved to GitHub Actions                | `.github/workflows/ci.yml` replaces the former Azure pipeline; releases publish to GitHub Packages                       |
