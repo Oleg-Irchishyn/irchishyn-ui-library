@@ -4,7 +4,7 @@ Irchishyn UI component library built with **React** + **MUI**. Components are de
 
 ### Prerequisites
 
-- Node.js `^22.14.0 || >=24.10.0`
+- Node.js `^22.14.0 || >=24.5.0`
 - pnpm 9 (`npm install -g pnpm@9` or via [Corepack](https://nodejs.org/api/corepack.html))
 
 ### Install
@@ -237,13 +237,13 @@ Test results and HTML report are output to `e2e-results/`.
 
 This repo was migrated from npm to pnpm 9. If you had this repo cloned and were using `npm`, follow these steps once after pulling this branch:
 
-**Step 1 — Ensure Node.js ≥ 24.10.0 is active**
+**Step 1 — Ensure Node.js ≥ 24.5.0 is active**
 
-This repo requires `^22.14.0 || >=24.10.0`. If you use nvm-windows, open **PowerShell as Administrator** and run:
+This repo requires `^22.14.0 || >=24.5.0`. If you use nvm-windows, open **PowerShell as Administrator** and run:
 
 ```powershell
 nvm list
-nvm use 24.14.1   # or whichever version >=24.10.0 you have installed
+nvm use 24.14.1   # or whichever version >=24.5.0 you have installed
 ```
 
 Must be run as Administrator — nvm needs elevated rights to update the Node symlink.
