@@ -8,8 +8,6 @@ dist/
 build/
 .next/
 
-# CI/CD pipelines
-
 # Third-party content (prompt injection risk)
 node_modules/
 

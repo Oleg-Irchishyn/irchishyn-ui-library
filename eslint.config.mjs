@@ -6,7 +6,7 @@ import prettierConfig from 'eslint-config-prettier';
 
 export default [
   {
-    ignores: ['dist/**', 'node_modules/**', 'storybook-static/**'],
+    ignores: ['dist/**', 'node_modules/**', 'storybook-static/**', '.claude/**'],
   },
 
   js.configs.recommended,
